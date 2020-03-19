@@ -1,30 +1,25 @@
 package br.com.deveficiente.bolaoapi.services.user.api.model;
 
-import br.com.deveficiente.bolaoapi.services.user.core.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import br.com.deveficiente.bolaoapi.services.user.core.User;
+import lombok.Getter;
+import lombok.ToString;
 
-import java.util.Date;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@ToString
 public class UserResponse {
+    @Getter
     private Long id;
-    private Date timestamp;
+    @Getter
     private String login;
+    @Getter
+    private LocalDateTime timestamp;
 
-    public static UserResponse fromUser(User user) {
-        UserResponse response = UserResponse.builder()
-                .id(user.getId())
-                .timestamp(user.getTimestamp())
-                .login(user.getLogin())
-                .build();
-
-        return response;
+    public UserResponse(@Valid @NotNull User user) {
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.timestamp = user.getTimestamp();
     }
-
 }
