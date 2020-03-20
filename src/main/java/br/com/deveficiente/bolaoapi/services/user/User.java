@@ -1,8 +1,8 @@
-package br.com.deveficiente.bolaoapi.services.user.core;
+package br.com.deveficiente.bolaoapi.services.user;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,20 +29,21 @@ public class User {
 
     @NotBlank
     @Getter
-    @Setter
     private String password;
 
     @NotNull
     @Getter
     private LocalDateTime timestamp;
 
+    private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     public User() {
     }
 
-    public User(@NotBlank String login, @NotBlank String password, @NotNull LocalDateTime timestamp) {
+    public User(@NotBlank String login, @NotBlank String rawPassword) {
         this.login = login;
-        this.password = password;
-        this.timestamp = timestamp;
+        this.password = encoder.encode(rawPassword);
+        this.timestamp = LocalDateTime.now();
     }
 
     @Override

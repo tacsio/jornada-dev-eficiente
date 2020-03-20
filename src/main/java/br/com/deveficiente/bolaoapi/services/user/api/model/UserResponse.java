@@ -1,6 +1,6 @@
 package br.com.deveficiente.bolaoapi.services.user.api.model;
 
-import br.com.deveficiente.bolaoapi.services.user.core.User;
+import br.com.deveficiente.bolaoapi.services.user.User;
 import lombok.Getter;
 import lombok.ToString;
 

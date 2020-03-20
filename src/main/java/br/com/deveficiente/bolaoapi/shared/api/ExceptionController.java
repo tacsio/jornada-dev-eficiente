@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestControllerAdvice(annotations = RestController.class)
+@RestControllerAdvice
 public class ExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
