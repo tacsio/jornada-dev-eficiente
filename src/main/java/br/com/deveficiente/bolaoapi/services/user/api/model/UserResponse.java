@@ -1,0 +1,25 @@
+package br.com.deveficiente.bolaoapi.services.user.api.model;
+
+import br.com.deveficiente.bolaoapi.services.user.User;
+import lombok.Getter;
+import lombok.ToString;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+
+@ToString
+public class UserResponse {
+    @Getter
+    private Long id;
+    @Getter
+    private String login;
+    @Getter
+    private LocalDateTime timestamp;
+
+    public UserResponse(@Valid @NotNull User user) {
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.timestamp = user.getTimestamp();
+    }
+}
