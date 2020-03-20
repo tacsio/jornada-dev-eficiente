@@ -1,11 +1,11 @@
 package br.com.deveficiente.bolaoapi.shared.api;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -24,6 +24,18 @@ public class ExceptionController {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Map<String, String> handleValidationExceptions(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        if (ex.getConstraintName().contains("uk_login")) {
+            errors.put("login", "This login is already in use.");
+        }
 
         return errors;
     }

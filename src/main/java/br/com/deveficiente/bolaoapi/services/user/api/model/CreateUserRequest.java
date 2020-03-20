@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 public class CreateUserRequest {
 
     @NotBlank(message = "login should not be null")
-    @Email(message = "wrong format login format", regexp = ".+@.+\\..+")
+    @Email(message = "wrong format login format")
     private String login;
 
     @NotBlank(message = "password should not be null")
