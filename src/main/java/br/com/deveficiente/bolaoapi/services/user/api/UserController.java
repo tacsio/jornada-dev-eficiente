@@ -24,6 +24,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity create(@RequestBody @Valid CreateUserRequest request) {
         UserResponse response = new UserResponse(this.userRepository.save(request.user()));
+
         return ResponseEntity.ok(response);
     }
 }

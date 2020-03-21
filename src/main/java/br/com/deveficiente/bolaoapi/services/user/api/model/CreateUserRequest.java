@@ -1,7 +1,7 @@
 package br.com.deveficiente.bolaoapi.services.user.api.model;
 
 import br.com.deveficiente.bolaoapi.services.user.User;
-import br.com.deveficiente.bolaoapi.services.user.validator.UniqueLogin;
+import br.com.deveficiente.bolaoapi.shared.validator.Unique;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,7 +13,7 @@ public class CreateUserRequest {
 
     @NotBlank(message = "login should not be null")
     @Email(message = "wrong format login format")
-    @UniqueLogin
+    @Unique(entityClass = User.class)
     private String login;
 
     @NotBlank(message = "password should not be null")

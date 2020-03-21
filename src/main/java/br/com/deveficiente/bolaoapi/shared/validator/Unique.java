@@ -1,15 +1,17 @@
-package br.com.deveficiente.bolaoapi.services.user.validator;
+package br.com.deveficiente.bolaoapi.shared.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = LoginValidator.class)
+@Constraint(validatedBy = UniqueValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UniqueLogin {
-    String message() default "login already exists";
+public @interface Unique {
+    String message() default "value already exists";
+
+    Class<?> entityClass();
 
     Class<?>[] groups() default {};
 
