@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @ToString
 public class UserResponse {
     @Getter
-    private Long id;
+    private final Long id;
     @Getter
-    private String login;
+    private final String login;
     @Getter
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
 
     public UserResponse(@Valid @NotNull User user) {
         this.id = user.getId();

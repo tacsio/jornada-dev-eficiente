@@ -1,13 +1,11 @@
 package br.com.deveficiente.bolaoapi.services.user;
 
+import br.com.deveficiente.bolaoapi.services.user.validator.UniqueLogin;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,14 +14,16 @@ import java.util.Objects;
 
 @ToString
 @Entity(name = "poll_user")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}, name = "uk_login"))
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
 
     @NotBlank
-    @Email(regexp = ".+@.+\\..+")
+    @Email
     @Getter
     private String login;
 
@@ -59,3 +59,4 @@ public class User {
         return Objects.hash(login);
     }
 }
+
