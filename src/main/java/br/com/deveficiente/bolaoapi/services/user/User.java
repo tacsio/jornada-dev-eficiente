@@ -1,8 +1,8 @@
 package br.com.deveficiente.bolaoapi.services.user;
 
+import br.com.deveficiente.bolaoapi.services.user.validator.UniqueLogin;
 import lombok.Getter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
