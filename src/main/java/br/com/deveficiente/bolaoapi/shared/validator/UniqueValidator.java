@@ -18,6 +18,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     private EntityManager entityManager;
     private Class entityClass;
+    private String entityField;
 
 
     public UniqueValidator(EntityManager entityManager) {
@@ -27,28 +28,20 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     @Override
     public void initialize(Unique constraintAnnotation) {
         entityClass = constraintAnnotation.entityClass();
+        entityField = constraintAnnotation.entityField();
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        String field = getField((ConstraintValidatorContextImpl) context);
-
-        return !this.exists(entityManager, field, value);
+        return !this.exists(entityManager, entityClass, entityField, value);
     }
 
-    private String getField(ConstraintValidatorContextImpl context) {
-        ConstraintValidatorContextImpl c = context;
-        ConstraintViolationCreationContext creationContext = c.getConstraintViolationCreationContexts().get(0);
-
-        return creationContext.getPath().asString();
-    }
-
-    private boolean exists(EntityManager entityManager, String field, String value) {
+    private boolean exists(EntityManager entityManager, Class entityClass, String field, String fieldValue) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
 
         Root<?> root = criteriaQuery.from(entityClass);
-        Predicate predicate = criteriaBuilder.like(root.get(field), value);
+        Predicate predicate = criteriaBuilder.like(root.get(field), fieldValue);
         criteriaQuery.select(root).where(predicate);
 
         Stream stream = entityManager

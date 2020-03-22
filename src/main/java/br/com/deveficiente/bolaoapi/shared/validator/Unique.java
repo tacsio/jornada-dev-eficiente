@@ -13,6 +13,8 @@ public @interface Unique {
 
     Class<?> entityClass();
 
+    String entityField();
+
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};

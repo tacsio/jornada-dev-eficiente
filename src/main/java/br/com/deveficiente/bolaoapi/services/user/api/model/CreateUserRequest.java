@@ -13,7 +13,7 @@ public class CreateUserRequest {
 
     @NotBlank(message = "login should not be null")
     @Email(message = "wrong format login format")
-    @Unique(entityClass = User.class)
+    @Unique(entityClass = User.class, entityField = "login")
     private String login;
 
     @NotBlank(message = "password should not be null")

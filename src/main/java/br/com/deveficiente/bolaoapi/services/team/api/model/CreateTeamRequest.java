@@ -16,7 +16,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 public class CreateTeamRequest {
 
     @NotBlank(message = "Team name should not be null.")
-    @Unique(entityClass = Team.class)
+    @Unique(entityClass = Team.class, entityField = "name")
     private String name;
 
     @NotNull(message = "Date of foundation should not be null.")
