@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -26,6 +27,7 @@ public class CreateChampionshipRequest {
     private LocalDate startDate;
 
     @Getter
+    @Min(2)
     private Integer totalTeams;
 
     public Championship getChampionship() {

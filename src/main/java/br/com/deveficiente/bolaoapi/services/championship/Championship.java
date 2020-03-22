@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
@@ -27,6 +28,7 @@ public class Championship {
     private LocalDate startDate;
 
     @Getter
+    @Min(2)
     private Integer totalTeams;
 
 
