@@ -1,7 +1,5 @@
 package br.com.deveficiente.bolaoapi.shared.validator;
 
-import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
-import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintViolationCreationContext;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -19,7 +17,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     private EntityManager entityManager;
     private Class entityClass;
     private String entityField;
-
 
     public UniqueValidator(EntityManager entityManager) {
         this.entityManager = entityManager;
