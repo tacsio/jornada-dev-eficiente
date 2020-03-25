@@ -1,6 +1,7 @@
 package br.com.deveficiente.bolaoapi.services.championship;
 
 import br.com.deveficiente.bolaoapi.services.team.Team;
+import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
@@ -10,6 +11,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.hibernate.annotations.CascadeType.*;
@@ -39,19 +41,17 @@ public class Championship {
     @Getter
     @ManyToMany
     @Cascade(value = {MERGE, PERSIST, REFRESH})
-    private Set<Team> teams;
+    private Set<Team> teams = new HashSet<>();
 
     public Championship() {
     }
 
     public Championship(String name, LocalDate startDate, Integer totalTeams, Set<Team> teams) {
+        Preconditions.checkArgument(totalTeams == teams.size(), "invalid number of teams");
+
         this.name = name;
         this.startDate = startDate;
         this.totalTeams = totalTeams;
-        this.teams = teams;
-
-        for(Team t : teams) {
-            t.addChampionship(this);
-        }
+        this.teams.addAll(teams);
     }
 }

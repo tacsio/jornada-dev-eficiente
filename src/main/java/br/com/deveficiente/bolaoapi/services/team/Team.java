@@ -1,20 +1,16 @@
 package br.com.deveficiente.bolaoapi.services.team;
 
-import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-@ToString(exclude = "championships")
+@ToString
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"name"}, name = "uk_team_name"))
 public class Team {
@@ -33,23 +29,12 @@ public class Team {
     @Getter
     private LocalDate foundation;
 
-    @ManyToMany(mappedBy = "teams")
-    @Getter
-    private Set<Championship> championships;
-
     public Team() {
     }
 
     public Team(String name, LocalDate foundation) {
         this.name = name;
         this.foundation = foundation;
-    }
-
-    public void addChampionship(@Valid @NotNull Championship championship) {
-        if(this.championships == null) {
-            this.championships = new HashSet<>();
-        }
-        this.championships.add(championship);
     }
 
     @Override

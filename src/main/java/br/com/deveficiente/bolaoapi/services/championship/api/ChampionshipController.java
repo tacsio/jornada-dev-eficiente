@@ -5,7 +5,6 @@ import br.com.deveficiente.bolaoapi.services.championship.ChampionshipRepository
 import br.com.deveficiente.bolaoapi.services.championship.api.model.ChampionshipResponse;
 import br.com.deveficiente.bolaoapi.services.championship.api.model.CreateChampionshipRequest;
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
-import br.com.deveficiente.bolaoapi.shared.api.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +31,6 @@ public class ChampionshipController {
     @Transactional
     public ResponseEntity create(@RequestBody @Valid CreateChampionshipRequest request) {
         Championship championship = request.getChampionship(teamRepository);
-
-        if (championship.getTeams().size() != championship.getTotalTeams()) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("invalid number of teams"));
-        }
-
         ChampionshipResponse response = new ChampionshipResponse(this.championshipRepository.save(championship));
 
         return ResponseEntity.ok(response);

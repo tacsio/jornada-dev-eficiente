@@ -26,4 +26,10 @@ public class ExceptionController {
 
         return errors;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleCustomValidationException(IllegalArgumentException ex) {
+        return new ErrorResponse(ex.getMessage());
+    }
 }

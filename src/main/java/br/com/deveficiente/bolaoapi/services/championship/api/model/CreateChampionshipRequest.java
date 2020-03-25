@@ -3,7 +3,7 @@ package br.com.deveficiente.bolaoapi.services.championship.api.model;
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import br.com.deveficiente.bolaoapi.services.team.Team;
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
-import br.com.deveficiente.bolaoapi.services.team.api.model.CreateTeamRequest;
+import br.com.deveficiente.bolaoapi.shared.validator.ChampionshipTeams;
 import br.com.deveficiente.bolaoapi.shared.validator.Unique;
 import lombok.Data;
 import lombok.Getter;
@@ -14,6 +14,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,13 +37,16 @@ public class CreateChampionshipRequest {
     @Min(2)
     private Integer totalTeams;
 
+    @ChampionshipTeams
     @Getter
-    private Set<CreateTeamRequest> teams = new HashSet<>();
+    private Set<Long> teamsId = new HashSet<>();
+
 
     public Championship getChampionship(TeamRepository teamRepository) {
-        Set<Team> mergedTeams = this.teams.stream()
-                .map(requestTeam -> teamRepository.findByName(requestTeam.getName())
-                .orElseGet(() -> requestTeam.getTeam()))
+        Set<Team> mergedTeams = this.teamsId.stream()
+                .map(id -> teamRepository.findById(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toSet());
 
         return new Championship(this.name, this.startDate, this.totalTeams, mergedTeams);
