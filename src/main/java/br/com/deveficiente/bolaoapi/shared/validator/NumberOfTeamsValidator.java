@@ -7,11 +7,11 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
 import java.util.Set;
 
-public class ChampionshipTeamsValidator implements ConstraintValidator<ChampionshipTeams, Set<Long>> {
+public class NumberOfTeamsValidator implements ConstraintValidator<NumberOfTeams, Set<Long>> {
 
     private TeamRepository teamRepository;
 
-    public ChampionshipTeamsValidator(TeamRepository teamRepository) {
+    public NumberOfTeamsValidator(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
 

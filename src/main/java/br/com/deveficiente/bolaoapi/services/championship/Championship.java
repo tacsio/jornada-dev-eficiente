@@ -1,10 +1,10 @@
 package br.com.deveficiente.bolaoapi.services.championship;
 
 import br.com.deveficiente.bolaoapi.services.team.Team;
-import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
@@ -47,7 +47,7 @@ public class Championship {
     }
 
     public Championship(String name, LocalDate startDate, Integer totalTeams, Set<Team> teams) {
-        Preconditions.checkArgument(totalTeams == teams.size(), "invalid number of teams");
+        Assert.isTrue(totalTeams == teams.size(), "invalid number of teams.");
 
         this.name = name;
         this.startDate = startDate;

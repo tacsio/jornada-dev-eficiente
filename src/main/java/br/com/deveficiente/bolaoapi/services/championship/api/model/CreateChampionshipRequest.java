@@ -3,7 +3,7 @@ package br.com.deveficiente.bolaoapi.services.championship.api.model;
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import br.com.deveficiente.bolaoapi.services.team.Team;
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
-import br.com.deveficiente.bolaoapi.shared.validator.ChampionshipTeams;
+import br.com.deveficiente.bolaoapi.shared.validator.NumberOfTeams;
 import br.com.deveficiente.bolaoapi.shared.validator.Unique;
 import lombok.Data;
 import lombok.Getter;
@@ -37,7 +37,7 @@ public class CreateChampionshipRequest {
     @Min(2)
     private Integer totalTeams;
 
-    @ChampionshipTeams
+    @NumberOfTeams
     @Getter
     private Set<Long> teamsId = new HashSet<>();
 

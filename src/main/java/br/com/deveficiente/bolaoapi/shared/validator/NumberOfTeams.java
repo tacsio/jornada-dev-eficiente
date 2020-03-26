@@ -4,11 +4,11 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Constraint(validatedBy = ChampionshipTeamsValidator.class)
+@Constraint(validatedBy = NumberOfTeamsValidator.class)
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ChampionshipTeams {
+public @interface NumberOfTeams {
 
     String message() default "invalid number of teams";
 
