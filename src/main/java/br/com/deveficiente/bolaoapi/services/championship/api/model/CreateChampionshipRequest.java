@@ -3,7 +3,8 @@ package br.com.deveficiente.bolaoapi.services.championship.api.model;
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import br.com.deveficiente.bolaoapi.services.team.Team;
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
-import br.com.deveficiente.bolaoapi.shared.validator.NumberOfTeams;
+import br.com.deveficiente.bolaoapi.shared.validator.ChampionshipTeamsRequest;
+import br.com.deveficiente.bolaoapi.shared.validator.DatabaseTeams;
 import br.com.deveficiente.bolaoapi.shared.validator.Unique;
 import lombok.Data;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 
 @Data
+@ChampionshipTeamsRequest
 public class CreateChampionshipRequest {
 
     @Getter
@@ -37,10 +39,9 @@ public class CreateChampionshipRequest {
     @Min(2)
     private Integer totalTeams;
 
-    @NumberOfTeams
+    @DatabaseTeams
     @Getter
     private Set<Long> teamsId = new HashSet<>();
-
 
     public Championship getChampionship(TeamRepository teamRepository) {
         Set<Team> mergedTeams = this.teamsId.stream()
