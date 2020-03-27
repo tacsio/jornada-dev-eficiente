@@ -19,11 +19,23 @@ public class ExceptionController {
         Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
+            String name;
+            if (error instanceof FieldError) {
+                name = ((FieldError) error).getField();
+            } else {
+                name = error.getObjectName().replaceAll("Request", "");
+            }
+
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            errors.put(name, errorMessage);
         });
 
         return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleCustomValidationException(IllegalArgumentException ex) {
+        return new ErrorResponse(ex.getMessage());
     }
 }

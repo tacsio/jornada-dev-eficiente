@@ -1,27 +1,35 @@
 package br.com.deveficiente.bolaoapi.services.championship.api.model;
 
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
+import br.com.deveficiente.bolaoapi.services.team.api.model.TeamResponse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @ToString
 public class ChampionshipResponse {
 
     @Getter
-    private Long id;
+    private final Long id;
 
     @Getter
-    private String name;
+    private final String name;
 
     @Getter
-    private LocalDate startDate;
+    private final LocalDate startDate;
 
     @Getter
-    private Integer totalTeams;
+    private final Integer totalTeams;
+
+    @Getter
+    @JsonIgnoreProperties
+    private final Set<TeamResponse> teams;
 
 
     public ChampionshipResponse(@Valid @NotNull Championship championship) {
@@ -29,5 +37,10 @@ public class ChampionshipResponse {
         this.name = championship.getName();
         this.startDate = championship.getStartDate();
         this.totalTeams = championship.getTotalTeams();
+
+        this.teams = championship.getTeams()
+                .stream()
+                .map(TeamResponse::new)
+                .collect(Collectors.toSet());
     }
 }

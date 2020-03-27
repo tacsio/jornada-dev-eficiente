@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @ToString
 @Entity
@@ -34,5 +35,20 @@ public class Team {
     public Team(String name, LocalDate foundation) {
         this.name = name;
         this.foundation = foundation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Team team = (Team) o;
+
+        return Objects.equals(name, team.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }
