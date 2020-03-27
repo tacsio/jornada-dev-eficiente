@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,5 +54,9 @@ public class Championship {
         this.startDate = startDate;
         this.totalTeams = totalTeams;
         this.teams.addAll(teams);
+    }
+
+    public Championship(@NotNull Long id) {
+        this.id = id;
     }
 }

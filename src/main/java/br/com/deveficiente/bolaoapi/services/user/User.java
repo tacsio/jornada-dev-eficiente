@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @ToString
-@Entity(name = "poll_user")
+@Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}, name = "uk_login"))
 public class User {
 
@@ -37,6 +37,10 @@ public class User {
     private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {
+    }
+
+    public User(@NotNull Long id){
+        this.id = id;
     }
 
     public User(@NotBlank String login, @NotBlank String rawPassword) {

@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
@@ -37,4 +38,8 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).each {
+	it.options.compilerArgs.add('--enable-preview')
 }
