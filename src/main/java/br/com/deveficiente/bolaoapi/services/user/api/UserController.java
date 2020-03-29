@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;

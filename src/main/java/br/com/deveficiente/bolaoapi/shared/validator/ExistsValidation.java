@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class ExistsValidation implements ConstraintValidator<Exists, Long> {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     private Class entityClass;
     private String entityField;
 

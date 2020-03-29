@@ -14,21 +14,17 @@ import java.util.UUID;
 @Entity
 public class Invitation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Getter
-    @Email
-    private String email;
-
-    @NotNull
-    private LocalDateTime expiration;
-
     @Getter
     @NotBlank
     private final String key = UUID.randomUUID().toString();
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Getter
+    @Email
+    private String email;
+    @NotNull
+    private LocalDateTime expiration = LocalDateTime.now().plusHours(24);
     @Getter
     @ManyToOne
     private Poll poll;
@@ -36,9 +32,18 @@ public class Invitation {
     protected Invitation() {
     }
 
-    public Invitation(String email, Poll poll) {
+    protected Invitation(String email, Poll poll) {
         this.email = email;
         this.poll = poll;
-        this.expiration = poll.getCreatedAt().plusHours(24);
+    }
+
+    public String getInvitationLink() {
+        String link = new StringBuilder()
+                .append("http://localhost:8080")
+                .append("/invitations?key=")
+                .append(this.getKey())
+                .toString();
+
+        return link;
     }
 }

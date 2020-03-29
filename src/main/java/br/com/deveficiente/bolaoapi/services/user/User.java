@@ -34,7 +34,7 @@ public class User {
     @Getter
     private LocalDateTime timestamp;
 
-    private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {
     }

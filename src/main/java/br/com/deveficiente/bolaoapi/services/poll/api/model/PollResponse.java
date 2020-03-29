@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 public class PollResponse {
 
     @Getter
-    private Long id;
+    private final Long id;
     @Getter
-    private String owner;
+    private final String owner;
     @Getter
-    private String championship;
+    private final String championship;
     @Getter
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
     @Getter
-    private Set<String> invites;
+    private final Set<String> invites;
 
     public PollResponse(Poll poll) {
         this.id = poll.getId();

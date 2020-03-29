@@ -12,7 +12,7 @@ import javax.validation.Valid;
 @RequestMapping("/teams")
 public class TeamController {
 
-    private TeamRepository repository;
+    private final TeamRepository repository;
 
     public TeamController(TeamRepository repository) {
         this.repository = repository;

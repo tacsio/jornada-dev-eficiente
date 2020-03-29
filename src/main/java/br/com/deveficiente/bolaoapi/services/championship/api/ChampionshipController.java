@@ -18,9 +18,9 @@ import javax.validation.Valid;
 @RequestMapping("/championships")
 public class ChampionshipController {
 
-    private ChampionshipRepository championshipRepository;
+    private final ChampionshipRepository championshipRepository;
 
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     public ChampionshipController(ChampionshipRepository repository, TeamRepository teamRepository) {
         this.championshipRepository = repository;

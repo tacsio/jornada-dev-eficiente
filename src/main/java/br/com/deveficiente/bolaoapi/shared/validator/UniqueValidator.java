@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Service
 public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     private Class entityClass;
     private String entityField;
 
