@@ -39,13 +39,13 @@ public class User {
     public User() {
     }
 
-    public User(@NotNull Long id){
+    public User(@NotNull Long id) {
         this.id = id;
     }
 
     public User(@NotBlank String login, @NotBlank String rawPassword) {
         this.login = login;
-        this.password = encoder.encode(rawPassword);
+        this.password = User.encoder.encode(rawPassword);
         this.timestamp = LocalDateTime.now();
     }
 

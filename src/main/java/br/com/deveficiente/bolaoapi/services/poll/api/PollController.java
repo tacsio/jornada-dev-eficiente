@@ -5,6 +5,7 @@ import br.com.deveficiente.bolaoapi.services.poll.Poll;
 import br.com.deveficiente.bolaoapi.services.poll.PollRepository;
 import br.com.deveficiente.bolaoapi.services.poll.api.model.CreatePollRequest;
 import br.com.deveficiente.bolaoapi.services.poll.api.model.PollResponse;
+import br.com.deveficiente.bolaoapi.services.poll.api.service.InvitationEmailSender;
 import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.services.user.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +23,15 @@ public class PollController {
 
     private final PollRepository pollRepository;
     private final ChampionshipRepository championshipRepository;
-    private final InvitationController invitationController;
+    private final InvitationEmailSender invitationEmailSender;
 
     //TODO: remove when add spring security features
     private final UserRepository userRepository;
 
-    public PollController(PollRepository pollRepository, ChampionshipRepository championshipRepository, InvitationController invitationController, UserRepository userRepository) {
+    public PollController(PollRepository pollRepository, ChampionshipRepository championshipRepository, InvitationEmailSender invitationEmailSender, UserRepository userRepository) {
         this.pollRepository = pollRepository;
         this.championshipRepository = championshipRepository;
-        this.invitationController = invitationController;
+        this.invitationEmailSender = invitationEmailSender;
         this.userRepository = userRepository;
     }
 
@@ -42,7 +43,7 @@ public class PollController {
         Poll poll = request.toPoll(loggedUser, championshipRepository);
 
         ResponseEntity response = ResponseEntity.ok(new PollResponse(pollRepository.save(poll)));
-        invitationController.sendInvitationsByEmail(poll.getInvitations());
+        invitationEmailSender.sendInvitationsByEmail(poll.getInvitations());
 
         return response;
     }
