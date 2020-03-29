@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @ToString
-@Entity(name = "poll_user")
+@Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}, name = "uk_login"))
 public class User {
 
@@ -34,14 +34,18 @@ public class User {
     @Getter
     private LocalDateTime timestamp;
 
-    private static BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {
     }
 
+    public User(@NotNull Long id) {
+        this.id = id;
+    }
+
     public User(@NotBlank String login, @NotBlank String rawPassword) {
         this.login = login;
-        this.password = encoder.encode(rawPassword);
+        this.password = User.encoder.encode(rawPassword);
         this.timestamp = LocalDateTime.now();
     }
 

@@ -41,9 +41,9 @@ public class Championship {
     @Getter
     @ManyToMany
     @Cascade(value = {MERGE, PERSIST, REFRESH})
-    private Set<Team> teams = new HashSet<>();
+    private final Set<Team> teams = new HashSet<>();
 
-    public Championship() {
+    protected Championship() {
     }
 
     public Championship(String name, LocalDate startDate, Integer totalTeams, Set<Team> teams) {

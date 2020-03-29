@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Service
 public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     private Class entityClass;
     private String entityField;
 
@@ -30,22 +30,6 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return !this.exists(entityManager, entityClass, entityField, value);
-    }
-
-    private boolean exists(EntityManager entityManager, Class entityClass, String field, String fieldValue) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
-
-        Root<?> root = criteriaQuery.from(entityClass);
-        Predicate predicate = criteriaBuilder.like(root.get(field), fieldValue);
-        criteriaQuery.select(root).where(predicate);
-
-        Stream stream = entityManager
-                .createQuery(criteriaQuery)
-                .setMaxResults(1)
-                .getResultStream();
-
-        return stream.findFirst().isPresent();
+        return !ExistsValidation.exists(entityManager, entityClass, entityField, value);
     }
 }

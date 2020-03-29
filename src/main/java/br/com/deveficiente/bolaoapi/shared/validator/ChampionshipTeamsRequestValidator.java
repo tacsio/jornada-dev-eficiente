@@ -8,11 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 public class ChampionshipTeamsRequestValidator implements ConstraintValidator<ChampionshipTeamsRequest, CreateChampionshipRequest> {
 
     @Override
-    public void initialize(ChampionshipTeamsRequest constraintAnnotation) {
-        System.out.println(constraintAnnotation);
-    }
-
-    @Override
     public boolean isValid(CreateChampionshipRequest value, ConstraintValidatorContext context) {
         return value.getTeamsId().size() == value.getTotalTeams();
     }

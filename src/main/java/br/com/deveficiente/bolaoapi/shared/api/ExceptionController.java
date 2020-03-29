@@ -20,8 +20,8 @@ public class ExceptionController {
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String name;
-            if (error instanceof FieldError) {
-                name = ((FieldError) error).getField();
+            if (error instanceof FieldError fieldObject) {
+                name = fieldObject.getField();
             } else {
                 name = error.getObjectName().replaceAll("Request", "");
             }

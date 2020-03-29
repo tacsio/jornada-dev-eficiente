@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class DatabaseTeamsValidator implements ConstraintValidator<DatabaseTeams, Set<Long>> {
 
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     public DatabaseTeamsValidator(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
