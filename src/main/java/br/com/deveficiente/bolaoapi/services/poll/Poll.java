@@ -42,6 +42,10 @@ public class Poll {
     @OneToMany(mappedBy = "poll", cascade = {MERGE, REFRESH, REMOVE, PERSIST}, orphanRemoval = true)
     private final Set<Invitation> invitations = new HashSet<>();
 
+    @Getter
+    @ManyToMany
+    private final Set<User> participants = new HashSet<>();
+
     protected Poll() {
     }
 
@@ -49,6 +53,11 @@ public class Poll {
         this.owner = owner;
         this.championship = championship;
         this.invitations.addAll(buildInvitations(emails));
+        this.participants.add(owner);
+    }
+
+    public void addPartipant(User participant) {
+        this.participants.add(participant);
     }
 
     private Set<Invitation> buildInvitations(Set<String> emails) {

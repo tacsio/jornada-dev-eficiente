@@ -2,6 +2,7 @@ package br.com.deveficiente.bolaoapi.services.poll;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -29,6 +30,15 @@ public class Invitation {
     @ManyToOne
     private Poll poll;
 
+    private LocalDateTime closeDate;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.INVITED;
+
+    enum Status {
+        INVITED, ACCEPTED, DECLINED
+    }
+
     protected Invitation() {
     }
 
@@ -46,4 +56,17 @@ public class Invitation {
 
         return link;
     }
+
+    public void accept() {
+        Assert.isNull(closeDate, "this invitation has already used.");
+        this.closeDate = LocalDateTime.now();
+        this.status = Status.ACCEPTED;
+    }
+
+    public void decline() {
+        Assert.isNull(closeDate, "this invitation has already used.");
+        this.closeDate = LocalDateTime.now();
+        this.status = Status.DECLINED;
+    }
+
 }

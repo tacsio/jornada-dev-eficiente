@@ -15,7 +15,8 @@ public class InvitationEmailSender {
     public void sendInvitationsByEmail(Set<Invitation> invitations) {
         invitations.forEach(invitation -> {
             String ownerLogin = invitation.getPoll().getOwner().getLogin();
-            System.out.println(invitation.getInvitationLink());
+            System.out.println(invitation.getInvitationLink() + "&accept=true");
+            System.out.println(invitation.getInvitationLink() + "&accept=false");
 //            mailSender.send(buildMessage(ownerLogin, invitation));
         });
     }
