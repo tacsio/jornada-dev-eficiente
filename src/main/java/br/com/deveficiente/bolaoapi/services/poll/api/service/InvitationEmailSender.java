@@ -15,8 +15,8 @@ public class InvitationEmailSender {
     public void sendInvitationsByEmail(Set<Invitation> invitations) {
         invitations.forEach(invitation -> {
             String ownerLogin = invitation.getPoll().getOwner().getLogin();
-            System.out.println(invitation.getInvitationLink() + "&accept=true");
-            System.out.println(invitation.getInvitationLink() + "&accept=false");
+            System.out.println(invitation.getInvitationLink(true));
+            System.out.println(invitation.getInvitationLink(false));
 //            mailSender.send(buildMessage(ownerLogin, invitation));
         });
     }
@@ -25,7 +25,16 @@ public class InvitationEmailSender {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(invitation.getEmail());
         message.setFrom(from);
-        message.setText(invitation.getInvitationLink());
+
+        String msg = """
+                Accept Link: %s 
+                Deny Link: %s
+                """;
+
+        message.setText(msg.formatted(
+                invitation.getInvitationLink(true),
+                invitation.getInvitationLink(false))
+        );
 
         return message;
     }

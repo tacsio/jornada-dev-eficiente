@@ -2,8 +2,6 @@ package br.com.deveficiente.bolaoapi.services.poll.api;
 
 import br.com.deveficiente.bolaoapi.services.poll.Invitation;
 import br.com.deveficiente.bolaoapi.services.poll.InvitationRepository;
-import br.com.deveficiente.bolaoapi.services.poll.Poll;
-import br.com.deveficiente.bolaoapi.services.poll.PollRepository;
 import br.com.deveficiente.bolaoapi.services.poll.api.model.InvitationAccepted;
 import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.services.user.UserRepository;
@@ -28,32 +26,39 @@ public class InvitationEmailController {
 
     private final InvitationRepository invitationRepository;
     private final UserRepository userRepository;
-    private final PollRepository pollRepository;
 
-    public InvitationEmailController(InvitationRepository invitationRepository, UserRepository userRepository, PollRepository pollRepository) {
+    public InvitationEmailController(InvitationRepository invitationRepository, UserRepository userRepository) {
         this.invitationRepository = invitationRepository;
         this.userRepository = userRepository;
-        this.pollRepository = pollRepository;
     }
 
     @Transactional
-    @GetMapping
-    public ResponseEntity process(@RequestParam String key, @RequestParam Boolean accept, UriComponentsBuilder uriBuilder) {
+    @GetMapping("/accept")
+    public ResponseEntity process(@RequestParam String key, UriComponentsBuilder uriBuilder) {
+        Optional<Invitation> invitation = invitationRepository.findByKeyAndExpirationAfter(key, LocalDateTime.now());
+
+        //validate invitation
+        if (!invitation.isPresent()) return invalidInvitation();
+
+        //validate user
+        String invitedUserLogin = invitation.get().getEmail();
+        Optional<User> invitedUser = userRepository.findByLogin(invitedUserLogin);
+        if (!invitedUser.isPresent()) return userNotExists(uriBuilder);
+
+        invitation.get().accept(invitedUser.get());
+        return ResponseEntity.ok(new InvitationAccepted(invitation.get()));
+    }
+
+    @Transactional
+    @GetMapping("/deny")
+    public ResponseEntity deny(@RequestParam String key) {
         Optional<Invitation> invitation = invitationRepository.findByKeyAndExpirationAfter(key, LocalDateTime.now());
 
         //check invitation
         if (!invitation.isPresent()) return invalidInvitation();
+        invitation.get().decline();
 
-        //check acceptance
-        if (!accept) return declineInvitation(invitation);
-
-        //check user
-        String invitedUserLogin = invitation.get().getEmail();
-        Optional<User> invitedUser = userRepository.findByLogin(invitedUserLogin);
-
-        if (!invitedUser.isPresent()) return userNotExists(uriBuilder);
-
-        return ResponseEntity.ok(acceptInvitation(invitation, invitedUser));
+        return ResponseEntity.status(HttpStatus.GONE).build();
     }
 
     private ResponseEntity invalidInvitation() {
@@ -64,21 +69,9 @@ public class InvitationEmailController {
         URI uri = uriBuilder.path("/users").build().toUri();
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uri);
-        return ResponseEntity.status(HttpStatus.SEE_OTHER).headers(headers).build();
-    }
 
-    private ResponseEntity declineInvitation(Optional<Invitation> invitation) {
-        invitation.get().decline();
-        this.invitationRepository.save(invitation.get());
-        return ResponseEntity.status(HttpStatus.GONE).build();
-    }
+        ErrorResponse error = new ErrorResponse("User not exists. Create user first, them accept invitation");
 
-    private InvitationAccepted acceptInvitation(Optional<Invitation> invitation, Optional<User> invitedUser) {
-        Poll invitationPoll = invitation.get().getPoll();
-        invitationPoll.addPartipant(invitedUser.get());
-        invitation.get().accept();
-        pollRepository.save(invitationPoll);
-
-        return new InvitationAccepted(invitation.get());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).headers(headers).body(error);
     }
 }

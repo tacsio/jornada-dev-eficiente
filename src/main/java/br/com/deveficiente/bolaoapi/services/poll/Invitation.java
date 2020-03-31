@@ -1,5 +1,6 @@
 package br.com.deveficiente.bolaoapi.services.poll;
 
+import br.com.deveficiente.bolaoapi.services.user.User;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.util.Assert;
@@ -35,10 +36,6 @@ public class Invitation {
     @Enumerated(EnumType.STRING)
     private Status status = Status.INVITED;
 
-    enum Status {
-        INVITED, ACCEPTED, DECLINED
-    }
-
     protected Invitation() {
     }
 
@@ -47,18 +44,21 @@ public class Invitation {
         this.poll = poll;
     }
 
-    public String getInvitationLink() {
+    public String getInvitationLink(boolean accept) {
         String link = new StringBuilder()
                 .append("http://localhost:8080")
-                .append("/invitations?key=")
+                .append("/invitations")
+                .append(accept ? "/accept" : "/deny")
+                .append("?key=")
                 .append(this.getKey())
                 .toString();
 
         return link;
     }
 
-    public void accept() {
+    public void accept(User invitedUser) {
         Assert.isNull(closeDate, "this invitation has already used.");
+        this.getPoll().getParticipants().add(invitedUser);
         this.closeDate = LocalDateTime.now();
         this.status = Status.ACCEPTED;
     }
@@ -67,6 +67,10 @@ public class Invitation {
         Assert.isNull(closeDate, "this invitation has already used.");
         this.closeDate = LocalDateTime.now();
         this.status = Status.DECLINED;
+    }
+
+    enum Status {
+        INVITED, ACCEPTED, DECLINED
     }
 
 }
