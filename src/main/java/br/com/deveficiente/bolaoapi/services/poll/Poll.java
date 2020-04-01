@@ -56,7 +56,7 @@ public class Poll {
         this.participants.add(owner);
     }
 
-    public void addPartipant(User participant) {
+    public void addParticipant(User participant) {
         this.participants.add(participant);
     }
 

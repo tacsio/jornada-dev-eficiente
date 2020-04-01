@@ -54,7 +54,7 @@ public class InvitationEmailController {
     public ResponseEntity deny(@RequestParam String key) {
         Optional<Invitation> invitation = invitationRepository.findByKeyAndExpirationAfter(key, LocalDateTime.now());
 
-        //check invitation
+        //validate invitation
         if (!invitation.isPresent()) return invalidInvitation();
         invitation.get().decline();
 

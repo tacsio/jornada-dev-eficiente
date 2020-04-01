@@ -44,11 +44,23 @@ public class Invitation {
         this.poll = poll;
     }
 
-    public String getInvitationLink(boolean accept) {
+    public String getAcceptLink(String host) {
         String link = new StringBuilder()
-                .append("http://localhost:8080")
+                .append(host)
                 .append("/invitations")
-                .append(accept ? "/accept" : "/deny")
+                .append("/accept")
+                .append("?key=")
+                .append(this.getKey())
+                .toString();
+
+        return link;
+    }
+
+    public String getDenyLink(String host) {
+        String link = new StringBuilder()
+                .append(host)
+                .append("/invitations")
+                .append("/deny")
                 .append("?key=")
                 .append(this.getKey())
                 .toString();
@@ -58,7 +70,8 @@ public class Invitation {
 
     public void accept(User invitedUser) {
         Assert.isNull(closeDate, "this invitation has already used.");
-        this.getPoll().getParticipants().add(invitedUser);
+        Assert.isTrue(invitedUser.getLogin().equals(email), "This user not belongs to its invitation.");
+        this.getPoll().addParticipant(invitedUser);
         this.closeDate = LocalDateTime.now();
         this.status = Status.ACCEPTED;
     }
