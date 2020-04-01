@@ -1,7 +1,9 @@
 package br.com.deveficiente.bolaoapi.services.poll;
 
+import br.com.deveficiente.bolaoapi.services.user.User;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -29,6 +31,11 @@ public class Invitation {
     @ManyToOne
     private Poll poll;
 
+    private LocalDateTime closeDate;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.INVITED;
+
     protected Invitation() {
     }
 
@@ -37,13 +44,46 @@ public class Invitation {
         this.poll = poll;
     }
 
-    public String getInvitationLink() {
+    public String getAcceptLink(String host) {
         String link = new StringBuilder()
-                .append("http://localhost:8080")
-                .append("/invitations?key=")
+                .append(host)
+                .append("/invitations")
+                .append("/accept")
+                .append("?key=")
                 .append(this.getKey())
                 .toString();
 
         return link;
     }
+
+    public String getDenyLink(String host) {
+        String link = new StringBuilder()
+                .append(host)
+                .append("/invitations")
+                .append("/deny")
+                .append("?key=")
+                .append(this.getKey())
+                .toString();
+
+        return link;
+    }
+
+    public void accept(User invitedUser) {
+        Assert.isNull(closeDate, "this invitation has already used.");
+        Assert.isTrue(invitedUser.getLogin().equals(email), "This user not belongs to its invitation.");
+        this.getPoll().addParticipant(invitedUser);
+        this.closeDate = LocalDateTime.now();
+        this.status = Status.ACCEPTED;
+    }
+
+    public void decline() {
+        Assert.isNull(closeDate, "this invitation has already used.");
+        this.closeDate = LocalDateTime.now();
+        this.status = Status.DECLINED;
+    }
+
+    enum Status {
+        INVITED, ACCEPTED, DECLINED
+    }
+
 }
