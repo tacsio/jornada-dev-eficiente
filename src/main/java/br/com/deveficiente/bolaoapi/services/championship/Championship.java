@@ -10,9 +10,12 @@ import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static org.hibernate.annotations.CascadeType.*;
 
@@ -42,6 +45,11 @@ public class Championship {
     @ManyToMany
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Team> teams = new HashSet<>();
+    
+    @Getter
+    @OneToMany(orphanRemoval = true)
+    @Cascade(value = {MERGE, PERSIST, REFRESH})
+    private final Set<Match> matches = new HashSet<>();
 
     protected Championship() {
     }
@@ -53,5 +61,27 @@ public class Championship {
         this.startDate = startDate;
         this.totalTeams = totalTeams;
         this.teams.addAll(teams);
+    }
+
+    public void addMatch(@NotNull Match match) {
+        Assert.isTrue(hasNotMatchInRound(match), "A team cannot play 2 matches in same round.");
+
+        this.matches.add(match);
+    }
+
+    public boolean hasNotMatchInRound(Match match) {
+        int round = match.getRound();
+
+        Optional<Match> overlay = matches.stream()
+                .filter(m -> m.getRound() == round)
+                .filter(hasTeam(match.getHomeTeam())
+                        .or(hasTeam(match.getVisitingTeam())))
+                .findFirst();
+
+        return overlay.isEmpty();
+    }
+
+    private Predicate<Match> hasTeam(Team team) {
+        return match -> (match.getVisitingTeam().equals(team) || match.getHomeTeam().equals(team));
     }
 }

@@ -23,7 +23,7 @@ public class CreatePollRequest {
     @Getter
     @NotNull
     @Positive
-    @Exists(entityClass = Championship.class, entityField = "id")
+    @Exists(entityClass = Championship.class)
     private Long championshipId;
 
     public Poll toPoll(User loggedUser, ChampionshipRepository championshipRepository) {
