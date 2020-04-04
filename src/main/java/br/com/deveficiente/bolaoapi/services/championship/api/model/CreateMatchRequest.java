@@ -38,7 +38,7 @@ public class CreateMatchRequest {
     @Getter
     @NotNull
     @Future
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
 
@@ -55,5 +55,9 @@ public class CreateMatchRequest {
         Team visitingTeam = teamRepository.findById(this.visitingTeamId).get();
 
         return new Match(championship, round, homeTeam, visitingTeam, startTime);
+    }
+
+    public boolean validMatchTeams() {
+        return this.homeTeamId != this.visitingTeamId;
     }
 }

@@ -9,7 +9,10 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
 
 @ToString(exclude = "championship")
 @Entity
@@ -42,7 +45,7 @@ public class Match {
     @Getter
     @NotNull
     @Future
-    @Column(columnDefinition = "TIME")
+    @Column
     private LocalTime startTime;
 
 
@@ -66,6 +69,26 @@ public class Match {
                 round.equals(match.round) &&
                 homeTeam.equals(match.homeTeam) &&
                 visitingTeam.equals(match.visitingTeam);
+    }
+
+    public boolean hasConflict(Match other) {
+        Set<Team> matchTeams = getTeamsOfMatch();
+        return this.round == other.getRound() && (
+                matchTeams.contains(other.getHomeTeam()) ||
+                matchTeams.contains(other.getVisitingTeam())
+        );
+    }
+
+    private Set<Team> getTeamsOfMatch() {
+        Set<Team> matchTeams = new HashSet<>();
+        matchTeams.add(homeTeam);
+        matchTeams.add(visitingTeam);
+
+        return matchTeams;
+    }
+
+    private Predicate<Match> hasTeam(Team team) {
+        return match -> (match.getVisitingTeam().equals(team) || match.getHomeTeam().equals(team));
     }
 
     @Override

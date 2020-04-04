@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import static org.hibernate.annotations.CascadeType.*;
 
@@ -45,7 +44,7 @@ public class Championship {
     @ManyToMany
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Team> teams = new HashSet<>();
-    
+
     @Getter
     @OneToMany(orphanRemoval = true)
     @Cascade(value = {MERGE, PERSIST, REFRESH})
@@ -70,18 +69,11 @@ public class Championship {
     }
 
     public boolean hasNotMatchInRound(Match match) {
-        int round = match.getRound();
-
         Optional<Match> overlay = matches.stream()
-                .filter(m -> m.getRound() == round)
-                .filter(hasTeam(match.getHomeTeam())
-                        .or(hasTeam(match.getVisitingTeam())))
+                .filter(m -> m.hasConflict(match))
                 .findFirst();
 
         return overlay.isEmpty();
     }
 
-    private Predicate<Match> hasTeam(Team team) {
-        return match -> (match.getVisitingTeam().equals(team) || match.getHomeTeam().equals(team));
-    }
 }

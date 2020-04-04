@@ -10,6 +10,6 @@ public class MatchTeamsRequestValidator implements ConstraintValidator<MatchTeam
 
     @Override
     public boolean isValid(CreateMatchRequest request, ConstraintValidatorContext context) {
-        return request.getHomeTeamId() != request.getVisitingTeamId();
+        return request.validMatchTeams();
     }
 }

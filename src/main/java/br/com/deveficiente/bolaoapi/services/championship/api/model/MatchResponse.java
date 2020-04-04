@@ -4,7 +4,6 @@ import br.com.deveficiente.bolaoapi.services.championship.Match;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @ToString

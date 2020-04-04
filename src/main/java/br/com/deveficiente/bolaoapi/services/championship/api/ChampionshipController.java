@@ -10,7 +10,6 @@ import br.com.deveficiente.bolaoapi.services.championship.api.model.MatchRespons
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
 import br.com.deveficiente.bolaoapi.shared.validator.Exists;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -44,8 +43,6 @@ public class ChampionshipController {
     public ResponseEntity createMatch(@Exists(entityClass = Championship.class) @PathVariable Long id, @RequestBody @Valid CreateMatchRequest request) {
         Championship championship = championshipRepository.findById(id).get();
         Match match = request.toMatch(teamRepository, championship);
-
-        Assert.isTrue(championship.hasNotMatchInRound(match), "A team cannot play 2 matches in same round.");
         championship.addMatch(match);
 
         return ResponseEntity.ok(new MatchResponse(match));
