@@ -4,19 +4,15 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Documented
-@Constraint(validatedBy = ExistsValidation.class)
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Constraint(validatedBy = MatchTeamsRequestValidator.class)
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Exists {
-    String message() default "not found";
+@Documented
+public @interface MatchTeamsRequest {
 
-    Class<?> entityClass();
-
-    String entityField() default "id";
+    String message() default "Home Team and Visiting Team should not be the same.";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
 }
