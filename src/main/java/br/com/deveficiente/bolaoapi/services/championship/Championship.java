@@ -69,11 +69,10 @@ public class Championship {
     }
 
     public boolean hasNotMatchInRound(Match match) {
-        Optional<Match> overlay = matches.stream()
-                .filter(m -> m.hasConflict(match))
-                .findFirst();
+        boolean overlay = matches.stream()
+                .anyMatch(m -> m.hasConflict(match));
 
-        return overlay.isEmpty();
+        return overlay;
     }
 
 }

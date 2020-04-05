@@ -12,7 +12,6 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 
 @ToString(exclude = "championship")
 @Entity
@@ -85,10 +84,6 @@ public class Match {
         matchTeams.add(visitingTeam);
 
         return matchTeams;
-    }
-
-    private Predicate<Match> hasTeam(Team team) {
-        return match -> (match.getVisitingTeam().equals(team) || match.getHomeTeam().equals(team));
     }
 
     @Override
