@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -13,7 +14,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@ToString(exclude = "championship")
+@ToString(exclude = {"championship", "shots"})
 @Entity
 public class Match {
 
@@ -47,6 +48,10 @@ public class Match {
     @Column
     private LocalTime startTime;
 
+    @Getter
+    @OneToMany
+    private Set<Shot> shots = new HashSet<>();
+
 
     protected Match() {
     }
@@ -57,6 +62,31 @@ public class Match {
         this.homeTeam = homeTeam;
         this.visitingTeam = visitingTeam;
         this.startTime = startTime;
+    }
+
+    public boolean hasConflict(Match other) {
+        Set<Team> matchTeams = getTeamsOfMatch();
+        return this.round == other.getRound() && (
+                matchTeams.contains(other.getHomeTeam()) ||
+                        matchTeams.contains(other.getVisitingTeam())
+        );
+    }
+
+    private Set<Team> getTeamsOfMatch() {
+        Set<Team> matchTeams = new HashSet<>();
+        matchTeams.add(homeTeam);
+        matchTeams.add(visitingTeam);
+
+        return matchTeams;
+    }
+
+    public void addShot(@Valid Shot shot) {
+        this.shots.add(shot);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(championship, round, homeTeam, visitingTeam);
     }
 
     @Override
@@ -70,24 +100,4 @@ public class Match {
                 visitingTeam.equals(match.visitingTeam);
     }
 
-    public boolean hasConflict(Match other) {
-        Set<Team> matchTeams = getTeamsOfMatch();
-        return this.round == other.getRound() && (
-                matchTeams.contains(other.getHomeTeam()) ||
-                matchTeams.contains(other.getVisitingTeam())
-        );
-    }
-
-    private Set<Team> getTeamsOfMatch() {
-        Set<Team> matchTeams = new HashSet<>();
-        matchTeams.add(homeTeam);
-        matchTeams.add(visitingTeam);
-
-        return matchTeams;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(championship, round, homeTeam, visitingTeam);
-    }
 }

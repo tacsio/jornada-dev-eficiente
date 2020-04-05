@@ -20,7 +20,7 @@ public class CreateUserRequest {
     @Length(message = "password should have at least 6 characters", min = 6)
     private String password;
 
-    public User user() {
+    public User toUser() {
         return new User(this.login, this.password);
     }
 }

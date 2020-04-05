@@ -43,7 +43,7 @@ public class CreateChampionshipRequest {
     @Getter
     private Set<Long> teamsId = new HashSet<>();
 
-    public Championship getChampionship(TeamRepository teamRepository) {
+    public Championship toChampionship(TeamRepository teamRepository) {
         Set<Team> mergedTeams = this.teamsId.stream()
                 .map(id -> teamRepository.findById(id))
                 .filter(Optional::isPresent)

@@ -20,7 +20,7 @@ public class TeamController {
 
     @PostMapping
     public ResponseEntity create(@RequestBody @Valid CreateTeamRequest request) {
-        TeamResponse response = new TeamResponse(repository.save(request.getTeam()));
+        TeamResponse response = new TeamResponse(repository.save(request.toTeam()));
 
         return ResponseEntity.ok(response);
     }

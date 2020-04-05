@@ -24,7 +24,7 @@ public class CreateTeamRequest {
     @DateTimeFormat(iso = DATE)
     private LocalDate foundation;
 
-    public Team getTeam() {
+    public Team toTeam() {
         return new Team(this.name, this.foundation);
     }
 }
