@@ -53,7 +53,7 @@ public class Match {
     private LocalTime startTime;
 
     @Getter
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, mappedBy = "match")
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private Set<Shot> shots = new HashSet<>();
 
@@ -87,11 +87,6 @@ public class Match {
 
     public void addShot(@Valid Shot shot) {
         Assert.isTrue(!shots.contains(shot), "Shot already made for this match.");
-
-        if(shot.getDoubled()) {
-            Assert.isTrue(!isValidDoubleShot(shot), "Can only have one doubled shot per round");
-        }
-
         this.shots.add(shot);
     }
 

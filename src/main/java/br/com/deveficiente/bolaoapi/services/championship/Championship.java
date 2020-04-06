@@ -46,7 +46,7 @@ public class Championship {
     private final Set<Team> teams = new HashSet<>();
 
     @Getter
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, mappedBy = "championship")
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Match> matches = new HashSet<>();
 
@@ -63,12 +63,12 @@ public class Championship {
     }
 
     public void addMatch(@NotNull Match match) {
-        Assert.isTrue(hasNotMatchInRound(match), "A team cannot play 2 matches in same round.");
+        Assert.isTrue(!hasMatchInRound(match), "A team cannot play 2 matches in same round.");
 
         this.matches.add(match);
     }
 
-    public boolean hasNotMatchInRound(Match match) {
+    public boolean hasMatchInRound(Match match) {
         boolean overlay = matches.stream()
                 .anyMatch(m -> m.hasConflict(match));
 

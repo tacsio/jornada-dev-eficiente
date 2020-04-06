@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/matches")
@@ -37,7 +38,7 @@ public class MatchController {
         User loggedUser = userRepository.findById(1l).get();
         Match match = matchRepository.findById(id).get();
 
-        Shot shot = request.toShot(loggedUser, match);
+        Shot shot = request.toShot(loggedUser, match, matchRepository);
         match.addShot(shot);
 
         return ResponseEntity.ok(new ShotResponse(shot));
