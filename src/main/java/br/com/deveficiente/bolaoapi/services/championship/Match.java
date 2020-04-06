@@ -3,6 +3,8 @@ package br.com.deveficiente.bolaoapi.services.championship;
 import br.com.deveficiente.bolaoapi.services.team.Team;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -13,6 +15,8 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import static org.hibernate.annotations.CascadeType.*;
 
 @ToString(exclude = {"championship", "shots"})
 @Entity
@@ -49,7 +53,8 @@ public class Match {
     private LocalTime startTime;
 
     @Getter
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
+    @Cascade(value = {MERGE, PERSIST, REFRESH})
     private Set<Shot> shots = new HashSet<>();
 
 
@@ -81,6 +86,12 @@ public class Match {
     }
 
     public void addShot(@Valid Shot shot) {
+        Assert.isTrue(!shots.contains(shot), "Shot already made for this match.");
+
+        if(shot.getDoubled()) {
+            Assert.isTrue(!isValidDoubleShot(shot), "Can only have one doubled shot per round");
+        }
+
         this.shots.add(shot);
     }
 
