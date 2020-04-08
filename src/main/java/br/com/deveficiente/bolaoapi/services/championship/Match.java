@@ -91,11 +91,9 @@ public class Match {
     }
 
     private boolean hasDoubledShotInRound(Shot newDoubledShot) {
-        Optional<Shot> doubledShot = newDoubledShot.getMatch().getChampionship().getMatches().stream()
-                .filter(m -> m.getRound().equals(newDoubledShot.getMatch().getRound()))
-                .map(Match::getShots)
-                .flatMap(Collection::stream)
-                .filter(s -> s.getParticipant().equals(newDoubledShot.getParticipant()))
+        Optional<Shot> doubledShot = newDoubledShot.getMatch().getChampionship().championshipMatches()
+                .shotsByRound(newDoubledShot.getMatch().getRound())
+                .filter(s -> Objects.equals(s.getParticipant(), newDoubledShot.getParticipant()))
                 .filter(Shot::getDoubled)
                 .findAny();
 

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.hibernate.annotations.CascadeType.*;
@@ -44,8 +43,6 @@ public class Championship {
     @ManyToMany
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Team> teams = new HashSet<>();
-
-    @Getter
     @OneToMany(orphanRemoval = true, mappedBy = "championship")
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Match> matches = new HashSet<>();
@@ -62,17 +59,12 @@ public class Championship {
         this.teams.addAll(teams);
     }
 
-    public void addMatch(@NotNull Match match) {
-        Assert.isTrue(!hasMatchInRound(match), "A team cannot play 2 matches in same round.");
+    public ChampionshipMatches championshipMatches() {
+        return new ChampionshipMatches(this.matches);
+    }
 
+    public void addMatch(@NotNull Match match) {
+        championshipMatches().validateNewMatch(match);
         this.matches.add(match);
     }
-
-    public boolean hasMatchInRound(Match match) {
-        boolean overlay = matches.stream()
-                .anyMatch(m -> m.hasConflict(match));
-
-        return overlay;
-    }
-
 }
