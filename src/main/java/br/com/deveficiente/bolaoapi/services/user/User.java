@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@ToString
+@ToString(exclude = "password")
 @Entity(name = "users")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"login"}, name = "uk_login"))
 public class User {

@@ -7,15 +7,12 @@ import br.com.deveficiente.bolaoapi.services.championship.api.model.CreateShotRe
 import br.com.deveficiente.bolaoapi.services.championship.api.model.ShotResponse;
 import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.services.user.UserRepository;
-import br.com.deveficiente.bolaoapi.shared.api.ErrorResponse;
 import br.com.deveficiente.bolaoapi.shared.validator.Exists;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/matches")
@@ -38,7 +35,7 @@ public class MatchController {
         User loggedUser = userRepository.findById(1l).get();
         Match match = matchRepository.findById(id).get();
 
-        Shot shot = request.toShot(loggedUser, match, matchRepository);
+        Shot shot = request.toShot(loggedUser, match);
         match.addShot(shot);
 
         return ResponseEntity.ok(new ShotResponse(shot));

@@ -12,9 +12,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static org.hibernate.annotations.CascadeType.*;
 
@@ -87,7 +85,21 @@ public class Match {
 
     public void addShot(@Valid Shot shot) {
         Assert.isTrue(!shots.contains(shot), "Shot already made for this match.");
+        Assert.isTrue(!shot.getDoubled() || !hasDoubledShotInRound(shot), "Only one doubled shot is permitted per round.");
+
         this.shots.add(shot);
+    }
+
+    private boolean hasDoubledShotInRound(Shot newDoubledShot) {
+        Optional<Shot> doubledShot = newDoubledShot.getMatch().getChampionship().getMatches().stream()
+                .filter(m -> m.getRound().equals(newDoubledShot.getMatch().getRound()))
+                .map(Match::getShots)
+                .flatMap(Collection::stream)
+                .filter(s -> s.getParticipant().equals(newDoubledShot.getParticipant()))
+                .filter(Shot::getDoubled)
+                .findAny();
+
+        return doubledShot.isPresent();
     }
 
     @Override
