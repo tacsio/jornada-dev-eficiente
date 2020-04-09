@@ -31,7 +31,7 @@ public class ChampionshipController {
     @PostMapping
     @Transactional
     public ResponseEntity createChampionship(@RequestBody @Valid CreateChampionshipRequest request) {
-        Championship championship = request.getChampionship(teamRepository);
+        Championship championship = request.toChampionship(teamRepository);
         ChampionshipResponse response = new ChampionshipResponse(this.championshipRepository.save(championship));
 
         return ResponseEntity.ok(response);

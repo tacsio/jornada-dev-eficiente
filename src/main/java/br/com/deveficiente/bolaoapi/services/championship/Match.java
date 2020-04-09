@@ -3,17 +3,20 @@ package br.com.deveficiente.bolaoapi.services.championship;
 import br.com.deveficiente.bolaoapi.services.team.Team;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-@ToString(exclude = "championship")
+import static org.hibernate.annotations.CascadeType.*;
+
+@ToString(exclude = {"championship", "shots"})
 @Entity
 public class Match {
 
@@ -47,6 +50,11 @@ public class Match {
     @Column
     private LocalTime startTime;
 
+    @Getter
+    @OneToMany(orphanRemoval = true, mappedBy = "match")
+    @Cascade(value = {MERGE, PERSIST, REFRESH})
+    private Set<Shot> shots = new HashSet<>();
+
 
     protected Match() {
     }
@@ -57,6 +65,44 @@ public class Match {
         this.homeTeam = homeTeam;
         this.visitingTeam = visitingTeam;
         this.startTime = startTime;
+    }
+
+    public boolean hasConflict(Match other) {
+        Set<Team> matchTeams = getTeamsOfMatch();
+        return this.round == other.getRound() && (
+                matchTeams.contains(other.getHomeTeam()) ||
+                        matchTeams.contains(other.getVisitingTeam())
+        );
+    }
+
+    private Set<Team> getTeamsOfMatch() {
+        Set<Team> matchTeams = new HashSet<>();
+        matchTeams.add(homeTeam);
+        matchTeams.add(visitingTeam);
+
+        return matchTeams;
+    }
+
+    public void addShot(@Valid Shot shot) {
+        Assert.isTrue(!shots.contains(shot), "Shot already made for this match.");
+        Assert.isTrue(!shot.getDoubled() || !hasDoubledShotInRound(shot), "Only one doubled shot is permitted per round.");
+
+        this.shots.add(shot);
+    }
+
+    private boolean hasDoubledShotInRound(Shot newDoubledShot) {
+        Optional<Shot> doubledShot = newDoubledShot.getMatch().getChampionship().championshipMatches()
+                .shotsByRound(newDoubledShot.getMatch().getRound())
+                .filter(s -> Objects.equals(s.getParticipant(), newDoubledShot.getParticipant()))
+                .filter(Shot::getDoubled)
+                .findAny();
+
+        return doubledShot.isPresent();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(championship, round, homeTeam, visitingTeam);
     }
 
     @Override
@@ -70,24 +116,4 @@ public class Match {
                 visitingTeam.equals(match.visitingTeam);
     }
 
-    public boolean hasConflict(Match other) {
-        Set<Team> matchTeams = getTeamsOfMatch();
-        return this.round == other.getRound() && (
-                matchTeams.contains(other.getHomeTeam()) ||
-                matchTeams.contains(other.getVisitingTeam())
-        );
-    }
-
-    private Set<Team> getTeamsOfMatch() {
-        Set<Team> matchTeams = new HashSet<>();
-        matchTeams.add(homeTeam);
-        matchTeams.add(visitingTeam);
-
-        return matchTeams;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(championship, round, homeTeam, visitingTeam);
-    }
 }
