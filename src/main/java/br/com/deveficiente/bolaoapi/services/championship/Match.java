@@ -12,7 +12,10 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.hibernate.annotations.CascadeType.*;
 
@@ -54,6 +57,11 @@ public class Match {
     @OneToMany(orphanRemoval = true, mappedBy = "match")
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private Set<Shot> shots = new HashSet<>();
+
+    @Getter
+    @OneToOne(orphanRemoval = true, mappedBy = "match")
+    @Cascade(value = {MERGE, PERSIST, REFRESH})
+    private MatchResult matchResult;
 
 
     protected Match() {
@@ -100,6 +108,11 @@ public class Match {
         return doubledShot.isPresent();
     }
 
+
+    public void setResult(MatchResult matchResult) {
+        this.matchResult = matchResult;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(championship, round, homeTeam, visitingTeam);
@@ -116,4 +129,7 @@ public class Match {
                 visitingTeam.equals(match.visitingTeam);
     }
 
+    public String getDescription() {
+        return String.format("%s x %s", homeTeam.getName(), visitingTeam.getName());
+    }
 }

@@ -2,8 +2,11 @@ package br.com.deveficiente.bolaoapi.services.championship.api;
 
 import br.com.deveficiente.bolaoapi.services.championship.Match;
 import br.com.deveficiente.bolaoapi.services.championship.MatchRepository;
+import br.com.deveficiente.bolaoapi.services.championship.MatchResult;
 import br.com.deveficiente.bolaoapi.services.championship.Shot;
+import br.com.deveficiente.bolaoapi.services.championship.api.model.CreateMatchResultRequest;
 import br.com.deveficiente.bolaoapi.services.championship.api.model.CreateShotRequest;
+import br.com.deveficiente.bolaoapi.services.championship.api.model.MatchResultResponse;
 import br.com.deveficiente.bolaoapi.services.championship.api.model.ShotResponse;
 import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.services.user.UserRepository;
@@ -39,5 +42,17 @@ public class MatchController {
         match.addShot(shot);
 
         return ResponseEntity.ok(new ShotResponse(shot));
+    }
+
+    @PostMapping("/{id}/result")
+    @Transactional
+    public ResponseEntity defineMatchResult(@Exists(entityClass = Match.class) @PathVariable Long id, @Valid @RequestBody CreateMatchResultRequest request) {
+
+        Match match = matchRepository.findById(id).get();
+        MatchResult matchResult = request.toMatchResult(match);
+
+        match.setResult(matchResult);
+
+        return ResponseEntity.ok(new MatchResultResponse(matchResult));
     }
 }
