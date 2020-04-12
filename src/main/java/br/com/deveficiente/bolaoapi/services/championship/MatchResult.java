@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @ToString(exclude = "match")
 @Entity
+@Table(uniqueConstraints =  @UniqueConstraint(columnNames = {"match_id"}, name = "uk_match_result"))
 public class MatchResult {
 
     @Getter

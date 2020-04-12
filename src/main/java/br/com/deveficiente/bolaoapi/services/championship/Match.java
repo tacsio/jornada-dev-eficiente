@@ -58,12 +58,6 @@ public class Match {
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private Set<Shot> shots = new HashSet<>();
 
-    @Getter
-    @OneToOne(orphanRemoval = true, mappedBy = "match")
-    @Cascade(value = {MERGE, PERSIST, REFRESH})
-    private MatchResult matchResult;
-
-
     protected Match() {
     }
 
@@ -106,11 +100,6 @@ public class Match {
                 .findAny();
 
         return doubledShot.isPresent();
-    }
-
-
-    public void setResult(MatchResult matchResult) {
-        this.matchResult = matchResult;
     }
 
     @Override

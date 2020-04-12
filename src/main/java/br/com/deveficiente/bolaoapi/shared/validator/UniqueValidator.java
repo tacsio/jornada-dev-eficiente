@@ -12,7 +12,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.stream.Stream;
 
 @Service
-public class UniqueValidator implements ConstraintValidator<Unique, String> {
+public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     private final EntityManager entityManager;
     private Class entityClass;
@@ -29,7 +29,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
         return !ExistsValidation.exists(entityManager, entityClass, entityField, value);
     }
 }

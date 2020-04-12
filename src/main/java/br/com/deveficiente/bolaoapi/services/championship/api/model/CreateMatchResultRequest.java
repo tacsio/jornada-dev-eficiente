@@ -19,11 +19,15 @@ public class CreateMatchResultRequest {
     @PositiveOrZero
     private Integer visitingTeamGoals;
 
+    public CreateMatchResultRequest(@PositiveOrZero Integer homeTeamGoals, @PositiveOrZero Integer visitingTeamGoals) {
+        this.homeTeamGoals = homeTeamGoals;
+        this.visitingTeamGoals = visitingTeamGoals;
+    }
+
     public MatchResult toMatchResult(Match match) {
         Scoreboard scoreboard = new Scoreboard(homeTeamGoals, visitingTeamGoals);
         MatchResult matchResult = new MatchResult(match, scoreboard);
 
         return matchResult;
     }
-
 }
