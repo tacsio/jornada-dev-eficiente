@@ -1,4 +1,4 @@
-package br.com.deveficiente.bolaoapi.services.championship.api.model;
+package br.com.deveficiente.bolaoapi.services.championship.api.model.match;
 
 import br.com.deveficiente.bolaoapi.services.championship.Match;
 import lombok.Getter;

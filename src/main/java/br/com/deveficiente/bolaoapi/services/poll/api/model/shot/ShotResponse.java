@@ -1,6 +1,6 @@
-package br.com.deveficiente.bolaoapi.services.championship.api.model;
+package br.com.deveficiente.bolaoapi.services.poll.api.model.shot;
 
-import br.com.deveficiente.bolaoapi.services.championship.Shot;
+import br.com.deveficiente.bolaoapi.services.poll.Shot;
 import lombok.Getter;
 import lombok.ToString;
 

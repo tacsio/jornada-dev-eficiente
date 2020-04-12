@@ -1,4 +1,4 @@
-package br.com.deveficiente.bolaoapi.services.poll.api.model;
+package br.com.deveficiente.bolaoapi.services.poll.api.model.poll;
 
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import br.com.deveficiente.bolaoapi.services.championship.ChampionshipRepository;
@@ -17,14 +17,15 @@ import java.util.Set;
 public class CreatePollRequest {
 
     @Getter
-    @Size(min = 1, message = "at least 1 email must be informed.")
-    private final Set<@Email(message = "check invitation emails.") String> invitations = new HashSet<>();
-
-    @Getter
     @NotNull
     @Positive
     @Exists(entityClass = Championship.class)
     private Long championshipId;
+
+    @Getter
+    @Size(min = 1, message = "at least 1 email must be informed.")
+    private final Set<@Email(message = "check invitation emails.") String> invitations = new HashSet<>();
+
 
     public Poll toPoll(User loggedUser, ChampionshipRepository championshipRepository) {
         Championship championship = championshipRepository.findById(championshipId).get();

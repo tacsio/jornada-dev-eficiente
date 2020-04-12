@@ -1,17 +1,27 @@
-package br.com.deveficiente.bolaoapi.services.championship.api.model;
+package br.com.deveficiente.bolaoapi.services.poll.api.model.shot;
 
 import br.com.deveficiente.bolaoapi.services.championship.Match;
 import br.com.deveficiente.bolaoapi.services.championship.Scoreboard;
-import br.com.deveficiente.bolaoapi.services.championship.Shot;
-import br.com.deveficiente.bolaoapi.services.user.User;
+import br.com.deveficiente.bolaoapi.services.poll.Participant;
+import br.com.deveficiente.bolaoapi.services.poll.Shot;
+import br.com.deveficiente.bolaoapi.shared.validator.Exists;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 @ToString
 public class CreateShotRequest {
+
+    @Getter
+    @Exists(entityClass = Match.class)
+    private Long matchId;
+
+    @Getter
+    @Exists(entityClass = Participant.class)
+    private Long participantId;
 
     @Getter
     @PositiveOrZero
@@ -25,7 +35,10 @@ public class CreateShotRequest {
     @NotNull
     private Boolean doubled;
 
-    public Shot toShot(User participant, Match match) {
+    public Shot toShot(EntityManager manager) {
+        Participant participant = manager.find(Participant.class, participantId);
+        Match match = manager.find(Match.class, matchId);
+
         Scoreboard scoreboard = new Scoreboard(homeTeamGoals, visitingTeamGoals);
         Shot shot = new Shot(participant, match, scoreboard, doubled);
 
