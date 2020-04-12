@@ -10,11 +10,13 @@ import br.com.deveficiente.bolaoapi.services.championship.api.model.MatchRespons
 import br.com.deveficiente.bolaoapi.services.team.TeamRepository;
 import br.com.deveficiente.bolaoapi.shared.validator.Exists;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+@Validated
 @RestController
 @RequestMapping("/championships")
 public class ChampionshipController {
