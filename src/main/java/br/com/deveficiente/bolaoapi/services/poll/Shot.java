@@ -52,7 +52,11 @@ public class Shot {
     @PostConstruct
     public void validateShot() {
         Assert.isTrue(!participant.getShots().contains(this), "Shot already made for this match.");
-        Assert.isTrue(!this.doubled || !this.participant.hasDoubledShotInRound(this.match.getRound()), "Only one doubled shot is permitted per round.");
+        Assert.isTrue(!this.doubled || !this.participant.hasDoubledShotInRound(this.getRound()), "Only one doubled shot is permitted per round.");
+    }
+
+    public Integer getRound() {
+        return this.match.getRound();
     }
 
     public Integer processShotScore() {

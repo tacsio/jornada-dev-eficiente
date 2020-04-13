@@ -44,15 +44,19 @@ public class Participant {
 
     public boolean hasDoubledShotInRound(Integer round) {
         return this.getShots().stream()
-                .filter(shot -> Objects.equals(shot.getMatch().getRound(), round))
+                .filter(shot -> Objects.equals(shot.getRound(), round))
                 .anyMatch(Shot::getDoubled);
     }
 
     public Integer getRoundScore(Integer round) {
         return this.getShots().stream()
-                .filter(shot -> Objects.equals(shot.getMatch().getRound(), round))
+                .filter(shot -> Objects.equals(shot.getRound(), round))
                 .map(Shot::processShotScore)
                 .reduce(0, Integer::sum);
+    }
+
+    public boolean sameAccount(User account) {
+        return this.account.equals(account);
     }
 
     public String getLogin() {

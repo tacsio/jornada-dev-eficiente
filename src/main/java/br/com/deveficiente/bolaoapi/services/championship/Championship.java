@@ -44,7 +44,7 @@ public class Championship {
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Team> teams = new HashSet<>();
 
-    @OneToMany(orphanRemoval = true, mappedBy = "championship")
+    @OneToMany(mappedBy = "championship")
     @Cascade(value = {MERGE, PERSIST, REFRESH})
     private final Set<Match> matches = new HashSet<>();
 

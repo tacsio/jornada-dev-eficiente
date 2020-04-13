@@ -4,9 +4,11 @@ import br.com.deveficiente.bolaoapi.services.championship.Match;
 import br.com.deveficiente.bolaoapi.services.championship.Scoreboard;
 import br.com.deveficiente.bolaoapi.services.poll.Participant;
 import br.com.deveficiente.bolaoapi.services.poll.Shot;
+import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.shared.validator.Exists;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
@@ -35,13 +37,14 @@ public class CreateShotRequest {
     @NotNull
     private Boolean doubled;
 
-    public Shot toShot(EntityManager manager) {
+    public Shot toShot(EntityManager manager, User loggedUser) {
         Participant participant = manager.find(Participant.class, participantId);
         Match match = manager.find(Match.class, matchId);
 
         Scoreboard scoreboard = new Scoreboard(homeTeamGoals, visitingTeamGoals);
         Shot shot = new Shot(participant, match, scoreboard, doubled);
 
+        Assert.isTrue(participant.sameAccount(loggedUser), "Shame!. You should not make shots to other accounts.");
         return shot;
     }
 }

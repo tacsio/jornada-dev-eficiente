@@ -20,12 +20,12 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/scores")
-public class ScoreController {
+public class ProcessRoundScoresController {
 
     private PollRepository pollRepository;
     private RoundResultRepository roundResultRepository;
 
-    public ScoreController(PollRepository pollRepository, RoundResultRepository roundResultRepository) {
+    public ProcessRoundScoresController(PollRepository pollRepository, RoundResultRepository roundResultRepository) {
         this.pollRepository = pollRepository;
         this.roundResultRepository = roundResultRepository;
     }
