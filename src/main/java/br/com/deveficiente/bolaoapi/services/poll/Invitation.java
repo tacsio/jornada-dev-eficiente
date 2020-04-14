@@ -70,8 +70,8 @@ public class Invitation {
 
     public void accept(User invitedUser) {
         Assert.isNull(closeDate, "this invitation has already used.");
-        Assert.isTrue(invitedUser.getLogin().equals(email), "This user not belongs to its invitation.");
-        this.getPoll().addParticipant(invitedUser);
+        Assert.isTrue(invitedUser.isFromEmail(email), "This user not belongs to its invitation.");
+        this.getPoll().addParticipant(new Participant(invitedUser, this.poll));
         this.closeDate = LocalDateTime.now();
         this.status = Status.ACCEPTED;
     }

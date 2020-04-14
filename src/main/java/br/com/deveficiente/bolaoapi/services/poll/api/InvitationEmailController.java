@@ -2,7 +2,7 @@ package br.com.deveficiente.bolaoapi.services.poll.api;
 
 import br.com.deveficiente.bolaoapi.services.poll.Invitation;
 import br.com.deveficiente.bolaoapi.services.poll.InvitationRepository;
-import br.com.deveficiente.bolaoapi.services.poll.api.model.InvitationAccepted;
+import br.com.deveficiente.bolaoapi.services.poll.api.model.invitation.InvitationAccepted;
 import br.com.deveficiente.bolaoapi.services.user.User;
 import br.com.deveficiente.bolaoapi.services.user.UserRepository;
 import br.com.deveficiente.bolaoapi.shared.api.ErrorResponse;

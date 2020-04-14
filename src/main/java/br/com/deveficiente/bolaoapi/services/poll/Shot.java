@@ -1,8 +1,11 @@
-package br.com.deveficiente.bolaoapi.services.championship;
+package br.com.deveficiente.bolaoapi.services.poll;
 
-import br.com.deveficiente.bolaoapi.services.user.User;
+import br.com.deveficiente.bolaoapi.services.championship.Match;
+import br.com.deveficiente.bolaoapi.services.championship.Scoreboard;
 import lombok.Getter;
+import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -18,7 +21,7 @@ public class Shot {
     @Getter
     @NotNull
     @ManyToOne
-    private User participant;
+    private Participant participant;
 
     @Getter
     @NotNull
@@ -37,16 +40,28 @@ public class Shot {
     protected Shot() {
     }
 
-    public Shot(@NotNull User participant, @NotNull Match match, @NotNull Scoreboard scoreboard, @NotNull Boolean doubled) {
+    public Shot(@NotNull Participant participant, @NotNull Match match, @NotNull Scoreboard scoreboard, @NotNull Boolean doubled) {
         this.participant = participant;
         this.match = match;
         this.scoreboard = scoreboard;
         this.doubled = doubled;
+
+        validateShot();
     }
 
-    public void update(Shot shot) {
-        this.scoreboard = shot.getScoreboard();
-        this.doubled = shot.getDoubled();
+    @PostConstruct
+    public void validateShot() {
+        Assert.isTrue(!participant.getShots().contains(this), "Shot already made for this match.");
+        Assert.isTrue(!this.doubled || !this.participant.hasDoubledShotInRound(this.getRound()), "Only one doubled shot is permitted per round.");
+    }
+
+    public Integer getRound() {
+        return this.match.getRound();
+    }
+
+    public Integer processShotScore() {
+        int multiplier = doubled ? 2 : 1;
+        return this.scoreboard.evaluate(this.match.getResult().getScoreboard()) * multiplier;
     }
 
     @Override

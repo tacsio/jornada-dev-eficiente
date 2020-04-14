@@ -1,7 +1,7 @@
 package br.com.deveficiente.bolaoapi.shared.validator;
 
 
-import br.com.deveficiente.bolaoapi.services.championship.api.model.CreateMatchRequest;
+import br.com.deveficiente.bolaoapi.services.championship.api.model.match.CreateMatchRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

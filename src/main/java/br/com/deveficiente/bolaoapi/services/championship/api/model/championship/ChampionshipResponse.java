@@ -1,4 +1,4 @@
-package br.com.deveficiente.bolaoapi.services.championship.api.model;
+package br.com.deveficiente.bolaoapi.services.championship.api.model.championship;
 
 import br.com.deveficiente.bolaoapi.services.championship.Championship;
 import br.com.deveficiente.bolaoapi.services.team.api.model.TeamResponse;

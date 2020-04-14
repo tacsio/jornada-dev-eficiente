@@ -49,6 +49,10 @@ public class User {
         this.timestamp = LocalDateTime.now();
     }
 
+    public boolean isFromEmail(String invitedEmail) {
+        return this.login.equals(invitedEmail);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

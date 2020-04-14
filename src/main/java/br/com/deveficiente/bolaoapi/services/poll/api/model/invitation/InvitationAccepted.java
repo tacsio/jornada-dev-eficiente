@@ -1,4 +1,4 @@
-package br.com.deveficiente.bolaoapi.services.poll.api.model;
+package br.com.deveficiente.bolaoapi.services.poll.api.model.invitation;
 
 import br.com.deveficiente.bolaoapi.services.poll.Invitation;
 import lombok.Getter;

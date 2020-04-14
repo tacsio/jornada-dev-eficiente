@@ -8,9 +8,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,12 +32,12 @@ public class Poll {
     private User owner;
 
     @Getter
-    private final LocalDateTime createdAt = LocalDateTime.now();
-
-    @Getter
     @NotNull
     @OneToOne
     private Championship championship;
+
+    @Getter
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @Getter
     @Size(min = 1)
@@ -43,8 +45,8 @@ public class Poll {
     private final Set<Invitation> invitations = new HashSet<>();
 
     @Getter
-    @ManyToMany
-    private final Set<User> participants = new HashSet<>();
+    @OneToMany(cascade = {PERSIST, MERGE, REFRESH}, orphanRemoval = true, mappedBy = "poll")
+    private final Set<Participant> participants = new HashSet<>();
 
     protected Poll() {
     }
@@ -53,11 +55,7 @@ public class Poll {
         this.owner = owner;
         this.championship = championship;
         this.invitations.addAll(buildInvitations(emails));
-        this.participants.add(owner);
-    }
-
-    public void addParticipant(User participant) {
-        this.participants.add(participant);
+        this.participants.add(new Participant(owner, this));
     }
 
     private Set<Invitation> buildInvitations(Set<String> emails) {
@@ -66,5 +64,19 @@ public class Poll {
                 .collect(Collectors.toSet());
 
         return invitations;
+    }
+
+    public void addParticipant(Participant participant) {
+        this.participants.add(participant);
+    }
+
+    public List<RoundResult> processRound(@Positive Integer round) {
+        List<RoundResult> results = participants.stream()
+                .map(participant -> {
+                    Integer score = participant.getRoundScore(round);
+                    return new RoundResult(participant, this, round, score, LocalDateTime.now());
+                }).collect(Collectors.toList());
+
+        return results;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.deveficiente.bolaoapi.services.poll.api.model;
+package br.com.deveficiente.bolaoapi.services.poll.api.model.poll;
 
 import br.com.deveficiente.bolaoapi.services.poll.Invitation;
 import br.com.deveficiente.bolaoapi.services.poll.Poll;
