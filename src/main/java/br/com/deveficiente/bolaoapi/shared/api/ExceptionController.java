@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ExceptionController {
@@ -31,6 +34,14 @@ public class ExceptionController {
         });
 
         return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public List<ErrorResponse> handleValidationExceptions(ConstraintViolationException ex) {
+        return ex.getConstraintViolations().stream()
+                .map(violation -> new ErrorResponse(violation.getMessage()))
+                .collect(Collectors.toList());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
