@@ -22,4 +22,4 @@ jobs:
         java-version: 11
     - name: Build with Maven
       working-directory: api-casa-codigo
-      run: mvn -B package --file pom.xml
+      run: mvn -B compile test --file pom.xml
