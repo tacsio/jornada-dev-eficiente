@@ -1,9 +1,9 @@
 package io.tacsio.author.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.tacsio.author.Autor;
 import lombok.Getter;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,7 +11,7 @@ public class AutorResponse {
 	private final String nome;
 	private final String email;
 	private final String descricao;
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonbDateFormat("dd-MM-yyyy HH:mm:ss")
 	private final LocalDateTime createdAt;
 
 	public AutorResponse(Autor autor) {

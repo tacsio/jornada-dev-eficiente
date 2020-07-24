@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
 public @interface UniqueCategory {
-	String message() default "value already exists";
+	String message() default "{Category.name.duplicated}";
 
 	Class<?>[] groups() default {};
 

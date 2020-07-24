@@ -60,6 +60,7 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-openapi</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
