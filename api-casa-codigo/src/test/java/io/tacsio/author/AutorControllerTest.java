@@ -4,13 +4,12 @@ import com.github.javafaker.Faker;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import io.tacsio.author.dto.AutorForm;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class AutorControllerTest {
@@ -18,11 +17,12 @@ public class AutorControllerTest {
 	private Faker faker = new Faker();
 
 	@Test
+	@DisplayName("Should create author.")
 	void create() {
 		String nome = faker.name().firstName();
 		String email = nome + "@mail.com";
 		String description = "Some description";
-		
+
 		AutorForm form = new AutorForm(nome, email, description);
 
 		given().contentType(ContentType.JSON)
@@ -30,7 +30,6 @@ public class AutorControllerTest {
 			.body(form)
 			.post("/authors")
 			.then()
-			.log().everything()
 			.statusCode(200)
 			.body("nome", is(nome))
 			.body("email", is(email))
@@ -39,7 +38,8 @@ public class AutorControllerTest {
 	}
 
 	@Test
-	void shouldNotCreate2AuthorsWithSameEmail() {
+	@DisplayName("Two authors should not have the same email.")
+	void emailValidation() {
 		final String email = "dup@mail.com";
 		final String description = "Book of Code";
 

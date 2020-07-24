@@ -1,23 +1,21 @@
-package io.tacsio.validators;
+package io.tacsio.author.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = UniqueValidator.class)
+@Constraint(validatedBy = UniqueAuthorEmailValidator.class)
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
-public @interface Unique {
+public @interface UniqueAuthorEmail {
 	String message() default "value already exists";
-
-	Class<?> entityClass();
-
-	String entityField();
 
 	Class<?>[] groups() default {};
 

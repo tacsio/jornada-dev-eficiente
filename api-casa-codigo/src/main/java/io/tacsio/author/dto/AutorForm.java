@@ -1,7 +1,7 @@
 package io.tacsio.author.dto;
 
 import io.tacsio.author.Autor;
-import io.tacsio.validators.Unique;
+import io.tacsio.author.validator.UniqueAuthorEmail;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
@@ -13,7 +13,7 @@ public class AutorForm {
 	@NotEmpty
 	public String nome;
 	@Email
-	@Unique(entityClass = Autor.class, entityField = "email")
+	@UniqueAuthorEmail
 	public String email;
 	@NotEmpty
 	@Size(max = 400)

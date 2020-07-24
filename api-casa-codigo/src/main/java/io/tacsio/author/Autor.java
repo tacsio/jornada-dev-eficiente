@@ -1,16 +1,15 @@
 package io.tacsio.author;
 
-import java.time.LocalDateTime;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
