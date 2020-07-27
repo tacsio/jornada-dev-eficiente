@@ -10,29 +10,28 @@ import javax.json.bind.annotation.JsonbDateFormat;
 import java.time.LocalDate;
 
 @ToString
-@Getter
 public class LivroResponse {
 
-	private final long id;
+	public final long id;
 
-	private final String titulo;
+	public final String titulo;
 
-	private final String resumo;
+	public final String resumo;
 
-	private final String sumario;
+	public final String sumario;
 
-	private final double preco;
+	public final double preco;
 
-	private final int paginas;
+	public final int paginas;
 
-	private final String isbn;
+	public final String isbn;
 
 	@JsonbDateFormat("dd-MM-yyyy")
-	private final LocalDate dataPublicacao;
+	public final LocalDate dataPublicacao;
 
-	private final CategoriaResponse categoria;
+	public final CategoriaResponse categoria;
 
-	private final AutorResponse autor;
+	public final AutorResponse autor;
 
 	public LivroResponse(Livro livro) {
 		this.id = livro.id;
