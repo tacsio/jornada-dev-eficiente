@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class AutorResponse {
+	private final long id;
 	private final String nome;
 	private final String email;
 	private final String descricao;
@@ -15,6 +16,7 @@ public class AutorResponse {
 	private final LocalDateTime createdAt;
 
 	public AutorResponse(Autor autor) {
+		this.id = autor.id;
 		this.nome = autor.getNome();
 		this.email = autor.getEmail();
 		this.descricao = autor.getDescricao();

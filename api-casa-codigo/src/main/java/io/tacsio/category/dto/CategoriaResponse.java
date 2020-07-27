@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class CategoriaResponse {
-	private String nome;
+	private final long id;
+	private final String nome;
 
 	public CategoriaResponse(Categoria categoria) {
+		this.id = categoria.id;
 		this.nome = categoria.getNome();
 	}
 }
