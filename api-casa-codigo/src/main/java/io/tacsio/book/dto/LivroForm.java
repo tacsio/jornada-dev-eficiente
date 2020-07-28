@@ -11,11 +11,13 @@ import io.tacsio.author.Autor;
 import io.tacsio.book.Livro;
 import io.tacsio.book.validator.UniqueBookTitle;
 import io.tacsio.category.Categoria;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class LivroForm {
 

@@ -3,7 +3,6 @@ package io.tacsio.book.dto;
 import io.tacsio.author.dto.AutorResponse;
 import io.tacsio.book.Livro;
 import io.tacsio.category.dto.CategoriaResponse;
-import lombok.Getter;
 import lombok.ToString;
 
 import javax.json.bind.annotation.JsonbDateFormat;
