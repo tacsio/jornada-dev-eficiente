@@ -43,11 +43,11 @@ public class Livro extends PanacheEntity {
 	private LocalDate dataPublicacao;
 
 	@ManyToOne
-	@JoinColumn(name = "categoria_livro", nullable = false)
+	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 
 	@ManyToOne
-	@JoinColumn(name = "autor_livro", nullable = false)
+	@JoinColumn(name = "autor_id", nullable = false)
 	private Autor autor;
 
 	protected Livro() {
