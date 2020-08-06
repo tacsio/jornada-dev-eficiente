@@ -14,7 +14,7 @@ public class EstadoResponse {
 	private PaisResponse pais;
 
 	public EstadoResponse(Estado estado) {
-		this.id = estado.id;
+		this.id = estado.getId();
 		this.nome = estado.getNome();
 		this.pais = new PaisResponse(estado.getPais());
 	}

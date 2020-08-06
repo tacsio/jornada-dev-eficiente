@@ -1,25 +1,33 @@
 package io.tacsio.book;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import io.tacsio.author.Autor;
-import io.tacsio.category.Categoria;
-import lombok.Getter;
-import lombok.ToString;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.tacsio.author.Autor;
+import io.tacsio.category.Categoria;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @Entity
 @ToString
-public class Livro extends PanacheEntity {
+public class Livro extends PanacheEntityBase {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@NotBlank
 	private String titulo;
@@ -53,7 +61,9 @@ public class Livro extends PanacheEntity {
 	protected Livro() {
 	}
 
-	public Livro(@NotBlank String titulo, @NotBlank String resumo, String sumario, @Size(min = 20) double preco, @Size(min = 100) int paginas, @NotBlank String isbn, @Future LocalDate dataPublicacao, Categoria categoria, Autor autor) {
+	public Livro(@NotBlank String titulo, @NotBlank String resumo, String sumario, @Size(min = 20) double preco,
+			@Size(min = 100) int paginas, @NotBlank String isbn, @Future LocalDate dataPublicacao, Categoria categoria,
+			Autor autor) {
 		this.titulo = titulo;
 		this.resumo = resumo;
 		this.sumario = sumario;

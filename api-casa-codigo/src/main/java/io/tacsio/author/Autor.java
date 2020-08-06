@@ -1,20 +1,28 @@
 package io.tacsio.author;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.Getter;
 
 @Entity
 @Getter
-public class Autor extends PanacheEntity {
+public class Autor extends PanacheEntityBase {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@NotEmpty
 	private String nome;
 	@Email

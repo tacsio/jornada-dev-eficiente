@@ -22,6 +22,9 @@ public class CPForCNPJValidator implements ConstraintValidator<CPForCNPJ, String
 
 		this.cpfValidator = new CPFValidator();
 		this.cnpjValidator = new CNPJValidator();
+
+		this.cpfValidator.initialize(null);
+		this.cnpjValidator.initialize(null);
 	}
 
 }

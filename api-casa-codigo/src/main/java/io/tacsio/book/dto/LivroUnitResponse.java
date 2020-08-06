@@ -7,7 +7,7 @@ public class LivroUnitResponse {
 	public final String titulo;
 
 	public LivroUnitResponse(Livro livro) {
-		this.id = livro.id;
+		this.id = livro.getId();
 		this.titulo = livro.getTitulo();
 	}
 

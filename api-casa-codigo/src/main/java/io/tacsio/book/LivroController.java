@@ -38,7 +38,9 @@ public class LivroController {
 	public List<LivroUnitResponse> list() {
 		PanacheQuery<Livro> livros = Livro.findAll();
 
-		return livros.stream().map(LivroUnitResponse::new).collect(Collectors.toList());
+		return livros.stream()
+			.map(LivroUnitResponse::new)
+			.collect(Collectors.toList());
 	}
 
 	@GET

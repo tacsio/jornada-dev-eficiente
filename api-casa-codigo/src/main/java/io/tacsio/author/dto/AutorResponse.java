@@ -16,7 +16,7 @@ public class AutorResponse {
 	private final LocalDateTime createdAt;
 
 	public AutorResponse(Autor autor) {
-		this.id = autor.id;
+		this.id = autor.getId();
 		this.nome = autor.getNome();
 		this.email = autor.getEmail();
 		this.descricao = autor.getDescricao();

@@ -3,12 +3,15 @@ package io.tacsio.order;
 import java.util.Optional;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.tacsio.country.Pais;
 import io.tacsio.order.validator.CPForCNPJ;
 import io.tacsio.state.Estado;
@@ -16,8 +19,12 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Cliente extends PanacheEntity {
+public class Cliente extends PanacheEntityBase {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@Email
 	private String email;
 

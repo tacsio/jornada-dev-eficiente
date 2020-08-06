@@ -9,7 +9,7 @@ public class CategoriaResponse {
 	private final String nome;
 
 	public CategoriaResponse(Categoria categoria) {
-		this.id = categoria.id;
+		this.id = categoria.getId();
 		this.nome = categoria.getNome();
 	}
 }

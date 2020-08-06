@@ -1,13 +1,22 @@
 package io.tacsio.country;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import lombok.Getter;
 
 @Entity
-public class Pais extends PanacheEntity {
+@Getter
+public class Pais extends PanacheEntityBase {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@NotEmpty
 	private String nome;
 
@@ -16,10 +25,6 @@ public class Pais extends PanacheEntity {
 
 	public Pais(String nome) {
 		this.nome = nome;
-	}
-
-	public String getNome() {
-		return nome;
 	}
 
 	@Override
