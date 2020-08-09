@@ -35,7 +35,8 @@ public class Cupom extends PanacheEntityBase {
 	private LocalDateTime validade;
 
 	@Deprecated
-	protected Cupom() {}
+	protected Cupom() {
+	}
 
 	public Cupom(@NotEmpty String codigo, @Positive Double desconto, @Future LocalDateTime validade) {
 		this.codigo = codigo;
@@ -43,6 +44,8 @@ public class Cupom extends PanacheEntityBase {
 		this.validade = validade;
 	}
 
-	
+	public boolean expirado() {
+		return this.validade.isBefore(LocalDateTime.now());
+	}
 
 }

@@ -8,6 +8,7 @@ import io.tacsio.order.Cliente;
 import io.tacsio.order.ItemPedido;
 import io.tacsio.order.Pedido;
 import io.tacsio.country.state.dto.EstadoResponse;
+import io.tacsio.coupon.Cupom;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -19,6 +20,7 @@ public class PedidoResponse {
 	private final ClienteResponse dadosCliente;
 	private final double total;
 	private final List<ItemPedidoResponse> itensPedido;
+	private CupomAplicadoResponse cupomAplicado;
 
 	public PedidoResponse(Pedido pedido) {
 		this.idPedido = pedido.getId();
@@ -29,6 +31,9 @@ public class PedidoResponse {
 		this.itensPedido = pedido.getItensPedido().stream()
 			.map(ItemPedidoResponse::new)
 			.collect(Collectors.toList());
+
+		if(pedido.getCupomAplicado() != null)
+			this.cupomAplicado = new CupomAplicadoResponse(pedido.getCupomAplicado());
 	}
 
 	@Getter
@@ -77,5 +82,18 @@ public class PedidoResponse {
 			this.preco = itemPedido.getPreco();
 		}
 
+	}
+	
+	@Getter
+	@ToString
+	public class CupomAplicadoResponse {
+		private final String codigo;
+		private final String desconto;
+
+		public CupomAplicadoResponse(Cupom cupom) {
+			this.codigo = cupom.getCodigo();
+			this.desconto = cupom.getDesconto()+ "%";
+		}
+		
 	}
 }

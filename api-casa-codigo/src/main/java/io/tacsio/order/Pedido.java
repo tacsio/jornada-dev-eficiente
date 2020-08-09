@@ -12,10 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.tacsio.coupon.Cupom;
 import lombok.Getter;
 
 @Getter
@@ -41,6 +43,10 @@ public class Pedido extends PanacheEntityBase {
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.NAO_INICIADO;
 
+	@OneToOne(optional = true, cascade = { CascadeType.MERGE })
+	@JoinColumn(name = "cupom_id", nullable = true)
+	private Cupom cupomAplicado;
+
 	@Deprecated
 	protected Pedido() {
 	}
@@ -49,7 +55,7 @@ public class Pedido extends PanacheEntityBase {
 		this.cliente = cliente;
 		this.itensPedido = itensPedido;
 		this.total = total;
-		
+
 		this.status = Status.INICIADO;
 
 		if (!total.equals(this.getTotalFromItens())) {
@@ -59,6 +65,23 @@ public class Pedido extends PanacheEntityBase {
 
 	public Double getTotalFromItens() {
 		return itensPedido.stream().mapToDouble(ItemPedido::valorItem).sum();
+	}
+
+	public void aplicarCupom(Cupom cupom) {
+		if (cupom.expirado()) {
+			throw new IllegalArgumentException("Coupon.validity.expired");
+		}
+
+		if (this.cupomAplicado != null) {
+			throw new IllegalArgumentException("Order.coupon.alreadyApplyed");
+		}
+
+		this.cupomAplicado = cupom;
+		this.aplicarDesconto(cupom.getDesconto());
+	}
+
+	private void aplicarDesconto(Double desconto) {
+		this.total -= total * (desconto / 100);
 	}
 
 }

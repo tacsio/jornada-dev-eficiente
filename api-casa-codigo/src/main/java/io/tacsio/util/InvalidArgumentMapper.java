@@ -21,6 +21,7 @@ public class InvalidArgumentMapper implements ExceptionMapper<IllegalArgumentExc
 
 		if(msg.trim().isEmpty()) {
 			msg = "Default error!";
+			exception.printStackTrace();
 		}
 
 		Map<String, String> error = new HashMap<>();
