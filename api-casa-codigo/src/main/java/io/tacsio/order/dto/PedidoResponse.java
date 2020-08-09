@@ -69,12 +69,12 @@ public class PedidoResponse {
 	public class ItemPedidoResponse {
 		private final String livro;
 		private final int quantidade;
-		private final double valor;
+		private final double preco;
 
 		public ItemPedidoResponse(ItemPedido itemPedido) {
 			this.livro = itemPedido.getLivro().getTitulo();
 			this.quantidade = itemPedido.getQuantidade();
-			this.valor = itemPedido.getPreco();
+			this.preco = itemPedido.getPreco();
 		}
 
 	}

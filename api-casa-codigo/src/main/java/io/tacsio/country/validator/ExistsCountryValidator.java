@@ -11,6 +11,6 @@ public class ExistsCountryValidator implements ConstraintValidator<ExistsCountry
 
 	@Override
 	public boolean isValid(Long id, ConstraintValidatorContext context) {
-		return Pais.find("id", id).firstResultOptional().isPresent();
+		return Pais.findByIdOptional(id).isPresent();
 	}
 }

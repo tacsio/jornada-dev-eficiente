@@ -32,10 +32,6 @@ public class EstadoController {
 	@GET
 	@Transactional
 	public List<EstadoResponse> index() {
-
-		System.out.println(Estado.findAll().count());
-		Estado.findAll().stream().forEach(System.out::println);
-
 		return Estado.findAll().stream()
 			.map(estado -> new EstadoResponse((Estado) estado))
 			.collect(Collectors.toList());

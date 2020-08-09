@@ -1,8 +1,6 @@
 package io.tacsio.order.validator;
 
-
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -15,22 +13,23 @@ public class ClientCountryStateValidator implements ConstraintValidator<ClientCo
 
 	@Override
 	public boolean isValid(ClienteForm form, ConstraintValidatorContext context) {
-		return validFormState(form);
+		Pais pais = Pais.findById(form.paisId);
+		if (pais == null)
+			return false;
+
+		return validFormState(pais, form.estadoId);
 	}
 
-	@Transactional
-	public boolean validFormState(ClienteForm form) {
-		Pais pais = Pais.findById(form.paisId);
-
+	public boolean validFormState(Pais pais, Long estadoId) {
 		boolean temEstados = !pais.getEstados().isEmpty();
-		boolean temIdEstadoForm = form.estadoId != null;
+		boolean temIdEstadoForm = estadoId != null;
 
 		// Valido se estados e idForm existe ou não (coincidência !XOR)
 		boolean valid = temEstados == temIdEstadoForm;
 
 		// valida se o id do form pertence ao pais
 		if (valid && temIdEstadoForm) {
-			Estado estado = Estado.findById(form.estadoId);
+			Estado estado = Estado.findById(estadoId);
 			valid &= estado != null && estado.of(pais);
 		}
 
