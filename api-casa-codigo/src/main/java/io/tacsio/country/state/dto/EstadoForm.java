@@ -1,13 +1,13 @@
-package io.tacsio.state.dto;
+package io.tacsio.country.state.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import io.smallrye.common.constraint.NotNull;
 import io.tacsio.country.Pais;
+import io.tacsio.country.state.Estado;
+import io.tacsio.country.state.validator.UniqueState;
 import io.tacsio.country.validator.ExistsCountry;
-import io.tacsio.state.Estado;
-import io.tacsio.state.validator.UniqueState;
 
 public class EstadoForm {
 

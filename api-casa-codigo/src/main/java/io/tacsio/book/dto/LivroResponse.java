@@ -1,12 +1,13 @@
 package io.tacsio.book.dto;
 
-import io.tacsio.author.dto.AutorResponse;
-import io.tacsio.book.Livro;
-import io.tacsio.category.dto.CategoriaResponse;
-import lombok.ToString;
+import java.time.LocalDate;
 
 import javax.json.bind.annotation.JsonbDateFormat;
-import java.time.LocalDate;
+
+import io.tacsio.author.dto.AutorResponse;
+import io.tacsio.book.Livro;
+import io.tacsio.book.category.dto.CategoriaResponse;
+import lombok.ToString;
 
 @ToString
 public class LivroResponse {

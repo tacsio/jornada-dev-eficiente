@@ -1,6 +1,6 @@
-package io.tacsio.category.dto;
+package io.tacsio.book.category.dto;
 
-import io.tacsio.category.Categoria;
+import io.tacsio.book.category.Categoria;
 import lombok.Getter;
 
 @Getter

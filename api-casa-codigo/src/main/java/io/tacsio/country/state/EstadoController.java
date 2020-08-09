@@ -1,4 +1,4 @@
-package io.tacsio.state;
+package io.tacsio.country.state;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,9 +12,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import io.tacsio.state.dto.EstadoForm;
-import io.tacsio.state.dto.EstadoResponse;
-
+import io.tacsio.country.state.dto.EstadoForm;
+import io.tacsio.country.state.dto.EstadoResponse;
+//TODO! Change path to /countries/{idCountry/states}
 @Path("/states")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

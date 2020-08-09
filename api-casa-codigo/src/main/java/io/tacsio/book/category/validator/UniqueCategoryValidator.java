@@ -1,6 +1,6 @@
-package io.tacsio.category.validator;
+package io.tacsio.book.category.validator;
 
-import io.tacsio.category.Categoria;
+import io.tacsio.book.category.Categoria;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.ConstraintValidator;

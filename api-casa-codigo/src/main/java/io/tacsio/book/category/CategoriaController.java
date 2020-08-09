@@ -1,7 +1,7 @@
-package io.tacsio.category;
+package io.tacsio.book.category;
 
-import io.tacsio.category.dto.CategoriaForm;
-import io.tacsio.category.dto.CategoriaResponse;
+import io.tacsio.book.category.dto.CategoriaForm;
+import io.tacsio.book.category.dto.CategoriaResponse;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;

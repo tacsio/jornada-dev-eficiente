@@ -1,4 +1,4 @@
-package io.tacsio.category;
+package io.tacsio.book.category;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

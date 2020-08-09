@@ -11,12 +11,14 @@ import io.tacsio.country.Pais;
 import io.tacsio.country.validator.ExistsCountry;
 import io.tacsio.order.Cliente;
 import io.tacsio.order.validator.CPForCNPJ;
-import io.tacsio.state.Estado;
+import io.tacsio.order.validator.ClientCountryState;
+import io.tacsio.country.state.Estado;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @NoArgsConstructor
+@ClientCountryState
 public class ClienteForm {
 
 	@Email

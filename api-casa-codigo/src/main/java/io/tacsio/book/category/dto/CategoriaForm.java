@@ -1,7 +1,7 @@
-package io.tacsio.category.dto;
+package io.tacsio.book.category.dto;
 
-import io.tacsio.category.Categoria;
-import io.tacsio.category.validator.UniqueCategory;
+import io.tacsio.book.category.Categoria;
+import io.tacsio.book.category.validator.UniqueCategory;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;

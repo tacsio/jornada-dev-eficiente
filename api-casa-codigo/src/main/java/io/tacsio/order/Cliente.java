@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.tacsio.country.Pais;
 import io.tacsio.order.validator.CPForCNPJ;
-import io.tacsio.state.Estado;
+import io.tacsio.country.state.Estado;
 import lombok.Getter;
 
 @Entity

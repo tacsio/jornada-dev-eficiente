@@ -1,9 +1,7 @@
 package io.tacsio.order;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -19,7 +17,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.tacsio.order.dto.PedidoForm;
 import io.tacsio.order.dto.PedidoResponse;
 
@@ -35,7 +32,9 @@ public class PedidoController {
 		Pedido pedido = pedidoForm.toModel();
 		pedido.persist();
 
-		URI uri = uriInfo.getAbsolutePathBuilder().path(pedido.getId().toString()).build();
+		URI uri = uriInfo.getAbsolutePathBuilder()
+			.path(pedido.getId().toString())
+			.build();
 		
 		return Response.created(uri).build();
 	}
@@ -51,15 +50,6 @@ public class PedidoController {
 			return Response.status(Status.NOT_FOUND).build();
 
 		return Response.ok(new PedidoResponse(pedido.get())).build();
-	}
-
-	@GET
-	public List<PedidoResponse> list() {
-		PanacheQuery<Pedido> pedidos = Pedido.findAll();
-
-		return pedidos.stream()
-			.map(PedidoResponse::new)
-			.collect(Collectors.toList());
 	}
 
 }

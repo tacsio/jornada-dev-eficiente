@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import io.tacsio.author.Autor;
 import io.tacsio.book.Livro;
 import io.tacsio.book.validator.UniqueBookTitle;
-import io.tacsio.category.Categoria;
+import io.tacsio.book.category.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

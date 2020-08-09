@@ -7,7 +7,7 @@ import io.tacsio.country.dto.PaisResponse;
 import io.tacsio.order.Cliente;
 import io.tacsio.order.ItemPedido;
 import io.tacsio.order.Pedido;
-import io.tacsio.state.dto.EstadoResponse;
+import io.tacsio.country.state.dto.EstadoResponse;
 import lombok.Getter;
 import lombok.ToString;
 

@@ -1,7 +1,7 @@
-package io.tacsio.state.dto;
+package io.tacsio.country.state.dto;
 
 import io.tacsio.country.dto.PaisResponse;
-import io.tacsio.state.Estado;
+import io.tacsio.country.state.Estado;
 import lombok.Getter;
 
 @Getter

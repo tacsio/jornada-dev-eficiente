@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.tacsio.category.dto.CategoriaForm;
+import io.tacsio.book.category.dto.CategoriaForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

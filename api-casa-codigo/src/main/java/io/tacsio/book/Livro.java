@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.tacsio.author.Autor;
-import io.tacsio.category.Categoria;
+import io.tacsio.book.category.Categoria;
 import lombok.Getter;
 import lombok.ToString;
 

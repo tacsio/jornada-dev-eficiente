@@ -18,7 +18,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.tacsio.author.Autor;
 import io.tacsio.book.dto.LivroForm;
-import io.tacsio.category.Categoria;
+import io.tacsio.book.category.Categoria;
 
 //TODO! Ajustar jsonb LocalDate
 @QuarkusTest
