@@ -1,7 +1,7 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Java CI with Gradle - Bolão API
 
 on:
   push:
@@ -16,12 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
+    - name: Set up JDK 14
       uses: actions/setup-java@v1
       with:
-        java-version: 14
+        java-version: '14-ea'
     - name: Grant execute permission for gradlew
+      working-directory: ./bolao-api
       run: chmod +x gradlew
     - name: Build with Gradle
-      working-directory: bolao-api
+      working-directory: ./bolao-api
       run: ./gradlew build
