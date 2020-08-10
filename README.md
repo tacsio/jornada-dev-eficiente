@@ -6,13 +6,13 @@
 	Jornada Dev Eficiente 🚀
 </h4>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/tacsio/jornada-dev-eficiente?color=%2340e5e5)
-![GitHub top language](https://img.shields.io/github/languages/top/tacsio/jornada-dev-eficiente?color=%2340e5e5)
-![GitHub last commit](https://img.shields.io/github/last-commit/tacsio/jornada-dev-eficiente?color=%2340e5e5)
-[![GitHub issues](https://img.shields.io/github/issues-raw/tacsio/jornada-dev-eficiente?color=%2340e5e5)](https://github.com/tacsio/jornada-dev-eficiente/issues)
-[![GitHub contributors](https://img.shields.io/github/contributors/tacsio/jornada-dev-eficiente?color=%2340e5e5)](https://github.com/tacsio/jornada-dev-eficiente/graphs/contributors)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/w/tacsio/jornada-dev-eficiente?color=%2340e5e5)](https://github.com/tacsio/jornada-dev-eficiente/graphs/commit-activity)
-![Maintenance](https://img.shields.io/maintenance/yes/2020?color=%2340e5e5)
+![GitHub repo size](https://img.shields.io/github/repo-size/tacsio/jornada-dev-eficiente?color=%2331acbf)
+![GitHub top language](https://img.shields.io/github/languages/top/tacsio/jornada-dev-eficiente?color=%2331acbf)
+![GitHub last commit](https://img.shields.io/github/last-commit/tacsio/jornada-dev-eficiente?color=%2331acbf)
+[![GitHub issues](https://img.shields.io/github/issues-raw/tacsio/jornada-dev-eficiente?color=%2331acbf)](https://github.com/tacsio/jornada-dev-eficiente/issues)
+[![GitHub contributors](https://img.shields.io/github/contributors/tacsio/jornada-dev-eficiente?color=%2331acbf)](https://github.com/tacsio/jornada-dev-eficiente/graphs/contributors)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/w/tacsio/jornada-dev-eficiente?color=%2331acbf)](https://github.com/tacsio/jornada-dev-eficiente/graphs/commit-activity)
+![Maintenance](https://img.shields.io/maintenance/yes/2020?color=%2331acbf)
 
 ## :soccer: Api Bolão ![Java CI with Gradle - Bolão API](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Gradle%20-%20Bol%C3%A3o%20API/badge.svg)
 
