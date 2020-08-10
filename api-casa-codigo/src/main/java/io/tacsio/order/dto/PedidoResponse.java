@@ -8,7 +8,7 @@ import io.tacsio.order.Cliente;
 import io.tacsio.order.ItemPedido;
 import io.tacsio.order.Pedido;
 import io.tacsio.country.state.dto.EstadoResponse;
-import io.tacsio.coupon.Cupom;
+import io.tacsio.order.coupon.Cupom;
 import lombok.Getter;
 import lombok.ToString;
 

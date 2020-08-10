@@ -1,10 +1,10 @@
-package io.tacsio.coupon.dto;
+package io.tacsio.order.coupon.dto;
 
 import java.time.LocalDateTime;
 
 import javax.json.bind.annotation.JsonbDateFormat;
 
-import io.tacsio.coupon.Cupom;
+import io.tacsio.order.coupon.Cupom;
 import lombok.ToString;
 
 @ToString

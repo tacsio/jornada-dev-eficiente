@@ -1,4 +1,4 @@
-package io.tacsio.coupon.dto;
+package io.tacsio.order.coupon.dto;
 
 import java.time.LocalDateTime;
 
@@ -7,8 +7,8 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
-import io.tacsio.coupon.Cupom;
-import io.tacsio.coupon.validator.UniqueCode;
+import io.tacsio.order.coupon.Cupom;
+import io.tacsio.order.coupon.validator.UniqueCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 

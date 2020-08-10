@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.tacsio.coupon.Cupom;
+import io.tacsio.order.coupon.Cupom;
 import lombok.Getter;
 
 @Getter

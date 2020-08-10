@@ -1,4 +1,4 @@
-package io.tacsio.coupon;
+package io.tacsio.order.coupon;
 
 import java.time.LocalDateTime;
 

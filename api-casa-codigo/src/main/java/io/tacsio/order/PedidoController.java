@@ -18,8 +18,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import io.tacsio.coupon.Cupom;
-import io.tacsio.coupon.validator.ExistsCoupon;
+import io.tacsio.order.coupon.Cupom;
+import io.tacsio.order.coupon.validator.ExistsCoupon;
 import io.tacsio.order.dto.PedidoForm;
 import io.tacsio.order.dto.PedidoResponse;
 import io.tacsio.order.validator.ExistsOrder;

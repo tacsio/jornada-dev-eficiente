@@ -1,4 +1,4 @@
-package io.tacsio.coupon.validator;
+package io.tacsio.order.coupon.validator;
 
 import java.util.Optional;
 
@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import io.tacsio.coupon.Cupom;
+import io.tacsio.order.coupon.Cupom;
 
 @ApplicationScoped
 public class ExistsCouponValidator implements ConstraintValidator<ExistsCoupon, String> {

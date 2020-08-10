@@ -1,4 +1,4 @@
-package io.tacsio.coupon;
+package io.tacsio.order.coupon;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -9,8 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.tacsio.coupon.dto.CupomForm;
-import io.tacsio.coupon.dto.CupomResponse;
+import io.tacsio.order.coupon.dto.CupomForm;
+import io.tacsio.order.coupon.dto.CupomResponse;
 
 @Path("/coupons")
 @Produces(MediaType.APPLICATION_JSON)

@@ -1,4 +1,5 @@
-package io.tacsio.coupon.validator;
+package io.tacsio.order.coupon.validator;
+
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -11,11 +12,11 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = ExistsCouponValidator.class)
-@Target({FIELD, PARAMETER})
+@Constraint(validatedBy = UniqueCodeValidator.class)
+@Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
-public @interface ExistsCoupon {
-	String message() default "{Coupon.code.notFound}";
+public @interface UniqueCode {
+	String message() default "{Coupon.code.duplicated}";
 
 	Class<?>[] groups() default {};
 
