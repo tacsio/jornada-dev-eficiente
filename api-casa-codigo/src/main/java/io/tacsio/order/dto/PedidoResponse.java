@@ -20,7 +20,10 @@ public class PedidoResponse {
 	private final ClienteResponse dadosCliente;
 	private final double total;
 	private final List<ItemPedidoResponse> itensPedido;
+
+	private final boolean existeCupom;
 	private CupomAplicadoResponse cupomAplicado;
+	private double valorFinal;
 
 	public PedidoResponse(Pedido pedido) {
 		this.idPedido = pedido.getId();
@@ -28,12 +31,16 @@ public class PedidoResponse {
 		this.dadosCliente = new ClienteResponse(pedido.getCliente());
 
 		this.total = pedido.getTotal();
+		this.valorFinal = pedido.getTotal();
 		this.itensPedido = pedido.getItensPedido().stream()
 			.map(ItemPedidoResponse::new)
 			.collect(Collectors.toList());
 
-		if(pedido.getCupomAplicado() != null)
+		this.existeCupom = pedido.existeCupomAplicado();
+		if(existeCupom) {
+			this.valorFinal = pedido.getValorFinal();
 			this.cupomAplicado = new CupomAplicadoResponse(pedido.getCupomAplicado());
+		}
 	}
 
 	@Getter

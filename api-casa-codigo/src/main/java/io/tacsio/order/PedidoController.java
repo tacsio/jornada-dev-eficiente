@@ -19,8 +19,10 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import io.tacsio.coupon.Cupom;
+import io.tacsio.coupon.validator.ExistsCoupon;
 import io.tacsio.order.dto.PedidoForm;
 import io.tacsio.order.dto.PedidoResponse;
+import io.tacsio.order.validator.ExistsOrder;
 
 @Path("/orders")
 @Produces(MediaType.APPLICATION_JSON)
@@ -55,19 +57,21 @@ public class PedidoController {
 	@PUT
 	@Path("/{id}/apply/{codigoCupom}")
 	@Transactional
-	public Response applyCoupon(@PathParam("id") Long orderId, @PathParam("codigoCupom") String codigoCupom) {
-		Pedido pedido = Pedido.findById(orderId);
-		if (pedido == null)
-			return Response.status(Status.NOT_FOUND).build();
+	public Response applyCoupon(@PathParam("id") @ExistsOrder Long pedidoId,
+			@PathParam("codigoCupom") @ExistsCoupon String codigoCupom,
+			@Context UriInfo uriInfo) {
 
 		Cupom cupom = Cupom.find("codigo", codigoCupom).firstResult();
-		if (cupom == null)
-			return Response.status(Status.NOT_FOUND).build();
 
+		Pedido pedido = Pedido.findById(pedidoId);
 		pedido.aplicarCupom(cupom);
 		pedido.persist();
 
-		return Response.ok().entity(new PedidoResponse(pedido)).build();
-	}
+		URI uri = uriInfo.getBaseUriBuilder()
+			.path(uriInfo.getPathSegments().get(0).getPath())
+			.path(pedido.getId().toString())
+			.build();
 
+		return Response.status(Status.OK).location(uri).build();
+	}
 }

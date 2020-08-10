@@ -40,6 +40,9 @@ public class Pedido extends PanacheEntityBase {
 	@Positive
 	private Double total;
 
+	@Positive
+	private Double valorFinal;
+
 	@Enumerated(EnumType.STRING)
 	private Status status = Status.NAO_INICIADO;
 
@@ -72,7 +75,7 @@ public class Pedido extends PanacheEntityBase {
 			throw new IllegalArgumentException("Coupon.validity.expired");
 		}
 
-		if (this.cupomAplicado != null) {
+		if (existeCupomAplicado()) {
 			throw new IllegalArgumentException("Order.coupon.alreadyApplyed");
 		}
 
@@ -81,7 +84,11 @@ public class Pedido extends PanacheEntityBase {
 	}
 
 	private void aplicarDesconto(Double desconto) {
-		this.total -= total * (desconto / 100);
+		this.valorFinal = total - total * (desconto / 100);
+	}
+
+	public boolean existeCupomAplicado() {
+		return this.cupomAplicado != null;
 	}
 
 }
