@@ -1,6 +1,6 @@
 # api-casa-codigo project
 
-![Java CI with Maven](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven/badge.svg)
+![Java CI with Maven - API Casa do Código](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven%20-%20API%20Casa%20do%20C%C3%B3digo/badge.svg)
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
