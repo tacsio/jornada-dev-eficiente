@@ -34,10 +34,12 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'org.springframework.security:spring-security-test'
+	testRuntime 'com.h2database:h2'
 }
 
 test {
 	useJUnitPlatform()
+	jvmArgs("--enable-preview")
 }
 
 tasks.withType(JavaCompile).each {
