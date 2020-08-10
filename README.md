@@ -14,7 +14,7 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/w/tacsio/jornada-dev-eficiente?color=%237159c1)](https://github.com/tacsio/jornada-dev-eficiente/graphs/commit-activity)
 ![Maintenance](https://img.shields.io/maintenance/yes/2020?color=%237159c1)
 
-## :soccer: Api Bolão 
+## :soccer: Api Bolão ![Java CI with Gradle - Bolão API](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Gradle%20-%20Bol%C3%A3o%20API/badge.svg)
 
 Implementar a API necessária rodar uma aplicação que possibilite pessoas criarem bolões. No final do treinamento vamos ter passado por atividades que são supostamente mais simples, como cadastros, mas também vamos lidar situações um pouco mais complicadas, como criação de convites de participantes, associação de pessoas a grupos, palpites, validação de palpites etc.
 
@@ -33,7 +33,7 @@ Implementar a API necessária rodar uma aplicação que possibilite pessoas cria
 ./gradlew boot:run
 ```
 
-## :books: API Casa do Código ![Java CI with Maven](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven/badge.svg)
+## :books: API Casa do Código ![Java CI with Maven - API Casa do Código](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven%20-%20API%20Casa%20do%20C%C3%B3digo/badge.svg)
 
 Desenvolver uma api para suportar parte do funcionamento da casa do código.
 
