@@ -60,6 +60,27 @@ Desenvolver uma api para suportar parte do funcionamento da casa do código.
 ./mvnw quarkus:dev
 ```
 
+## :credit_card: Api Pagamentos 
+
+Implementar uma aplicação específica para processar pagamentos relativos a um aplicativo famoso de pedido de comida, o YFood.
+A ideia é que nossa aplicação liste as possíveis formas de pagamento para uma pessoa dado um restaurante e depois que a gente processe o pagamento em função da escolha final da pessoa.
+Esse é um serviço crucial no contexto do YFood. É a conclusão da experiência do usuário e precisamos atender o máximo de pedidos que for possível sob as condições mais extremas. 
+
+### :pushpin: Stack
+
+- [Java 14][java14] - JDK 14 is the open-source reference implementation of version 14 of the Java SE Platform as specified by by JSR 389 in the Java Community Process.
+- [Spring Boot 2.4.0][spring] - Spring makes programming Java quicker, easier, and safer for everybody. Spring’s focus on speed, simplicity, and productivity has made it the world's most popular Java framework.
+- [Spring Data JPA][springdata] - Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories.
+- [Spring Validtaion][springvalidation] - Starter for using Java Bean Validation with Hibernate Validator
+- [H2][h2] - PostgreSQL: The World's Most Advanced Open Source Relational Database
+
+
+
+#### :heavy_dollar_sign: Run Scripts
+```bash
+./gradlew boot:run
+```
+
 ## :bullettrain_side: Contributing
 
 1. Fork it
@@ -81,7 +102,6 @@ Desenvolver uma api para suportar parte do funcionamento da casa do código.
 [openapi]: https://www.openapis.org/
 
 
-
 [rocketseat]: https://github.com/rocketseat
 [nodejs]: https://nodejs.org
 [reactjs]: https://reactjs.org/
@@ -89,3 +109,5 @@ Desenvolver uma api para suportar parte do funcionamento da casa do código.
 [axios]: https://github.com/axios/axios
 [expo]: https://expo.io/
 [reactnative]: https://reactnative.dev/
+
+[springvalidation]: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.3-Release-Notes#validation-starter-no-longer-included-in-web-starters
