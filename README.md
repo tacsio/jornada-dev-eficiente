@@ -60,7 +60,7 @@ Desenvolver uma api para suportar parte do funcionamento da casa do código.
 ./mvnw quarkus:dev
 ```
 
-## :credit_card: Api Pagamentos 
+## :credit_card: Api Pagamentos ![Java CI with Gradle - API Pagamentos](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Gradle%20-%20API%20Pagamentos/badge.svg)
 
 Implementar uma aplicação específica para processar pagamentos relativos a um aplicativo famoso de pedido de comida, o YFood.
 A ideia é que nossa aplicação liste as possíveis formas de pagamento para uma pessoa dado um restaurante e depois que a gente processe o pagamento em função da escolha final da pessoa.

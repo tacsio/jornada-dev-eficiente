@@ -15,30 +15,30 @@ public class PaymentMethod {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private PaymentType type;
 
     @NotBlank
     private String description;
 
     @Enumerated(EnumType.STRING)
     @JsonInclude(value = JsonInclude.Include.NON_EMPTY)//TODO: move to DTO
-    private CardBrand brand;
+    private Brand brand;
 
     @Deprecated
     protected PaymentMethod() {
     }
 
-    public PaymentMethod(@NotNull Type type, @NotBlank String description, Optional<CardBrand> brand) {
+    public PaymentMethod(@NotNull PaymentType type, @NotBlank String description, Optional<Brand> brand) {
         this.type = type;
         this.description = description;
 
-        if (type.equals(Type.CARD)) {
+        if (type.equals(PaymentType.CARD)) {
             Assert.isTrue(brand.isPresent(), "For Card Type brand is mandatory.");
             this.brand = brand.get();
         }
     }
 
-    public Type getType() {
+    public PaymentType getType() {
         return type;
     }
 
@@ -46,42 +46,16 @@ public class PaymentMethod {
         return description;
     }
 
-    public boolean isOnline() {
-        return type.online;
+    public boolean acceptOnline() {
+        return type.acceptOnline();
     }
 
-    public boolean isOffline() {
-        return type.offline;
-    }
 
-    public Optional<CardBrand> getBrand() {
+    public Optional<Brand> getBrand() {
         return Optional.ofNullable(brand);
     }
 
-    public enum Type {
-        CARD(true, true),
-        MONEY(false, true),
-        CARD_MACHINE(false, true),
-        CHECK(false, true);
-
-        private final boolean online;
-        private final boolean offline;
-
-        Type(boolean online, boolean offline) {
-            this.online = online;
-            this.offline = offline;
-        }
-
-        public boolean acceptOnline() {
-            return online;
-        }
-
-        public boolean acceptOffline() {
-            return offline;
-        }
-    }
-
-    public enum CardBrand {
+    public enum Brand {
         VISA, MASTERCARD, ELO, HYPERCARD
     }
 }

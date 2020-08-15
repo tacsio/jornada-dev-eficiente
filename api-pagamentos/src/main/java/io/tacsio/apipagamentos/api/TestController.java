@@ -14,6 +14,8 @@ import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static io.tacsio.apipagamentos.domain.PaymentType.*;
+
 @RestController
 public class TestController {
 
@@ -24,11 +26,11 @@ public class TestController {
     @Transactional
     public ResponseEntity store() {
         //create payment methods
-        PaymentMethod visa = new PaymentMethod(PaymentMethod.Type.CARD, "Visa Card", Optional.of(PaymentMethod.CardBrand.VISA));
-        PaymentMethod master = new PaymentMethod(PaymentMethod.Type.CARD, "Master Card", Optional.of(PaymentMethod.CardBrand.MASTERCARD));
-        PaymentMethod money = new PaymentMethod(PaymentMethod.Type.MONEY, "Money", Optional.empty());
-        PaymentMethod cardMachine = new PaymentMethod(PaymentMethod.Type.CARD_MACHINE, "Credit Card Machine", Optional.empty());
-        PaymentMethod check = new PaymentMethod(PaymentMethod.Type.CHECK, "Check", Optional.empty());
+        PaymentMethod visa = new PaymentMethod(CARD, "Visa Card", Optional.of(PaymentMethod.Brand.VISA));
+        PaymentMethod master = new PaymentMethod(CARD, "Master Card", Optional.of(PaymentMethod.Brand.MASTERCARD));
+        PaymentMethod money = new PaymentMethod(MONEY, "Money", Optional.empty());
+        PaymentMethod cardMachine = new PaymentMethod(CARD_MACHINE, "Credit Card Machine", Optional.empty());
+        PaymentMethod check = new PaymentMethod(CHECK, "Check", Optional.empty());
 
         Arrays.asList(visa, master, money, cardMachine, check).forEach(em::persist);
 

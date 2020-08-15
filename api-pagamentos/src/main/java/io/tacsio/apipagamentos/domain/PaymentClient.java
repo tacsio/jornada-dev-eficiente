@@ -4,8 +4,9 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -18,7 +19,7 @@ public abstract class PaymentClient {
     @Size(min = 1)
     @ManyToMany
     @JoinTable(name = "accepted_payment_methods")
-    private List<PaymentMethod> paymentMethods = new ArrayList<>();
+    private Set<PaymentMethod> paymentMethods = new HashSet<>();
 
     @Deprecated
     protected PaymentClient() {
@@ -26,14 +27,14 @@ public abstract class PaymentClient {
 
     public PaymentClient(List<PaymentMethod> paymentMethods) {
         Assert.notEmpty(paymentMethods, "At least 1 payment method is required.");
-        this.paymentMethods = paymentMethods;
+        this.paymentMethods.addAll(paymentMethods);
     }
 
     public Long getId() {
         return id;
     }
 
-    public List<PaymentMethod> getPaymentMethods() {
+    public Set<PaymentMethod> getPaymentMethods() {
         return paymentMethods;
     }
 }
