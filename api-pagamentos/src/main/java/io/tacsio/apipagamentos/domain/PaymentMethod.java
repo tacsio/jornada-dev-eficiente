@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Optional;
 
 @Entity
@@ -38,6 +39,10 @@ public class PaymentMethod {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public PaymentType getType() {
         return type;
     }
@@ -57,6 +62,18 @@ public class PaymentMethod {
 
     public enum Brand {
         VISA, MASTERCARD, ELO, HYPERCARD
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PaymentMethod that)) return false;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 
