@@ -1,4 +1,4 @@
-package io.tacsio.apipagamentos.service;
+package io.tacsio.apipagamentos.service.fraud;
 
 import io.tacsio.apipagamentos.domain.PaymentClient;
 import io.tacsio.apipagamentos.domain.PaymentMethod;

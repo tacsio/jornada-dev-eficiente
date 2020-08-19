@@ -70,6 +70,7 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 
 - [Java 14][java14] - JDK 14 is the open-source reference implementation of version 14 of the Java SE Platform as specified by by JSR 389 in the Java Community Process.
 - [Spring Boot 2.4.0][spring] - Spring makes programming Java quicker, easier, and safer for everybody. Spring’s focus on speed, simplicity, and productivity has made it the world's most popular Java framework.
+- [Spring Cloud OpenFeign][openfeign] - Feign is a declarative web service client. It makes writing web service clients easier.
 - [Spring Data JPA][springdata] - Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories.
 - [Spring Validtaion][springvalidation] - Starter for using Java Bean Validation with Hibernate Validator
 - [H2][h2] - PostgreSQL: The World's Most Advanced Open Source Relational Database
@@ -111,3 +112,4 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 [reactnative]: https://reactnative.dev/
 
 [springvalidation]: https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.3-Release-Notes#validation-starter-no-longer-included-in-web-starters
+[openfeign]: https://cloud.spring.io/spring-cloud-openfeign/reference/html/

@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.0-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.4.0-SNAPSHOT'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
 }
 
 group = 'io.tacsio'
@@ -9,29 +9,43 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
 
 repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
 
+ext {
+    set('springCloudVersion', "2020.0.0-SNAPSHOT")
+}
+
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.h2database:h2'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    runtimeOnly 'com.h2database:h2'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 test {
-	useJUnitPlatform()
-	jvmArgs("--enable-preview")
+    useJUnitPlatform()
+    jvmArgs("--enable-preview")
 }
 
 tasks.withType(JavaCompile).each {
-	it.options.compilerArgs.add('--enable-preview')
+    it.options.compilerArgs.add('--enable-preview')
 }
 
 bootRun {
-	jvmArgs("--enable-preview")
+    jvmArgs("--enable-preview")
 }

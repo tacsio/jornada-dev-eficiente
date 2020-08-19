@@ -3,6 +3,9 @@ package io.tacsio.apipagamentos.api;
 import io.tacsio.apipagamentos.domain.PaymentMethod;
 import io.tacsio.apipagamentos.domain.Restaurant;
 import io.tacsio.apipagamentos.domain.User;
+import io.tacsio.apipagamentos.service.order.OrderResponse;
+import io.tacsio.apipagamentos.service.order.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +56,16 @@ public class TestController {
         response.put("users", Arrays.asList(tacsio, alberto, gustavo, fraudster));
 
         return ResponseEntity.ok(response);
+    }
+
+    @Autowired
+    OrderService service;
+
+    @GetMapping("/feign/{id}")
+    public ResponseEntity feign(@PathVariable Long id) {
+
+        OrderResponse orderResponse = service.getOrder(id);
+        return ResponseEntity.ok(orderResponse);
     }
 
     @GetMapping("/users/{id}")

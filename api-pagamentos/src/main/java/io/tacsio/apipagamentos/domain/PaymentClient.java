@@ -1,6 +1,6 @@
 package io.tacsio.apipagamentos.domain;
 
-import io.tacsio.apipagamentos.service.FraudAnalyzer;
+import io.tacsio.apipagamentos.service.fraud.FraudAnalyzer;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
