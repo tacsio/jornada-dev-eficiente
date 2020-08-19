@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 
 import static io.tacsio.apipagamentos.domain.PaymentType.*;
 
@@ -38,15 +37,22 @@ public class TestController {
         Restaurant outback = new Restaurant("Outback Steakhouse", Arrays.asList(visa, master, money, cardMachine));
         Restaurant eki = new Restaurant("EKI", Arrays.asList(visa, master, cardMachine));
         Restaurant boteco = new Restaurant("Boteco Do Cordel", Arrays.asList(money, check));
-        Arrays.asList(outback, eki, boteco).forEach(em::persist);
+        Restaurant debtor = new Restaurant("Sr. dos Calotes", Arrays.asList(master, visa, money, check, cardMachine));
+        Arrays.asList(outback, eki, boteco, debtor).forEach(em::persist);
 
         //create users
-        User tacsio = new User("tacsio@mail.com", Arrays.asList(master, cardMachine));
+        User tacsio = new User("tacsio@deveficiente.com", Arrays.asList(master, cardMachine));
         User alberto = new User("alberto@deveficiente.com", Arrays.asList(visa, money, check, cardMachine));
         User gustavo = new User("gustavo@deveficiente.com", Arrays.asList(master, visa, money, cardMachine));
-        Arrays.asList(tacsio, alberto, gustavo).forEach(em::persist);
+        User fraudster = new User("fraudster@frauders.com", Arrays.asList(master, visa, money, check, cardMachine));
+        Arrays.asList(tacsio, alberto, gustavo, fraudster).forEach(em::persist);
 
-        return ResponseEntity.ok().build();
+        Map<String, List<?>> response = new HashMap<>();
+        response.put("paymentMethods", Arrays.asList(visa, master, money, cardMachine, check));
+        response.put("restaurants", Arrays.asList(outback, eki, boteco, debtor));
+        response.put("users", Arrays.asList(tacsio, alberto, gustavo, fraudster));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/users/{id}")

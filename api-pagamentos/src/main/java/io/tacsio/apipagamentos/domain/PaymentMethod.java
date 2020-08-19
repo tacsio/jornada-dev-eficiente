@@ -51,10 +51,9 @@ public class PaymentMethod {
         return description;
     }
 
-    public boolean acceptOnline() {
-        return type.acceptOnline();
+    public boolean isOnline() {
+        return type.online;
     }
-
 
     public Optional<Brand> getBrand() {
         return Optional.ofNullable(brand);
@@ -74,6 +73,16 @@ public class PaymentMethod {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentMethod{" +
+               "id=" + id +
+               ", type=" + type +
+               ", description='" + description + '\'' +
+               ", brand=" + brand +
+               '}';
     }
 }
 

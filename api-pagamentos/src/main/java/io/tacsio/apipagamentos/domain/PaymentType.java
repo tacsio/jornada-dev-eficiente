@@ -6,13 +6,9 @@ public enum PaymentType {
     CARD_MACHINE(false),
     CHECK(false);
 
-    private final boolean online;
+    public final boolean online;
 
     PaymentType(boolean online) {
         this.online = online;
-    }
-
-    public boolean acceptOnline() {
-        return online;
     }
 }

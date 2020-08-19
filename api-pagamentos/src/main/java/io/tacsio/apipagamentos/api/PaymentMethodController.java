@@ -4,6 +4,7 @@ import io.tacsio.apipagamentos.api.dto.AvailablePaymentForm;
 import io.tacsio.apipagamentos.api.dto.AvailablePaymentMethod;
 import io.tacsio.apipagamentos.domain.Restaurant;
 import io.tacsio.apipagamentos.domain.User;
+import io.tacsio.apipagamentos.service.FraudAnalyzer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +24,18 @@ public class PaymentMethodController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private FraudAnalyzer fraudAnalyzer;
+
+    public PaymentMethodController(FraudAnalyzer fraudAnalyzer) {
+        this.fraudAnalyzer = fraudAnalyzer;
+    }
+
     @GetMapping("/available")
     public ResponseEntity availableMethods(@Valid @RequestBody AvailablePaymentForm form) {
         Restaurant restaurant = entityManager.find(Restaurant.class, form.restaurantId());
         User user = entityManager.find(User.class, form.userId());
 
-        Set<AvailablePaymentMethod> availableMethods = user.availablePaymentMethods(restaurant)
+        Set<AvailablePaymentMethod> availableMethods = user.availablePaymentMethods(restaurant, fraudAnalyzer)
                 .map(AvailablePaymentMethod::new)
                 .collect(Collectors.toSet());
 
