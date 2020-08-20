@@ -20,7 +20,6 @@ public class PaymentAvailableValidator implements ConstraintValidator<PaymentAva
     }
 
     public boolean isValid(OfflinePaymentForm form, ConstraintValidatorContext context) {
-        System.out.println("LAST>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Restaurant restaurant = manager.find(Restaurant.class, form.restaurantId());
         User user = manager.find(User.class, form.userId());
 
