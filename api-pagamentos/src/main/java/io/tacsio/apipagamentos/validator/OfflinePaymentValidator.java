@@ -15,6 +15,7 @@ public class OfflinePaymentValidator implements ConstraintValidator<OfflinePayme
     }
 
     public boolean isValid(Long paymentMethodId, ConstraintValidatorContext context) {
+        System.out.println("FIRST OFFLINE>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         PaymentMethod paymentMethod = entityManager.find(PaymentMethod.class, paymentMethodId);
         return (paymentMethod != null && !paymentMethod.getType().online);
     }

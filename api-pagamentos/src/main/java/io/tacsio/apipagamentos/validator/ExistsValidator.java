@@ -28,6 +28,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
+        System.out.println("FIRST EXISTS>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         return exists(entityManager, entityClass, entityField, value);
     }
 
