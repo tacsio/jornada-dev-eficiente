@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = OrderValidator.class)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Order {
+public @interface ValidOrder {
     String message() default "Invalid order id";
 
     Class<?>[] groups() default {};

@@ -3,7 +3,7 @@ package io.tacsio.apipagamentos.api;
 import io.tacsio.apipagamentos.domain.PaymentMethod;
 import io.tacsio.apipagamentos.domain.Restaurant;
 import io.tacsio.apipagamentos.domain.User;
-import io.tacsio.apipagamentos.service.order.OrderResponse;
+import io.tacsio.apipagamentos.service.order.Order;
 import io.tacsio.apipagamentos.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -64,8 +64,8 @@ public class TestController {
     @GetMapping("/feign/{id}")
     public ResponseEntity feign(@PathVariable Long id) {
 
-        OrderResponse orderResponse = service.getOrder(id);
-        return ResponseEntity.ok(orderResponse);
+        Order order = service.getOrder(id);
+        return ResponseEntity.ok(order);
     }
 
     @GetMapping("/users/{id}")

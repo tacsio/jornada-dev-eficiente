@@ -17,19 +17,19 @@ import java.util.function.Supplier;
 @Repository
 public class ValidationContext {
 
-    private static ThreadLocal<Map> context = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Object>> context = new ThreadLocal<>();
 
     /**
      * Get result from validation context.
      * It is possible to return null values
      *
-     * @param clazz
-     * @param id
-     * @param <T>
-     * @return
+     * @param clazz Supplied object class
+     * @param id    Supplied id
+     * @param <T>   Type of supplied object
+     * @return T
      */
-    public <T> T get(Class<T> clazz, String id) {
-        String key = String.format("%s.%s", clazz.getName(), id);
+    public <T> T get(Class<T> clazz, Object id) {
+        String key = String.format("%s.%s", clazz.getName(), id.toString());
         Object value = ValidationContext.context.get().get(key);
 
         return (T) value;
@@ -38,23 +38,21 @@ public class ValidationContext {
     /**
      * Find for a value in validation context, if the value isn't found, the result is retrieved by supplier.
      *
-     * @param clazz
-     * @param id
-     * @param supplier
-     * @param <T>
+     * @param clazz Supplied object class
+     * @param id    Supplied id
+     * @param <T>   Type of supplied object
      * @return
      */
-    public <T> T find(Class<T> clazz, String id, Supplier<T> supplier) {
-        Map values = ValidationContext.context.get();
+    public <T> T find(Class<T> clazz, Object id, Supplier<T> supplier) {
+        Map<String, Object> values = ValidationContext.context.get();
 
         if (values == null) {
-            ValidationContext.context.set(new ConcurrentHashMap());
+            ValidationContext.context.set(new ConcurrentHashMap<>());
         }
 
-        String key = String.format("%s.%s", clazz.getName(), id);
-        Object value = ValidationContext.context.get().get(key);
-
+        Object value = this.get(clazz, id);
         if (value == null) {
+            String key = String.format("%s.%s", clazz.getName(), id.toString());
             T suppliedValue = supplier.get();
             this.put(key, suppliedValue);
             return suppliedValue;

@@ -12,9 +12,9 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
 public class PaymentAvailableValidator implements ConstraintValidator<PaymentAvailable, OfflinePaymentForm> {
-    private ValidationContext ctx;
-    private EntityManager manager;
-    private FraudAnalyzer fraudAnalyzer;
+    private final ValidationContext ctx;
+    private final EntityManager manager;
+    private final FraudAnalyzer fraudAnalyzer;
 
     public PaymentAvailableValidator(ValidationContext ctx, EntityManager manager, FraudAnalyzer fraudAnalyzer) {
         this.ctx = ctx;
@@ -30,8 +30,6 @@ public class PaymentAvailableValidator implements ConstraintValidator<PaymentAva
                 () -> manager.find(User.class, form.userId()));
 
         return user.availablePaymentMethods(restaurant, fraudAnalyzer)
-                .filter(availableMethod -> Objects.equals(availableMethod.getId(), form.paymentMethodId()))
-                .findFirst()
-                .isPresent();
+                .anyMatch(availableMethod -> Objects.equals(availableMethod.getId(), form.paymentMethodId()));
     }
 }

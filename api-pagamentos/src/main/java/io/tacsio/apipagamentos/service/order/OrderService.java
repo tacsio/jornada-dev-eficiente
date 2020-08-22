@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface OrderService {
 
     @GetMapping("/orders/{id}")
-    OrderResponse getOrder(@PathVariable("id") Long id);
+    Order getOrder(@PathVariable("id") Long id);
 }
 
