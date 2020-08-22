@@ -1,6 +1,8 @@
 package io.tacsio.apipagamentos.validator;
 
 
+import io.tacsio.apipagamentos.validator.util.ValidationContext;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,11 +14,13 @@ import java.util.stream.Stream;
 
 public class ExistsValidator implements ConstraintValidator<Exists, Long> {
 
+    private ValidationContext ctx;
     private final EntityManager entityManager;
     private Class entityClass;
     private String entityField;
 
-    public ExistsValidator(EntityManager entityManager) {
+    public ExistsValidator(ValidationContext ctx, EntityManager entityManager) {
+        this.ctx = ctx;
         this.entityManager = entityManager;
     }
 
@@ -28,10 +32,12 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
-        return exists(entityManager, entityClass, entityField, value);
+        Object result = ctx.find(entityClass, value.toString(),
+                () -> exists(entityManager, entityClass, entityField, value));
+        return result != null;
     }
 
-    public static boolean exists(EntityManager entityManager, Class entityClass, String field, Object fieldValue) {
+    public static Object exists(EntityManager entityManager, Class entityClass, String field, Object fieldValue) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
 
@@ -44,6 +50,6 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
                 .setMaxResults(1)
                 .getResultStream();
 
-        return stream.findFirst().isPresent();
+        return stream.findFirst().orElse(null);
     }
 }

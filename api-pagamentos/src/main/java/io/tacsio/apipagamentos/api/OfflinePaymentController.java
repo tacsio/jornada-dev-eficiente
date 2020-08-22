@@ -2,7 +2,7 @@ package io.tacsio.apipagamentos.api;
 
 import io.tacsio.apipagamentos.api.dto.form.OfflinePaymentForm;
 import io.tacsio.apipagamentos.service.order.OrderResponse;
-import io.tacsio.apipagamentos.service.order.OrderService;
+import io.tacsio.apipagamentos.validator.util.ValidationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,16 +15,16 @@ import javax.validation.Valid;
 @RequestMapping("/offline")
 public class OfflinePaymentController {
 
-    private OrderService orderService;
+    private ValidationContext context;
 
-    public OfflinePaymentController(OrderService orderService) {
-        this.orderService = orderService;
+    public OfflinePaymentController(ValidationContext context) {
+        this.context = context;
     }
 
     @PostMapping("/process")
     public ResponseEntity offlinePayment(@RequestBody @Valid OfflinePaymentForm form) {
 
-        OrderResponse order = orderService.getOrder(form.orderId());
+        OrderResponse order = context.get(OrderResponse.class, form.orderId().toString());
 
         //TODO: create transaction
         System.out.println(order);
