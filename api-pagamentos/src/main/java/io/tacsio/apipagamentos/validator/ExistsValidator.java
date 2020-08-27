@@ -12,7 +12,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.stream.Stream;
 
-public class ExistsValidator implements ConstraintValidator<Exists, Long> {
+public class ExistsValidator implements ConstraintValidator<Exists, Object> {
 
     private ValidationContext ctx;
     private final EntityManager entityManager;
@@ -31,7 +31,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
     }
 
     @Override
-    public boolean isValid(Long value, ConstraintValidatorContext context) {
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
         Object result = ctx.find(entityClass, value.toString(),
                 () -> exists(entityManager, entityClass, entityField, value));
         return result != null;

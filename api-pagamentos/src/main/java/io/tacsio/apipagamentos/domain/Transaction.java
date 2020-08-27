@@ -33,15 +33,23 @@ public class Transaction {
 
     private String extra;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(updatable = true)
+    private LocalDateTime updatedAt;
+
     @PrePersist
     void generateTransactionId() {
         id = UUID.randomUUID();
+    }
+
+    @PreUpdate
+    void updateTimestamp() {
+        updatedAt = LocalDateTime.now();
     }
 
     @Deprecated
@@ -60,6 +68,10 @@ public class Transaction {
         if (!paymentMethod.getType().online) {
             this.status = TransactionStatus.AWAITING_PAYMENT_CONFIRMATION;
         }
+    }
+
+    public void conclude() {
+        this.status = TransactionStatus.CONCLUDED;
     }
 
     public UUID getId() {
@@ -88,6 +100,10 @@ public class Transaction {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }
 
