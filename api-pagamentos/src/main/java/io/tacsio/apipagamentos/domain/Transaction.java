@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -71,7 +72,9 @@ public class Transaction {
     }
 
     public void conclude() {
-        this.status = TransactionStatus.CONCLUDED;
+        if (Objects.equals(status, TransactionStatus.AWAITING_PAYMENT_CONFIRMATION)) {
+            this.status = TransactionStatus.CONCLUDED;
+        }
     }
 
     public UUID getId() {
