@@ -7,6 +7,7 @@
 </h4>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/tacsio/jornada-dev-eficiente?color=%2331acbf)
+![GitHub language count](https://img.shields.io/github/languages/count/tacsio/jornada-dev-eficiente?color=%2331acbf)
 ![GitHub top language](https://img.shields.io/github/languages/top/tacsio/jornada-dev-eficiente?color=%2331acbf)
 ![GitHub last commit](https://img.shields.io/github/last-commit/tacsio/jornada-dev-eficiente?color=%2331acbf)
 [![GitHub issues](https://img.shields.io/github/issues-raw/tacsio/jornada-dev-eficiente?color=%2331acbf)](https://github.com/tacsio/jornada-dev-eficiente/issues)
