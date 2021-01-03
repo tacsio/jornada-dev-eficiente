@@ -1,4 +1,4 @@
-package io.tacsio.apipagamentos.api.dto.representer;
+package io.tacsio.apipagamentos.api.representer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

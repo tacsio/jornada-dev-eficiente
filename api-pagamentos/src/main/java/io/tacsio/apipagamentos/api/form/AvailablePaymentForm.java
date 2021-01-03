@@ -1,4 +1,4 @@
-package io.tacsio.apipagamentos.api.dto.form;
+package io.tacsio.apipagamentos.api.form;
 
 import io.tacsio.apipagamentos.domain.Restaurant;
 import io.tacsio.apipagamentos.domain.User;

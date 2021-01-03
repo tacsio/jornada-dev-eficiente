@@ -1,4 +1,4 @@
-package io.tacsio.apipagamentos.api.dto.representer;
+package io.tacsio.apipagamentos.api.representer;
 
 import io.tacsio.apipagamentos.domain.PaymentMethod;
 

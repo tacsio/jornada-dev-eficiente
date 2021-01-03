@@ -6,16 +6,16 @@ import javax.persistence.EntityManager;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class OfflinePaymentValidator implements ConstraintValidator<OfflinePayment, Long> {
+public class OnlinePaymentValidator implements ConstraintValidator<OnlinePayment, Long> {
 
     private final EntityManager entityManager;
 
-    public OfflinePaymentValidator(EntityManager entityManager) {
+    public OnlinePaymentValidator(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     public boolean isValid(Long paymentMethodId, ConstraintValidatorContext context) {
         var paymentMethod = entityManager.find(PaymentMethod.class, paymentMethodId);
-        return (paymentMethod != null && !paymentMethod.getType().online);
+        return (paymentMethod != null && paymentMethod.getType().online);
     }
 }

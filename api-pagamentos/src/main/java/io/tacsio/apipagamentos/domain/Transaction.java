@@ -32,7 +32,7 @@ public class Transaction {
     @ManyToOne
     private PaymentMethod paymentMethod;
 
-    private String extra;
+    private String extraInfo;
 
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
@@ -40,7 +40,6 @@ public class Transaction {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(updatable = true)
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -57,13 +56,13 @@ public class Transaction {
     protected Transaction() {
     }
 
-    public Transaction(@NotNull Long orderId, @PositiveOrZero BigDecimal value, User user, Restaurant restaurant, PaymentMethod paymentMethod, String extra) {
+    public Transaction(@NotNull Long orderId, @PositiveOrZero BigDecimal value, User user, Restaurant restaurant, PaymentMethod paymentMethod, String extraInfo) {
         this.orderId = orderId;
         this.value = value;
         this.user = user;
         this.restaurant = restaurant;
         this.paymentMethod = paymentMethod;
-        this.extra = extra;
+        this.extraInfo = extraInfo;
         this.createdAt = LocalDateTime.now();
 
         if (!paymentMethod.getType().online) {

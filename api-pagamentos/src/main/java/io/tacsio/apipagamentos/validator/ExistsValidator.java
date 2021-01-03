@@ -1,8 +1,5 @@
 package io.tacsio.apipagamentos.validator;
 
-
-import io.tacsio.apipagamentos.validator.util.ValidationContext;
-
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,13 +11,11 @@ import java.util.stream.Stream;
 
 public class ExistsValidator implements ConstraintValidator<Exists, Object> {
 
-    private ValidationContext ctx;
     private final EntityManager entityManager;
-    private Class entityClass;
+    private Class<?> entityClass;
     private String entityField;
 
-    public ExistsValidator(ValidationContext ctx, EntityManager entityManager) {
-        this.ctx = ctx;
+    public ExistsValidator(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -32,12 +27,10 @@ public class ExistsValidator implements ConstraintValidator<Exists, Object> {
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        Object result = ctx.find(entityClass, value.toString(),
-                () -> exists(entityManager, entityClass, entityField, value));
-        return result != null;
+        return exists(entityManager, entityClass, entityField, value) != null;
     }
 
-    public static Object exists(EntityManager entityManager, Class entityClass, String field, Object fieldValue) {
+    public static Object exists(EntityManager entityManager, Class<?> entityClass, String field, Object fieldValue) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
 

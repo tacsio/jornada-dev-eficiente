@@ -1,5 +1,9 @@
 package io.tacsio.apipagamentos.domain;
 
 public enum TransactionStatus {
-    AWAITING_PAYMENT_CONFIRMATION, CONCLUDED
+    //offline
+    AWAITING_PAYMENT_CONFIRMATION, CONCLUDED,
+
+    //online
+    FAILED, SUCCEED
 }
