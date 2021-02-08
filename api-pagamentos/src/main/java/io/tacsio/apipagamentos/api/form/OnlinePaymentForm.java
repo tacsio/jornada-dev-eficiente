@@ -15,13 +15,12 @@ import javax.validation.GroupSequence;
 @GroupSequence({OnlinePaymentForm.class, LateValidation.class})
 @PaymentAvailable(groups = {LateValidation.class})
 public record OnlinePaymentForm(
-        @ValidOrder Long orderId,
-        @OnlinePayment Long paymentMethodId,
-        @Exists(entityClass = User.class) Long userId,
-        @Exists(entityClass = Restaurant.class) Long restaurantId,
-        @CreditCardNumber(ignoreNonDigitCharacters = true) String cardNumber,
-        @Length(min = 3) String securityCode,
-        String extraInfo) {
+    @ValidOrder Long orderId,
+    @OnlinePayment Long paymentMethodId,
+    @Exists(entityClass = User.class) Long userId,
+    @Exists(entityClass = Restaurant.class) Long restaurantId,
+    @CreditCardNumber(ignoreNonDigitCharacters = true) String cardNumber,
+    @Length(min = 3) String securityCode) implements PaymentForm {
 
 
     public Transaction getTransaction(EntityManager em, OrderService orderService) {
@@ -29,6 +28,8 @@ public record OnlinePaymentForm(
         var restaurant = em.find(Restaurant.class, restaurantId);
         var paymentMethod = em.find(PaymentMethod.class, paymentMethodId);
         var order = orderService.getOrder(orderId);
+        //last 5 numbers of card
+        var extraInfo = cardNumber.substring(cardNumber.length() - 5);
 
         return new Transaction(orderId, order.value, user, restaurant, paymentMethod, extraInfo);
     }

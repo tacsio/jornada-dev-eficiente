@@ -1,5 +1,7 @@
 package io.tacsio.apipagamentos.domain;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -31,6 +33,8 @@ public class Transaction {
 
     @ManyToOne
     private PaymentMethod paymentMethod;
+
+    private String gatewayTransactionId;
 
     private String extraInfo;
 
@@ -76,12 +80,31 @@ public class Transaction {
         }
     }
 
+    public void setOnlineStatus(boolean succeed) {
+        if (succeed) succeed();
+        else failed();
+    }
+
+    public void failed() {
+        Assert.isTrue(paymentMethod.getType().online, "Only online transactions can fail.");
+        this.status = TransactionStatus.FAILED;
+    }
+
+    public void succeed() {
+        Assert.isTrue(paymentMethod.getType().online, "Only online transactions can succeed.");
+        this.status = TransactionStatus.SUCCEED;
+    }
+
     public UUID getId() {
         return id;
     }
 
     public Long getOrderId() {
         return orderId;
+    }
+
+    public BigDecimal getValue() {
+        return value;
     }
 
     public User getUser() {
@@ -106,6 +129,18 @@ public class Transaction {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    public String getGatewayTransactionId() {
+        return gatewayTransactionId;
+    }
+
+    public void setGatewayTransactionId(String gatewayTransactionId) {
+        this.gatewayTransactionId = gatewayTransactionId;
     }
 }
 

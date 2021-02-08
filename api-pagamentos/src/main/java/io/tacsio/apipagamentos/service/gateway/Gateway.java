@@ -1,11 +1,12 @@
 package io.tacsio.apipagamentos.service.gateway;
 
+import java.math.BigDecimal;
+
 public interface Gateway {
-    default boolean acceptPayment() {
-        return this.accept();
-    }
 
-    boolean accept();
+    GatewayResponse process(CardInfo cardInfo, BigDecimal value);
 
-    void process();
+    boolean accept(CardInfo cardInfo);
+
+    BigDecimal cost(BigDecimal value);
 }

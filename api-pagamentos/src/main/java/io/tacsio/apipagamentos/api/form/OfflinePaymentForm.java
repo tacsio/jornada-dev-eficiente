@@ -16,7 +16,7 @@ public record OfflinePaymentForm(
         @ValidOrder Long orderId,
         @OfflinePayment Long paymentMethodId,
         @Exists(entityClass = User.class) Long userId,
-        @Exists(entityClass = Restaurant.class) Long restaurantId) {
+        @Exists(entityClass = Restaurant.class) Long restaurantId) implements PaymentForm {
 
 
     public Transaction getTransaction(EntityManager em, OrderService orderService) {
