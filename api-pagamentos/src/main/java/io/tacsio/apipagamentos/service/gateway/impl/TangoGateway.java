@@ -31,19 +31,6 @@ public class TangoGateway implements Gateway {
         this.restTemplate = restTemplate;
     }
 
-
-    @Override
-    public GatewayResponse process(CardInfo cardInfo, BigDecimal value) {
-        var request = new HttpEntity<>(new TangoRequest(cardInfo, value));
-        var response = restTemplate.exchange(gatewayURI, HttpMethod.POST, request, TangoResponse.class);
-
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().gatewayResponse();
-        } else {
-            return GatewayResponse.failed();
-        }
-    }
-
     @Override
     public boolean accept(CardInfo cardInfo) {
         return acceptedBrands.contains(cardInfo.brand);
@@ -59,6 +46,18 @@ public class TangoGateway implements Gateway {
 
         System.out.println("Tango: " + cost);
         return cost;
+    }
+
+    @Override
+    public GatewayResponse process(CardInfo cardInfo, BigDecimal value) {
+        var request = new HttpEntity<>(new TangoRequest(cardInfo, value));
+        var response = restTemplate.exchange(gatewayURI, HttpMethod.POST, request, TangoResponse.class);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody().gatewayResponse();
+        } else {
+            return GatewayResponse.failed();
+        }
     }
 }
 

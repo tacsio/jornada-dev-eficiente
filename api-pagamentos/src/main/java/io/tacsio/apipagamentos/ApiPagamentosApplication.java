@@ -191,10 +191,16 @@ class TestController {
     class SeiyaRequest {
         @NotBlank
         public String id;
+        @NotBlank
+        private String num_cartao;
+        @NotBlank
+        private String codigo_seguranca;
         public BigDecimal valor_compra;
 
-        public SeiyaRequest(String id, BigDecimal valor_compra) {
+        public SeiyaRequest(String id, @NotBlank String num_cartao, @NotBlank String codigo_seguranca, BigDecimal valor_compra) {
             this.id = id;
+            this.num_cartao = num_cartao;
+            this.codigo_seguranca = codigo_seguranca;
             this.valor_compra = valor_compra;
         }
     }
