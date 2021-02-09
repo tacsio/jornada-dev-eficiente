@@ -20,8 +20,6 @@ public class PaymentAvailableValidator implements ConstraintValidator<PaymentAva
     }
 
     public boolean isValid(PaymentForm form, ConstraintValidatorContext context) {
-
-
         var restaurant = manager.find(Restaurant.class, form.restaurantId());
         var user = manager.find(User.class, form.userId());
 

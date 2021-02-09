@@ -1,11 +1,14 @@
 package io.tacsio.apipagamentos.service.gateway;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
 public class GatewayService {
+    private final Logger log = LoggerFactory.getLogger(GatewayService.class);
     private final GatewaySelector gatewaySelector;
 
     public GatewayService(GatewaySelector gatewaySelector) {
@@ -30,6 +33,7 @@ public class GatewayService {
         try {
             return gateway.process(cardInfo, value);
         } catch (RuntimeException e) {
+            log.error("Gateway (" + gateway.getClass().getName() + ") error: " + e.getMessage());
             return GatewayResponse.failed();
         }
     }

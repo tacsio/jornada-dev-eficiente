@@ -37,7 +37,6 @@ public class SaoriGateway implements Gateway {
 
     @Override
     public BigDecimal cost(BigDecimal value) {
-        System.out.println("Saori: " + value.multiply(tax));
         return value.multiply(tax);
     }
 
@@ -46,35 +45,35 @@ public class SaoriGateway implements Gateway {
         var request = new HttpEntity<>(new SaoriRequest(cardInfo, value));
         var response = restTemplate.postForEntity(gatewayURI, request, SaoriResponse.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().gatewayResponse();
-        } else {
+        var gatewayResponse = response.getBody().gatewayResponse();
+        if (response.getStatusCode().isError() || !gatewayResponse.success) {
             return GatewayResponse.failed();
         }
+
+        return gatewayResponse;
     }
+}
 
-    class SaoriRequest {
-        @JsonProperty("num_cartao")
-        public final String cardNumber;
-        @JsonProperty("codigo_seguranca")
-        public final String securityCode;
-        @JsonProperty("valor_compra")
-        public final BigDecimal value;
+class SaoriRequest {
+    @JsonProperty("num_cartao")
+    public final String cardNumber;
+    @JsonProperty("codigo_seguranca")
+    public final String securityCode;
+    @JsonProperty("valor_compra")
+    public final BigDecimal value;
 
-        SaoriRequest(CardInfo cardInfo, BigDecimal value) {
-            this.cardNumber = cardInfo.cardNumber;
-            this.securityCode = cardInfo.securityCode;
-            this.value = value;
-        }
+    SaoriRequest(CardInfo cardInfo, BigDecimal value) {
+        this.cardNumber = cardInfo.cardNumber;
+        this.securityCode = cardInfo.securityCode;
+        this.value = value;
     }
+}
 
-    class SaoriResponse {
-        public String authorization;
-        public boolean processed;
+class SaoriResponse {
+    public String authorization;
+    public boolean processed;
 
-        GatewayResponse gatewayResponse() {
-            return new GatewayResponse(authorization, processed);
-        }
-
+    GatewayResponse gatewayResponse() {
+        return new GatewayResponse(authorization, processed);
     }
 }

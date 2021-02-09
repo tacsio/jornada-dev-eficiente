@@ -14,6 +14,7 @@ import javax.validation.GroupSequence;
 
 @GroupSequence({OnlinePaymentForm.class, LateValidation.class})
 @PaymentAvailable(groups = {LateValidation.class})
+@AlreadyPayedOnline(groups = {LateValidation.class})
 public record OnlinePaymentForm(
     @ValidOrder Long orderId,
     @OnlinePayment Long paymentMethodId,
@@ -21,7 +22,6 @@ public record OnlinePaymentForm(
     @Exists(entityClass = Restaurant.class) Long restaurantId,
     @CreditCardNumber(ignoreNonDigitCharacters = true) String cardNumber,
     @Length(min = 3) String securityCode) implements PaymentForm {
-
 
     public Transaction getTransaction(EntityManager em, OrderService orderService) {
         var user = em.find(User.class, userId);

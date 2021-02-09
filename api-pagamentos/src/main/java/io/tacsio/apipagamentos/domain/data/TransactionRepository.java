@@ -10,15 +10,15 @@ import java.util.UUID;
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
 
     @Query("""
-            select t from Transaction t 
-            where t.orderId= :orderId 
-            and t.user.id= :userId 
-            and t.restaurant.id = :restaurantId
-            and t.paymentMethod.id = :paymentMethodId
-                """)
+        select t from Transaction t 
+        where t.orderId= :orderId 
+        and t.user.id= :userId 
+        and t.restaurant.id = :restaurantId
+        and t.paymentMethod.id = :paymentMethodId
+            """)
     Transaction find(
-            @Param("orderId") Long orderId,
-            @Param("userId") Long userId,
-            @Param("restaurantId") Long restaurantId,
-            @Param("paymentMethodId") Long paymentMethodId);
+        @Param("orderId") Long orderId,
+        @Param("userId") Long userId,
+        @Param("restaurantId") Long restaurantId,
+        @Param("paymentMethodId") Long paymentMethodId);
 }

@@ -44,7 +44,6 @@ public class TangoGateway implements Gateway {
             cost = value.multiply(variableTax);
         }
 
-        System.out.println("Tango: " + cost);
         return cost;
     }
 
@@ -53,11 +52,12 @@ public class TangoGateway implements Gateway {
         var request = new HttpEntity<>(new TangoRequest(cardInfo, value));
         var response = restTemplate.exchange(gatewayURI, HttpMethod.POST, request, TangoResponse.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().gatewayResponse();
-        } else {
+        var gatewayResponse = response.getBody().gatewayResponse();
+        if (response.getStatusCode().isError() || !gatewayResponse.success) {
             return GatewayResponse.failed();
         }
+
+        return gatewayResponse;
     }
 }
 
@@ -78,10 +78,10 @@ class TangoRequest {
 
 class TangoResponse {
     public String id;
-    public boolean valid;
+    public boolean ok;
 
     GatewayResponse gatewayResponse() {
-        return new GatewayResponse(id, valid);
+        return new GatewayResponse(id, ok);
     }
 
 }

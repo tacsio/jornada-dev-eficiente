@@ -16,10 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 14
+    - name: Set up JDK 15
       uses: actions/setup-java@v1
       with:
-        java-version: '14'
+        java-version: '15'
     - name: Grant execute permission for gradlew
       working-directory: ./api-pagamentos
       run: chmod +x gradlew

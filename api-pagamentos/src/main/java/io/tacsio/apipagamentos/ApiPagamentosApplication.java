@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.tacsio.apipagamentos.domain.PaymentMethod;
 import io.tacsio.apipagamentos.domain.Restaurant;
 import io.tacsio.apipagamentos.domain.User;
-import io.tacsio.apipagamentos.service.gateway.CardInfo;
+import io.tacsio.apipagamentos.domain.data.TransactionRepository;
 import io.tacsio.apipagamentos.service.order.Order;
 import io.tacsio.apipagamentos.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static io.tacsio.apipagamentos.domain.PaymentType.*;
@@ -78,7 +75,16 @@ class TestController {
     private EntityManager em;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     OrderService service;
+
+    @GetMapping("/transactions")
+    public ResponseEntity transactions() {
+        var transactions = transactionRepository.findAll();
+        return ResponseEntity.ok(transactions);
+    }
 
     @GetMapping("/feign/{id}")
     public ResponseEntity feign(@PathVariable Long id) {
@@ -104,8 +110,8 @@ class TestController {
     //GATEWAYS DUMMY
     @PostMapping("/jornada-dev-eficiente/tango")
     public ResponseEntity tangoGateway(@Valid @RequestBody TangoRequest request) throws InterruptedException {
-        var fail = Math.random() * 100 % 2 == 0;
-        var slow = Math.random() * 100 % 2 == 0;
+        var fail = new Random().nextInt(100) % 2 == 0;
+        var slow = new Random().nextInt(100) % 2 == 0;
         if (fail) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         if (slow) TimeUnit.SECONDS.sleep(30);
 
@@ -113,7 +119,7 @@ class TestController {
         return ResponseEntity.ok(response);
     }
 
-    class TangoRequest {
+    static class TangoRequest {
         @NotBlank
         @JsonProperty("numero_cartao")
         public String cardNumber;
@@ -123,23 +129,20 @@ class TestController {
         @JsonProperty("valor_compra")
         public BigDecimal value;
 
-        TangoRequest(CardInfo cardInfo, BigDecimal value) {
-            this.cardNumber = cardInfo.cardNumber;
-            this.securityCode = cardInfo.securityCode;
-            this.value = value;
+        public TangoRequest() {
         }
     }
 
     @PostMapping("/jornada-dev-eficiente/saori")
     public ResponseEntity saioriGateway(@Valid @RequestBody SaoriRequest request) {
-        var fail = Math.random() * 100 % 3 == 0;
+        var fail = new Random().nextInt(100) % 3 == 0;
         if (fail) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         var response = Map.of("authorization", UUID.randomUUID().toString(), "processed", true);
         return ResponseEntity.ok(response);
     }
 
-    class SaoriRequest {
+    static class SaoriRequest {
         @NotBlank
         @JsonProperty("num_cartao")
         public String cardNumber;
@@ -149,38 +152,33 @@ class TestController {
         @JsonProperty("valor_compra")
         public BigDecimal value;
 
-        SaoriRequest(CardInfo cardInfo, BigDecimal value) {
-            this.cardNumber = cardInfo.cardNumber;
-            this.securityCode = cardInfo.securityCode;
-            this.value = value;
+        public SaoriRequest() {
         }
     }
 
     @PostMapping("/jornada-dev-eficiente/seiya/auth")
     public ResponseEntity seiyaAuthGateway(@Valid @RequestBody SeiyaAuthRequest request) {
-        var fail = Math.random() * 100 % 2 == 0;
+        var fail = new Random().nextInt(100) % 7 == 0;
         if (fail) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 
         var response = Map.of("id", UUID.randomUUID().toString(), "status", "success");
         return ResponseEntity.ok(response);
     }
 
-    class SeiyaAuthRequest {
+    static class SeiyaAuthRequest {
         @NotBlank
         public String num_cartao;
         @NotBlank
         public String codigo_seguranca;
 
-        public SeiyaAuthRequest(String num_cartao, String codigo_seguranca) {
-            this.num_cartao = num_cartao;
-            this.codigo_seguranca = codigo_seguranca;
+        public SeiyaAuthRequest() {
         }
     }
 
     @PostMapping("/jornada-dev-eficiente/seiya")
     public ResponseEntity seiyaGateway(@Valid @RequestBody SeiyaRequest request) {
-        var fail = Math.random() * 100 % 2 == 0;
-        var notFound = Math.random() * 100 % 3 == 0;
+        var fail = new Random().nextInt(100) % 11 == 0;
+        var notFound = new Random().nextInt(100) % 17 == 0;
         if (fail) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         if (notFound) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
@@ -188,20 +186,16 @@ class TestController {
         return ResponseEntity.ok(response);
     }
 
-    class SeiyaRequest {
+    static class SeiyaRequest {
         @NotBlank
         public String id;
         @NotBlank
-        private String num_cartao;
+        public String num_cartao;
         @NotBlank
-        private String codigo_seguranca;
+        public String codigo_seguranca;
         public BigDecimal valor_compra;
 
-        public SeiyaRequest(String id, @NotBlank String num_cartao, @NotBlank String codigo_seguranca, BigDecimal valor_compra) {
-            this.id = id;
-            this.num_cartao = num_cartao;
-            this.codigo_seguranca = codigo_seguranca;
-            this.valor_compra = valor_compra;
+        public SeiyaRequest() {
         }
     }
 }

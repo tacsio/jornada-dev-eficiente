@@ -40,7 +40,6 @@ public class SeiyaGateway implements Gateway {
 
     @Override
     public BigDecimal cost(BigDecimal value) {
-        System.out.println("Seyia: " + tax);
         return tax;
     }
 
@@ -52,11 +51,12 @@ public class SeiyaGateway implements Gateway {
         }
 
         var response = processPayment(authResponse.getBody().id, cardInfo, value);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody().gatewayResponse();
-        } else {
+        var gatewayResponse = response.getBody().gatewayResponse();
+        if (response.getStatusCode().isError() || !gatewayResponse.success) {
             return GatewayResponse.failed();
         }
+
+        return gatewayResponse;
     }
 
     public ResponseEntity<SeiyaAuthResponse> validateCard(CardInfo cardInfo) {
@@ -72,51 +72,51 @@ public class SeiyaGateway implements Gateway {
 
         return response;
     }
+}
 
-    class SeiyaAuthRequest {
-        @JsonProperty("num_cartao")
-        public final String cardNumber;
-        @JsonProperty("codigo_seguranca")
-        public final String securityCode;
+class SeiyaAuthRequest {
+    @JsonProperty("num_cartao")
+    public final String cardNumber;
+    @JsonProperty("codigo_seguranca")
+    public final String securityCode;
 
-        public SeiyaAuthRequest(CardInfo cardInfo) {
-            this.cardNumber = cardInfo.cardNumber;
-            this.securityCode = cardInfo.securityCode;
-        }
+    public SeiyaAuthRequest(CardInfo cardInfo) {
+        this.cardNumber = cardInfo.cardNumber;
+        this.securityCode = cardInfo.securityCode;
     }
+}
 
-    class SeiyaAuthResponse {
-        public String id;
-        public String status;
+class SeiyaAuthResponse {
+    public String id;
+    public String status;
 
-        boolean valid() {
-            return status.contains("success");
-        }
+    boolean valid() {
+        return status.contains("success");
     }
+}
 
-    class SeiyaRequest {
-        public final String id;
-        @JsonProperty("num_cartao")
-        public final String cardNumber;
-        @JsonProperty("codigo_seguranca")
-        public final String securityCode;
-        @JsonProperty("valor_compra")
-        public final BigDecimal value;
+class SeiyaRequest {
+    public final String id;
+    @JsonProperty("num_cartao")
+    public final String cardNumber;
+    @JsonProperty("codigo_seguranca")
+    public final String securityCode;
+    @JsonProperty("valor_compra")
+    public final BigDecimal value;
 
-        public SeiyaRequest(String id, String cardNumber, String securityCode, BigDecimal value) {
-            this.id = id;
-            this.cardNumber = cardNumber;
-            this.securityCode = securityCode;
-            this.value = value;
-        }
+    public SeiyaRequest(String id, String cardNumber, String securityCode, BigDecimal value) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.securityCode = securityCode;
+        this.value = value;
     }
+}
 
-    class SeiyaResponse {
-        public String authentication;
-        public String status;
+class SeiyaResponse {
+    public String authentication;
+    public String status;
 
-        GatewayResponse gatewayResponse() {
-            return new GatewayResponse(authentication, status.contains("valid"));
-        }
+    GatewayResponse gatewayResponse() {
+        return new GatewayResponse(authentication, status.contains("valid"));
     }
 }

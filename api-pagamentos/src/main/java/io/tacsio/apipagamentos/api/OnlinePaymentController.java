@@ -1,6 +1,7 @@
 package io.tacsio.apipagamentos.api;
 
 import io.tacsio.apipagamentos.api.form.OnlinePaymentForm;
+import io.tacsio.apipagamentos.api.representer.PaymentTransaction;
 import io.tacsio.apipagamentos.domain.data.TransactionRepository;
 import io.tacsio.apipagamentos.service.gateway.CardInfo;
 import io.tacsio.apipagamentos.service.gateway.GatewayService;
@@ -52,6 +53,6 @@ public class OnlinePaymentController {
             throw new ResponseStatusException(HttpStatus.PAYMENT_REQUIRED);
         }
 
-        return ResponseEntity.ok(transaction);
+        return ResponseEntity.ok(new PaymentTransaction(transaction));
     }
 }
