@@ -69,11 +69,11 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 
 ### :pushpin: Stack
 
-- [Java 14][java14] - JDK 14 is the open-source reference implementation of version 14 of the Java SE Platform as specified by by JSR 389 in the Java Community Process.
+- [Java 15][java15] - JDK 15 is the open-source reference implementation of version 15 of the Java SE Platform, as specified by by JSR 390 in the Java Community Process.
 - [Spring Boot 2.4.0][spring] - Spring makes programming Java quicker, easier, and safer for everybody. Spring’s focus on speed, simplicity, and productivity has made it the world's most popular Java framework.
 - [Spring Cloud OpenFeign][openfeign] - Feign is a declarative web service client. It makes writing web service clients easier.
 - [Spring Data JPA][springdata] - Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories.
-- [Spring Validtaion][springvalidation] - Starter for using Java Bean Validation with Hibernate Validator
+- [Spring Validation][springvalidation] - Starter for using Java Bean Validation with Hibernate Validator
 - [H2][h2] - PostgreSQL: The World's Most Advanced Open Source Relational Database
 
 
@@ -83,6 +83,27 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 ./gradlew boot:run
 ```
 
+## :package: Api Mercad Livre ![Java CI with Maven - API Mercado Livre](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%Maven%20-%20API%20Mercado%20Livre/badge.svg)
+
+Implementar uma parte do mercado livre. 
+
+### :pushpin: Stack
+
+- [Java 15][java15] - JDK 15 is the open-source reference implementation of version 15 of the Java SE Platform, as specified by by JSR 390 in the Java Community Process.
+- [Spring Boot 2.4.2][spring] - Spring makes programming Java quicker, easier, and safer for everybody. Spring’s focus on speed, simplicity, and productivity has made it the world's most popular Java framework.
+- [Spring Data JPA][springdata] - Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories.
+- [Spring Validation][springvalidation] - Starter for using Java Bean Validation with Hibernate Validator
+- [Spring Security][springsecurity] - Spring Security is a powerful and highly customizable authentication and access-control framework. It is the de-facto standard for securing Spring-based applications.
+- [H2][h2] - PostgreSQL: The World's Most Advanced Open Source Relational Database
+
+
+
+#### :heavy_dollar_sign: Run Scripts
+```bash
+./gradlew boot:run
+```
+
+
 ## :bullettrain_side: Contributing
 
 1. Fork it
@@ -91,20 +112,21 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-[spring]: https://spring.io/
+
 [java14]: https://openjdk.java.net/projects/jdk/14/
+[java15]: https://openjdk.java.net/projects/jdk/15/
+[java11]: https://openjdk.java.net/projects/jdk/11/
+
+[spring]: https://spring.io/
 [springdata]: https://spring.io/projects/spring-data-jpa
 [springsecurity]: https://spring.io/projects/spring-security
 [postgres]: https://www.postgresql.org/
 [lombok]: https://projectlombok.org/
 
-[java11]: https://openjdk.java.net/projects/jdk/11/
 [quarkus]: http://quarkus.io/
 [h2]: http://www.h2database.com/html/main.html
 [openapi]: https://www.openapis.org/
 
-
-[rocketseat]: https://github.com/rocketseat
 [nodejs]: https://nodejs.org
 [reactjs]: https://reactjs.org/
 [sqlite]:https://www.sqlite.org/index.html
