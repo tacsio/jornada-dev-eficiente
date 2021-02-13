@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = ExistsValidator.class)
-@Target({ElementType.FIELD, ElementType.PARAMETER})
+@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Exists {
     String message() default "not found";
@@ -14,6 +14,8 @@ public @interface Exists {
     Class<?> entityClass();
 
     String entityField() default "id";
+
+    boolean nullable() default false;
 
     Class<?>[] groups() default {};
 

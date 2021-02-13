@@ -14,6 +14,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
     private final EntityManager entityManager;
     private Class entityClass;
     private String entityField;
+    private boolean nullable;
 
     public ExistsValidator(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -23,10 +24,13 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
     public void initialize(Exists constraintAnnotation) {
         this.entityClass = constraintAnnotation.entityClass();
         this.entityField = constraintAnnotation.entityField();
+        this.nullable = constraintAnnotation.nullable();
     }
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
+        if (value == null && nullable) return true;
+
         return exists(entityManager, entityClass, entityField, value);
     }
 

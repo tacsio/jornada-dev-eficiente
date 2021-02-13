@@ -1,6 +1,8 @@
 package io.tacsio.mercadolivre;
 
+import io.tacsio.mercadolivre.model.data.CategoryRepository;
 import io.tacsio.mercadolivre.model.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,18 @@ public class MercadoLivreApplication {
 @RestController
 @RequestMapping("test")
 class TestController {
-    private final UserRepository userRepository;
-
-    TestController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @GetMapping("/users")
     public ResponseEntity listUsers() {
         return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity categories() {
+        return ResponseEntity.ok(categoryRepository.findAll());
     }
 }
