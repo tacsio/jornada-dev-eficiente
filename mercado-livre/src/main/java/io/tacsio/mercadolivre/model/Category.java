@@ -1,14 +1,17 @@
 package io.tacsio.mercadolivre.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.core.annotation.Order;
+import org.springframework.util.comparator.Comparators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Comparator;
 import java.util.SortedSet;
 
 @Entity
-public class Category {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class Category implements Comparable<Category> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +23,12 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(columnDefinition = "parent_id")
-    @JsonIgnoreProperties({"parent, children"})
+    @JsonBackReference
     private Category parent;
 
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
     @OrderBy("name")
-    @JsonIgnoreProperties({"parent, children"})
+    @JsonManagedReference
     private SortedSet<Category> children;
 
     @Deprecated
@@ -35,6 +38,7 @@ public class Category {
     public Category(String name) {
         this.name = name;
     }
+
 
     public Category(String name, Category parent, SortedSet<Category> children) {
         this.name = name;
@@ -54,7 +58,18 @@ public class Category {
         return parent;
     }
 
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
     public SortedSet<Category> getChildren() {
         return children;
+    }
+
+    @Override
+    public int compareTo(Category o) {
+        return Comparator
+                .comparing(Category::getName)
+                .compare(this, o);
     }
 }

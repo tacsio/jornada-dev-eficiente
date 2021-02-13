@@ -12,18 +12,16 @@ public class CategoryRepresenter {
     public final Long id;
     public final String name;
 
-    @JsonIgnoreProperties({"parent, children"})
-    public CategoryRepresenter parent;
+    public ThinCategoryRepresenter parent;
 
-    @JsonIgnoreProperties({"parent, children"})
-    public final List<CategoryRepresenter> children;
+    public final List<ThinCategoryRepresenter> children;
 
     public CategoryRepresenter(Category category) {
         this.id = category.getId();
         this.name = category.getName();
-        if (category.getParent() != null) this.parent = new CategoryRepresenter(category.getParent());
+        if (category.getParent() != null) this.parent = new ThinCategoryRepresenter(category.getParent());
         this.children = category.getChildren().stream()
-                .map(CategoryRepresenter::new)
+                .map(ThinCategoryRepresenter::new)
                 .collect(Collectors.toList());
 
     }

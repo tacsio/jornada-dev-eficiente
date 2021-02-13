@@ -34,7 +34,10 @@ public class CategoryBuilder {
     }
 
     public Category build() {
-        return new Category(name, parent, children);
+        var category = new Category(name, parent, children);
+        children.stream().forEach(it -> it.setParent(category));
+
+        return category;
     }
 
 
