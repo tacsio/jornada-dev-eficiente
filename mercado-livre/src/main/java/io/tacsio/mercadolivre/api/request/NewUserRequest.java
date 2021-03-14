@@ -1,5 +1,6 @@
 package io.tacsio.mercadolivre.api.request;
 
+import io.tacsio.mercadolivre.config.security.ApplicationRole;
 import io.tacsio.mercadolivre.model.User;
 import io.tacsio.mercadolivre.validation.Unique;
 import org.hibernate.validator.constraints.Length;
@@ -19,7 +20,7 @@ public class NewUserRequest {
 
     public User toUser(PasswordEncoder passwordEncoder) {
         var encryptedPassword = passwordEncoder.encode(password);
-        var newUser = new User(login, encryptedPassword);
+        var newUser = new User(login, encryptedPassword, ApplicationRole.USER);
 
         return newUser;
     }

@@ -83,7 +83,7 @@ Esse é um serviço crucial no contexto do YFood. É a conclusão da experiênci
 ./gradlew boot:run
 ```
 
-## :package: Api Mercad Livre ![Java CI with Maven - API Mercado Livre](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven%20-%20API%20Mercado%20Livre/badge.svg)
+## :package: Api Mercado Livre ![Java CI with Maven - API Mercado Livre](https://github.com/tacsio/jornada-dev-eficiente/workflows/Java%20CI%20with%20Maven%20-%20API%20Mercado%20Livre/badge.svg)
 
 Implementar uma parte do mercado livre. 
 
@@ -100,7 +100,7 @@ Implementar uma parte do mercado livre.
 
 #### :heavy_dollar_sign: Run Scripts
 ```bash
-./gradlew boot:run
+./mvn spring-boot:run
 ```
 
 
