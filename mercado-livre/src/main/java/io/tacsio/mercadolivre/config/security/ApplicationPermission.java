@@ -4,7 +4,9 @@ public enum ApplicationPermission {
     USER_READ("user:read"),
     USER_WRITE("user:write"),
     CATEGORY_READ("category:read"),
-    CATEGORY_WRITE("category:write");
+    CATEGORY_WRITE("category:write"),
+    PRODUCT_READ("product:read"),
+    PRODUCT_WRITE("product:write");
 
     private final String permission;
 

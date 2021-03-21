@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static io.tacsio.mercadolivre.config.security.ApplicationPermission.*;
 
 public enum ApplicationRole {
-    USER(Set.of(USER_READ, CATEGORY_WRITE, CATEGORY_READ));
+    USER(Set.of(USER_READ, CATEGORY_WRITE, CATEGORY_READ, PRODUCT_READ, PRODUCT_WRITE));
 
     private final Set<ApplicationPermission> permissions;
 

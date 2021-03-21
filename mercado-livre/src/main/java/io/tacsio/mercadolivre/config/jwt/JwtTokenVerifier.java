@@ -3,6 +3,7 @@ package io.tacsio.mercadolivre.config.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.tacsio.mercadolivre.model.data.UserRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,10 +28,12 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
+    private final UserRepository userRepository;
 
-    public JwtTokenVerifier(SecretKey secretKey, JwtConfig jwtConfig) {
+    public JwtTokenVerifier(SecretKey secretKey, JwtConfig jwtConfig, UserRepository userRepository) {
         this.secretKey = secretKey;
         this.jwtConfig = jwtConfig;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -56,7 +59,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             var username = body.getSubject();
             var grantedAuthorities = parseAuthorities(body);
 
-            var authentication = new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
+            var user = userRepository.findByLogin(username).get();
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (JwtException e) {

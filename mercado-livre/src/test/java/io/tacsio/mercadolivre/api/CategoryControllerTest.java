@@ -2,6 +2,7 @@ package io.tacsio.mercadolivre.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tacsio.mercadolivre.api.request.NewCategoryRequest;
+import io.tacsio.mercadolivre.config.TestFactory;
 import io.tacsio.mercadolivre.model.Category;
 import io.tacsio.mercadolivre.model.data.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +30,12 @@ class CategoryControllerTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private TestFactory testFactory;
+
     @BeforeEach
     void setup() {
-        categoryRepository.deleteAll();
+        testFactory.cleanDB();
     }
 
 
@@ -39,8 +43,7 @@ class CategoryControllerTest {
     @DisplayName("Simple category creation.")
     @WithMockUser(username = "testUser", authorities = "category:write")
     public void createCategory() throws Exception {
-        NewCategoryRequest request = new NewCategoryRequest();
-        request.setName("Category 1");
+        NewCategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 
@@ -56,13 +59,10 @@ class CategoryControllerTest {
     @DisplayName("Nested category creation.")
     @WithMockUser(username = "testUser", authorities = "category:write")
     public void createNestedCategories() throws Exception {
-        Category parent = new Category("Parent");
+        Category parent = testFactory.category();
         categoryRepository.save(parent);
 
-        var child = new NewCategoryRequest();
-        child.setParentId(parent.getId());
-        child.setName("Child");
-
+        var child = testFactory.categoryRequest(parent.getId());
         var payload = mapper.writeValueAsString(child);
 
         mvc.perform(
@@ -77,11 +77,11 @@ class CategoryControllerTest {
     @DisplayName("Should not permit 2 categories with the same name.")
     @WithMockUser(username = "testUser", authorities = "category:write")
     public void duplicatedCategory() throws Exception {
-        Category existent = new Category("Category 1");
+        Category existent = testFactory.category();
         categoryRepository.save(existent);
 
         NewCategoryRequest request = new NewCategoryRequest();
-        request.setName("Category 1");
+        request.setName(existent.getName());
 
         var payload = mapper.writeValueAsString(request);
 
@@ -110,7 +110,7 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Should not access without authentication.")
     public void accessWithoutLogin() throws Exception {
-        NewCategoryRequest request = new NewCategoryRequest();
+        NewCategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 
@@ -125,7 +125,7 @@ class CategoryControllerTest {
     @DisplayName("Should not access without specific permission to write.")
     @WithMockUser(username = "testUser", authorities = "category:read")
     public void accessWithoutPermission() throws Exception {
-        NewCategoryRequest request = new NewCategoryRequest();
+        NewCategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 

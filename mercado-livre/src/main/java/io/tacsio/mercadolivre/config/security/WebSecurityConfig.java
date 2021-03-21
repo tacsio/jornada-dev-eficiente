@@ -17,8 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.crypto.SecretKey;
 
-import static io.tacsio.mercadolivre.config.security.ApplicationPermission.CATEGORY_READ;
-import static io.tacsio.mercadolivre.config.security.ApplicationPermission.CATEGORY_WRITE;
+import static io.tacsio.mercadolivre.config.security.ApplicationPermission.*;
 
 @Configuration
 @EnableWebSecurity
@@ -63,8 +62,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
+
                 .antMatchers(HttpMethod.POST, "/categories").hasAuthority(CATEGORY_WRITE.getPermission())
                 .antMatchers(HttpMethod.GET, "/categories").hasAuthority(CATEGORY_READ.getPermission())
+
+                .antMatchers(HttpMethod.POST, "/products").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/products").hasAuthority(CATEGORY_READ.getPermission())
                 .anyRequest()
                 .authenticated();
     }

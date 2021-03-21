@@ -2,6 +2,7 @@ package io.tacsio.mercadolivre.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tacsio.mercadolivre.api.request.NewUserRequest;
+import io.tacsio.mercadolivre.config.TestFactory;
 import io.tacsio.mercadolivre.model.data.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,18 +29,18 @@ class RegistrationControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TestFactory testFactory;
+
     @BeforeEach
     void setup() {
-        userRepository.deleteAll();
+        testFactory.cleanDB();
     }
 
     @Test
     @DisplayName("User registration.")
     void createUser() throws Exception {
-        NewUserRequest newUser = new NewUserRequest();
-        newUser.setLogin("user@mail.com");
-        newUser.setPassword("123456");
-
+        NewUserRequest newUser = testFactory.userRequest();
         String payload = mapper.writeValueAsString(newUser);
 
 
@@ -54,9 +55,7 @@ class RegistrationControllerTest {
     @Test
     @DisplayName("User invalid registration.")
     void createInvalidUser() throws Exception {
-        NewUserRequest newUser = new NewUserRequest();
-        newUser.setLogin("user");
-        newUser.setPassword("123456");
+        NewUserRequest newUser = testFactory.userRequest();
 
         String payload = mapper.writeValueAsString(newUser);
 
@@ -71,9 +70,7 @@ class RegistrationControllerTest {
     @Test
     @DisplayName("Already used login.")
     void duplicatedLogin() throws Exception {
-        NewUserRequest newUser = new NewUserRequest();
-        newUser.setLogin("user@mail.com");
-        newUser.setPassword("123456");
+        NewUserRequest newUser = testFactory.userRequest();
 
         userRepository.save(newUser.toUser(new BCryptPasswordEncoder()));
 
