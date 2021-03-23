@@ -1,6 +1,7 @@
 package io.tacsio.mercadolivre.api.representer;
 
 import io.tacsio.mercadolivre.model.Feature;
+import io.tacsio.mercadolivre.model.Image;
 import io.tacsio.mercadolivre.model.Product;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ProductRepresenter {
     public final ThinCategoryRepresenter category;
     public final LocalDateTime createdAt;
     public final UserRepresenter owner;
+    public final List<String> images;
 
     public ProductRepresenter(Product product) {
         this.id = product.getId();
@@ -32,6 +34,10 @@ public class ProductRepresenter {
         this.features = product.getFeatures()
                 .stream()
                 .map(FeatureRepresenter::new)
+                .collect(Collectors.toList());
+
+        this.images = product.getImages().stream()
+                .map(Image::getUri)
                 .collect(Collectors.toList());
     }
 }

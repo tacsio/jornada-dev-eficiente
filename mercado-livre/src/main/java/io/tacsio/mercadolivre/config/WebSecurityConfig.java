@@ -1,9 +1,10 @@
-package io.tacsio.mercadolivre.config.security;
+package io.tacsio.mercadolivre.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tacsio.mercadolivre.config.jwt.JwtConfig;
 import io.tacsio.mercadolivre.config.jwt.JwtTokenVerifier;
 import io.tacsio.mercadolivre.config.jwt.JwtUsernamePasswordAuthenticationFilter;
+import io.tacsio.mercadolivre.config.security.ApplicationRole;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -68,6 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/products").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.GET, "/products").hasAuthority(CATEGORY_READ.getPermission())
+
+                .antMatchers(HttpMethod.POST, "/products/{id}/images").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/images/{hash}**").permitAll()
+
+                .antMatchers(HttpMethod.POST, "/products/{id}/reviews").hasRole(ApplicationRole.USER.name())
+                .antMatchers(HttpMethod.GET, "/products/{id}/reviews**").hasRole(ApplicationRole.USER.name())
+
                 .anyRequest()
                 .authenticated();
     }

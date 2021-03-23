@@ -1,7 +1,7 @@
 package io.tacsio.mercadolivre.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tacsio.mercadolivre.api.request.NewCategoryRequest;
+import io.tacsio.mercadolivre.api.request.CategoryRequest;
 import io.tacsio.mercadolivre.config.TestFactory;
 import io.tacsio.mercadolivre.model.Category;
 import io.tacsio.mercadolivre.model.data.CategoryRepository;
@@ -43,7 +43,7 @@ class CategoryControllerTest {
     @DisplayName("Simple category creation.")
     @WithMockUser(username = "testUser", authorities = "category:write")
     public void createCategory() throws Exception {
-        NewCategoryRequest request = testFactory.categoryRequest();
+        CategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 
@@ -80,7 +80,7 @@ class CategoryControllerTest {
         Category existent = testFactory.category();
         categoryRepository.save(existent);
 
-        NewCategoryRequest request = new NewCategoryRequest();
+        CategoryRequest request = new CategoryRequest();
         request.setName(existent.getName());
 
         var payload = mapper.writeValueAsString(request);
@@ -96,7 +96,7 @@ class CategoryControllerTest {
     @DisplayName("Should not accept categories without name.")
     @WithMockUser(username = "testUser", authorities = "category:write")
     public void categoryWithoutName() throws Exception {
-        NewCategoryRequest request = new NewCategoryRequest();
+        CategoryRequest request = new CategoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 
@@ -110,7 +110,7 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Should not access without authentication.")
     public void accessWithoutLogin() throws Exception {
-        NewCategoryRequest request = testFactory.categoryRequest();
+        CategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 
@@ -125,7 +125,7 @@ class CategoryControllerTest {
     @DisplayName("Should not access without specific permission to write.")
     @WithMockUser(username = "testUser", authorities = "category:read")
     public void accessWithoutPermission() throws Exception {
-        NewCategoryRequest request = testFactory.categoryRequest();
+        CategoryRequest request = testFactory.categoryRequest();
 
         var payload = mapper.writeValueAsString(request);
 

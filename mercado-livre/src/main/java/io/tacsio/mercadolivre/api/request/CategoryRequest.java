@@ -9,7 +9,7 @@ import io.tacsio.mercadolivre.validation.Unique;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-public class NewCategoryRequest {
+public class CategoryRequest {
 
     @NotBlank
     @Unique(entityClass = Category.class, entityField = "name")

@@ -59,8 +59,13 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             var username = body.getSubject();
             var grantedAuthorities = parseAuthorities(body);
 
-            var user = userRepository.findByLogin(username).get();
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
+            var user = userRepository.findByLogin(username);
+            if (user.isEmpty()) {
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
+            }
+
+            var authentication = new UsernamePasswordAuthenticationToken(user.get(), null, grantedAuthorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         } catch (JwtException e) {

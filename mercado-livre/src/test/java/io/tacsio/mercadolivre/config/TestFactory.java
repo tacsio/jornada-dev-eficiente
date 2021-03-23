@@ -1,8 +1,8 @@
 package io.tacsio.mercadolivre.config;
 
 import com.github.javafaker.Faker;
-import io.tacsio.mercadolivre.api.request.NewCategoryRequest;
-import io.tacsio.mercadolivre.api.request.NewUserRequest;
+import io.tacsio.mercadolivre.api.request.CategoryRequest;
+import io.tacsio.mercadolivre.api.request.UserRequest;
 import io.tacsio.mercadolivre.model.Category;
 import io.tacsio.mercadolivre.model.data.CategoryRepository;
 import io.tacsio.mercadolivre.model.data.ProductRepository;
@@ -38,22 +38,22 @@ public class TestFactory {
 
 
     //requests
-    public NewUserRequest userRequest() {
-        var request = new NewUserRequest();
+    public UserRequest userRequest() {
+        var request = new UserRequest();
         request.setLogin(faker.internet().emailAddress());
         request.setPassword(faker.internet().password(6, 10));
 
         return request;
     }
 
-    public NewCategoryRequest categoryRequest() {
-        var request = new NewCategoryRequest();
+    public CategoryRequest categoryRequest() {
+        var request = new CategoryRequest();
         request.setName(faker.elderScrolls().creature());
 
         return request;
     }
 
-    public NewCategoryRequest categoryRequest(long parentId) {
+    public CategoryRequest categoryRequest(long parentId) {
         var request = categoryRequest();
         request.setParentId(parentId);
 

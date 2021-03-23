@@ -1,7 +1,7 @@
 package io.tacsio.mercadolivre.api;
 
 import io.tacsio.mercadolivre.api.representer.CategoryRepresenter;
-import io.tacsio.mercadolivre.api.request.NewCategoryRequest;
+import io.tacsio.mercadolivre.api.request.CategoryRequest;
 import io.tacsio.mercadolivre.model.data.CategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class CategoryController {
 
     @Transactional
     @PostMapping("/categories")
-    public ResponseEntity<?> create(@Valid @RequestBody NewCategoryRequest request) {
+    public ResponseEntity<?> create(@Valid @RequestBody CategoryRequest request) {
 
         var category = request.toModel(categoryRepository);
         categoryRepository.save(category);

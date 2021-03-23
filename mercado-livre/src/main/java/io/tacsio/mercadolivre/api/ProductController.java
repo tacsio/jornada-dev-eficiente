@@ -1,19 +1,17 @@
 package io.tacsio.mercadolivre.api;
 
 import io.tacsio.mercadolivre.api.representer.ProductRepresenter;
-import io.tacsio.mercadolivre.api.request.NewProductRequest;
+import io.tacsio.mercadolivre.api.request.ProductRequest;
 import io.tacsio.mercadolivre.model.User;
 import io.tacsio.mercadolivre.model.data.CategoryRepository;
 import io.tacsio.mercadolivre.model.data.ProductRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -29,12 +27,23 @@ public class ProductController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@Valid @RequestBody NewProductRequest request,
-                                 @AuthenticationPrincipal User owner) {
+    public ResponseEntity create(@AuthenticationPrincipal User owner,
+                                 @Valid @RequestBody ProductRequest request) {
 
         var product = request.toModel(owner, categoryRepository);
         productRepository.save(product);
 
         return ResponseEntity.ok(new ProductRepresenter(product));
+    }
+
+    @GetMapping
+    public ResponseEntity index() {
+        var products = productRepository.findAll();
+
+        var response = products.stream()
+                .map(ProductRepresenter::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,5 +1,7 @@
 package io.tacsio.mercadolivre.validation;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,7 +11,8 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.stream.Stream;
 
-public class ExistsValidator implements ConstraintValidator<Exists, Long> {
+@Service
+public class ExistsValidator implements ConstraintValidator<Exists, Object> {
 
     private final EntityManager entityManager;
     private Class entityClass;
@@ -28,7 +31,7 @@ public class ExistsValidator implements ConstraintValidator<Exists, Long> {
     }
 
     @Override
-    public boolean isValid(Long value, ConstraintValidatorContext context) {
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value == null && nullable) return true;
 
         return exists(entityManager, entityClass, entityField, value);

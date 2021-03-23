@@ -1,7 +1,7 @@
 package io.tacsio.mercadolivre.api;
 
 import io.tacsio.mercadolivre.api.representer.UserRepresenter;
-import io.tacsio.mercadolivre.api.request.NewUserRequest;
+import io.tacsio.mercadolivre.api.request.UserRequest;
 import io.tacsio.mercadolivre.model.data.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @Transactional
     @PostMapping("/users")
-    public ResponseEntity<?> signIn(@Valid @RequestBody NewUserRequest request) {
+    public ResponseEntity<?> signIn(@Valid @RequestBody UserRequest request) {
 
         var newUser = request.toUser(passwordEncoder);
         userRepository.save(newUser);

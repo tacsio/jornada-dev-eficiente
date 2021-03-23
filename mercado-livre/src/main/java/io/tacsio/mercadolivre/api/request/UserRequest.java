@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class NewUserRequest {
+public class UserRequest {
     @Email
     @Unique(entityClass = User.class, entityField = "login")
     private String login;

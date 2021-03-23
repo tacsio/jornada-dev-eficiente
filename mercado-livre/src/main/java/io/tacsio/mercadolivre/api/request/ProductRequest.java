@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class NewProductRequest {
+public class ProductRequest {
     @NotBlank
     private String name;
     @Positive
@@ -30,7 +30,7 @@ public class NewProductRequest {
     private Long categoryId;
 
     public Product toModel(User owner, CategoryRepository categoryRepository) {
-        var category = categoryRepository.findById(categoryId).get();
+        var category = categoryRepository.getOne(categoryId);
         var features = this.features.stream()
                 .map(FeatureRequest::toModel)
                 .collect(Collectors.toList());

@@ -3,7 +3,9 @@ package io.tacsio.mercadolivre.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -29,6 +31,10 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User owner;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Set<Image> images;
+
     public Product() {
     }
 
@@ -51,6 +57,8 @@ public class Product {
 
         this.features.stream()
                 .forEach(f -> f.setProduct(this));
+
+        this.images = new HashSet<>();
     }
 
     public Long getId() {
@@ -87,5 +95,13 @@ public class Product {
 
     public User getOwner() {
         return owner;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 }
