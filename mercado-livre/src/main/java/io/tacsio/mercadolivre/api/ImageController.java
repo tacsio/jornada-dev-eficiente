@@ -5,7 +5,7 @@ import io.tacsio.mercadolivre.model.Product;
 import io.tacsio.mercadolivre.model.User;
 import io.tacsio.mercadolivre.model.data.ImageRepository;
 import io.tacsio.mercadolivre.model.data.ProductRepository;
-import io.tacsio.mercadolivre.service.StorageService;
+import io.tacsio.mercadolivre.service.storage.StorageService;
 import io.tacsio.mercadolivre.validation.Exists;
 import io.tacsio.mercadolivre.validation.ProductOwner;
 import org.springframework.core.io.FileSystemResource;

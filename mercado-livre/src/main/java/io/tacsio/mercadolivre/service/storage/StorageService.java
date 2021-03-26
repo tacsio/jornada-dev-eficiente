@@ -1,4 +1,4 @@
-package io.tacsio.mercadolivre.service;
+package io.tacsio.mercadolivre.service.storage;
 
 import io.tacsio.mercadolivre.model.Image;
 import org.springframework.web.multipart.MultipartFile;
