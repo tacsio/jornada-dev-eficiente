@@ -2,7 +2,7 @@ package io.tacsio.mercadolivre.api;
 
 import io.tacsio.mercadolivre.api.representer.UserRepresenter;
 import io.tacsio.mercadolivre.api.request.UserRequest;
-import io.tacsio.mercadolivre.model.data.UserRepository;
+import io.tacsio.mercadolivre.data.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;

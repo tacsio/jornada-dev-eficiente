@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tacsio.mercadolivre.api.request.CategoryRequest;
 import io.tacsio.mercadolivre.config.TestFactory;
 import io.tacsio.mercadolivre.model.Category;
-import io.tacsio.mercadolivre.model.data.CategoryRepository;
+import io.tacsio.mercadolivre.data.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

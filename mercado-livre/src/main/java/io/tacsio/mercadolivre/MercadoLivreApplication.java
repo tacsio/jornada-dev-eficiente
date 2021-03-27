@@ -1,19 +1,14 @@
 package io.tacsio.mercadolivre;
 
-import io.tacsio.mercadolivre.config.security.ApplicationRole;
-import io.tacsio.mercadolivre.model.User;
-import io.tacsio.mercadolivre.model.data.CategoryRepository;
-import io.tacsio.mercadolivre.model.data.UserRepository;
+import io.tacsio.mercadolivre.data.CategoryRepository;
+import io.tacsio.mercadolivre.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @SpringBootApplication
 public class MercadoLivreApplication {
@@ -38,5 +33,28 @@ class TestController {
     @GetMapping("/categories")
     public ResponseEntity categories() {
         return ResponseEntity.ok(categoryRepository.findAll());
+    }
+
+    @GetMapping("/payment-redirect")
+    public ResponseEntity payment() {
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/dummy-pagseguro")
+    public ResponseEntity dummyPagSeguro(@RequestParam("returnId") String id, @RequestParam("redirectUrl") String url) {
+        var map = new HashMap<>();
+        map.put("id", id);
+        map.put("url", url);
+
+        return ResponseEntity.ok(map);
+    }
+
+    @GetMapping("/dummy-paypal/{id)")
+    public ResponseEntity dummyPaypal(@PathVariable("id") String id, @RequestParam("redirectUrl") String url) {
+        var map = new HashMap<>();
+        map.put("id", id);
+        map.put("url", url);
+
+        return ResponseEntity.ok(map);
     }
 }

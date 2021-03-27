@@ -1,7 +1,7 @@
 package io.tacsio.mercadolivre.validation;
 
 import io.tacsio.mercadolivre.model.User;
-import io.tacsio.mercadolivre.model.data.ProductRepository;
+import io.tacsio.mercadolivre.data.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

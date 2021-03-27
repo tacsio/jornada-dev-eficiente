@@ -1,4 +1,4 @@
-package io.tacsio.mercadolivre.model.data;
+package io.tacsio.mercadolivre.data;
 
 import io.tacsio.mercadolivre.model.Image;
 import org.springframework.data.jpa.repository.JpaRepository;

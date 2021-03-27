@@ -3,7 +3,7 @@ package io.tacsio.mercadolivre.config.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.tacsio.mercadolivre.model.data.UserRepository;
+import io.tacsio.mercadolivre.data.UserRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

@@ -4,7 +4,7 @@ import io.tacsio.mercadolivre.model.Category;
 import io.tacsio.mercadolivre.model.Feature;
 import io.tacsio.mercadolivre.model.Product;
 import io.tacsio.mercadolivre.model.User;
-import io.tacsio.mercadolivre.model.data.CategoryRepository;
+import io.tacsio.mercadolivre.data.CategoryRepository;
 import io.tacsio.mercadolivre.validation.Exists;
 
 import javax.validation.constraints.NotBlank;

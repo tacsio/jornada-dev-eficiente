@@ -2,7 +2,7 @@ package io.tacsio.mercadolivre.api.request;
 
 import io.tacsio.mercadolivre.model.Category;
 import io.tacsio.mercadolivre.model.CategoryBuilder;
-import io.tacsio.mercadolivre.model.data.CategoryRepository;
+import io.tacsio.mercadolivre.data.CategoryRepository;
 import io.tacsio.mercadolivre.validation.Exists;
 import io.tacsio.mercadolivre.validation.Unique;
 

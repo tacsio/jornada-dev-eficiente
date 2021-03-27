@@ -1,6 +1,6 @@
 package io.tacsio.mercadolivre.config.security;
 
-import io.tacsio.mercadolivre.model.data.UserRepository;
+import io.tacsio.mercadolivre.data.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,6 +1,9 @@
 package io.tacsio.mercadolivre.model;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -103,5 +106,16 @@ public class Product {
 
     public void setImages(Set<Image> images) {
         this.images = images;
+    }
+
+    public boolean available(@Positive Integer quantity) {
+        return this.piecesAvailable >= quantity;
+    }
+
+    public void removeFromInventory(Integer quantity) {
+        Assert.isTrue(available(quantity),
+                "Unable to remove from inventory, quantity unavailable.");
+
+        this.piecesAvailable = piecesAvailable - quantity;
     }
 }

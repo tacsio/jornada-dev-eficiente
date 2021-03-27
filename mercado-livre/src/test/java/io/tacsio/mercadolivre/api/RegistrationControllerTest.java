@@ -3,7 +3,7 @@ package io.tacsio.mercadolivre.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tacsio.mercadolivre.api.request.UserRequest;
 import io.tacsio.mercadolivre.config.TestFactory;
-import io.tacsio.mercadolivre.model.data.UserRepository;
+import io.tacsio.mercadolivre.data.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

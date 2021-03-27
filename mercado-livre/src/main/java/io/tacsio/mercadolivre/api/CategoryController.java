@@ -2,7 +2,7 @@ package io.tacsio.mercadolivre.api;
 
 import io.tacsio.mercadolivre.api.representer.CategoryRepresenter;
 import io.tacsio.mercadolivre.api.request.CategoryRequest;
-import io.tacsio.mercadolivre.model.data.CategoryRepository;
+import io.tacsio.mercadolivre.data.CategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
